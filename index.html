@@ -14,15 +14,15 @@ header{background:linear-gradient(135deg,#111c2b,#20344f);color:white;padding:38
 .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.11em;color:var(--gold);font-weight:800}.title{font-family:Georgia,serif;font-size:19px;margin:8px 0 7px}.meta{color:var(--muted);font-size:12px;margin-bottom:15px}.open{display:inline-block;text-decoration:none;color:white;background:var(--blue);padding:9px 12px;border-radius:9px;font-size:12px;font-weight:750}
 .empty{padding:22px;border:1px dashed #cbc5b7;border-radius:14px;color:var(--muted);background:#fff}.admin{margin-top:38px;padding:16px 18px;background:#eeeae0;border-radius:14px;font-size:13px;color:#58606a}
 footer{text-align:center;color:#8a8f95;font-size:12px;padding:25px}.hidden{display:none}@media(max-width:700px){header{padding:28px 22px}.hero{display:block}.search{margin-top:16px;width:100%}.brand{font-size:25px}}
-</style></head>
+.adminbar{display:none;margin:0 0 20px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;gap:8px;flex-wrap:wrap;align-items:center}.adminbar.show{display:flex}.adminbar a{background:var(--gold);color:#182434;text-decoration:none;font-weight:800;padding:9px 12px;border-radius:9px;font-size:12px}.adminbar span{font-size:12px;color:var(--muted);margin-right:auto}</style></head>
 <body><header><div class="brand">GM RESEARCH</div><div class="sub">Biblioteca de Research · Investidor10</div></header>
 <main class="wrap"><div class="hero"><div><h1>Central de Análises</h1><p>Carteiras, ações e fundos imobiliários em um único ambiente.</p></div><input id="search" class="search" placeholder="Buscar ativo, carteira ou relatório…"></div>
 <div class="tabs"><button class="tab active" data-filter="all">Tudo</button><button class="tab" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Análises · Ações</button><button class="tab" data-filter="fiis">Análises · FIIs</button></div>
-<div id="content"><div class="empty">Carregando biblioteca…</div></div>
+<div id="adminbar" class="adminbar"><span><b>Modo de gestão</b> — adicionar ou excluir documentos no GitHub.</span><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/carteiras">Gerenciar carteiras</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/acoes">Gerenciar ações</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/fiis">Gerenciar FIIs</a></div><div id="content"><div class="empty">Carregando biblioteca…</div></div>
 <div class="admin"><b>Atualização simples:</b> envie ou exclua PDFs nas pastas <code>documentos/carteiras</code>, <code>documentos/acoes</code> e <code>documentos/fiis</code>. O portal reorganiza os arquivos automaticamente após a publicação.</div>
 </main><footer>GM Research · ANALYSIS · STRATEGY · PERFORMANCE</footer>
 <script>
-let DATA=[],filter='all';
+let DATA=[],filter='all';if(new URLSearchParams(location.search).get('admin')==='1')document.addEventListener('DOMContentLoaded',()=>document.querySelector('#adminbar').classList.add('show'));
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function nice(s){return s.replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim()}
 function draw(){let q=document.querySelector('#search').value.toLowerCase();let a=DATA.filter(x=>(filter==='all'||x.category===filter)&&nice(x.name).toLowerCase().includes(q));let groups={carteiras:'Carteiras',acoes:'Análises · Ações',fiis:'Análises · FIIs'};let html='';

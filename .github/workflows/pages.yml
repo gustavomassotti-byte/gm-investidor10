@@ -43,11 +43,29 @@ jobs:
           python3 - <<'PY'
           import os,json
           out=[]
+          LABELS={
+            # Ações
+            'DIRR3':'Direcional (DIRR3)','PETR4':'Petrobras (PETR4)','BBAS3':'Banco do Brasil (BBAS3)',
+            'PRIO3':'PRIO (PRIO3)','CPLE3':'Copel (CPLE3)','NKE':'Nike (NKE)',
+            # FIIs
+            'PVBI11':'PVBI11','GARE11':'GARE11','HGRU11':'HGRU11','VISC11':'VISC11',
+            'XPML11':'XPML11','XPLG11':'XPLG11','BTLG11':'BTLG11','HGLG11':'HGLG11','TRXF11':'TRXF11'
+          }
+          def display_name(filename,cat):
+              stem=os.path.splitext(filename)[0]
+              if cat in ('acoes','fiis'):
+                  up=stem.upper()
+                  for ticker,label in LABELS.items():
+                      if ticker in up:
+                          rest=stem.replace('_',' ').replace('-',' ')
+                          # Mantém a descrição original, mas garante o ativo na frente.
+                          return f'{label} · {rest}'
+              return stem
           for cat in ('carteiras','acoes','fiis'):
               root=f'_site/documentos/{cat}'
               for f in os.listdir(root):
                   if f.lower().endswith('.pdf'):
-                      out.append({'category':cat,'name':f,'path':f'documentos/{cat}/{f}'})
+                      out.append({'category':cat,'name':f,'display_name':display_name(f,cat),'path':f'documentos/{cat}/{f}'})
           out.sort(key=lambda x:(x['category'],x['name'].lower()))
           with open('_site/manifest.json','w',encoding='utf8') as h:
               json.dump(out,h,ensure_ascii=False,indent=2)

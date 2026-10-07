@@ -1,0 +1,46 @@
+name: Publicar Portal Investidor10
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preparar portal
+        run: |
+          rm -rf _site _tmp
+          mkdir -p _site _tmp
+          unzip -q GM_RESEARCH_INVESTIDOR10_PORTAL.zip -d _tmp
+          cp -a _tmp/GM_RESEARCH_INVESTIDOR10_PORTAL/. _site/
+          touch _site/.nojekyll
+          test -f _site/index.html
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Enviar site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4

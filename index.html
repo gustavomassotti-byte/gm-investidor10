@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GM Research · Investidor10</title>
+<style>
+:root{--navy:#182434;--blue:#1E2D44;--gold:#C59B27;--cream:#F5F3EC;--ink:#152234;--muted:#6d7682;--white:#fff;--line:#e4e0d6}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f7f6f2;color:var(--ink)}
+header{background:linear-gradient(135deg,#111c2b,#20344f);color:white;padding:38px 5vw 30px;border-bottom:3px solid var(--gold)}
+.brand{font-family:Georgia,serif;font-size:30px;letter-spacing:.08em}.sub{opacity:.76;margin-top:6px}.wrap{max-width:1180px;margin:auto;padding:28px 22px 60px}
+.hero{display:flex;gap:20px;justify-content:space-between;align-items:end;margin-bottom:24px}.hero h1{font-family:Georgia,serif;font-size:32px;margin:0 0 6px}.hero p{margin:0;color:var(--muted)}
+.search{width:min(360px,100%);padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:white;font-size:14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:10px 15px;cursor:pointer;font-weight:650}.tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+.section{margin:28px 0}.section h2{font-family:Georgia,serif;font-size:23px;margin:0 0 4px}.section .hint{color:var(--muted);font-size:13px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:13px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 4px 18px #1623370a;transition:.18s}.card:hover{transform:translateY(-2px);box-shadow:0 8px 25px #16233714}
+.kicker{font-size:11px;text-transform:uppercase;letter-spacing:.11em;color:var(--gold);font-weight:800}.title{font-family:Georgia,serif;font-size:19px;margin:8px 0 7px}.meta{color:var(--muted);font-size:12px;margin-bottom:15px}.open{display:inline-block;text-decoration:none;color:white;background:var(--blue);padding:9px 12px;border-radius:9px;font-size:12px;font-weight:750}
+.empty{padding:22px;border:1px dashed #cbc5b7;border-radius:14px;color:var(--muted);background:#fff}.admin{margin-top:38px;padding:16px 18px;background:#eeeae0;border-radius:14px;font-size:13px;color:#58606a}
+footer{text-align:center;color:#8a8f95;font-size:12px;padding:25px}.hidden{display:none}@media(max-width:700px){header{padding:28px 22px}.hero{display:block}.search{margin-top:16px;width:100%}.brand{font-size:25px}}
+</style></head>
+<body><header><div class="brand">GM RESEARCH</div><div class="sub">Biblioteca de Research · Investidor10</div></header>
+<main class="wrap"><div class="hero"><div><h1>Central de Análises</h1><p>Carteiras, ações e fundos imobiliários em um único ambiente.</p></div><input id="search" class="search" placeholder="Buscar ativo, carteira ou relatório…"></div>
+<div class="tabs"><button class="tab active" data-filter="all">Tudo</button><button class="tab" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Análises · Ações</button><button class="tab" data-filter="fiis">Análises · FIIs</button></div>
+<div id="content"><div class="empty">Carregando biblioteca…</div></div>
+<div class="admin"><b>Atualização simples:</b> envie ou exclua PDFs nas pastas <code>documentos/carteiras</code>, <code>documentos/acoes</code> e <code>documentos/fiis</code>. O portal reorganiza os arquivos automaticamente após a publicação.</div>
+</main><footer>GM Research · ANALYSIS · STRATEGY · PERFORMANCE</footer>
+<script>
+let DATA=[],filter='all';
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function nice(s){return s.replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim()}
+function draw(){let q=document.querySelector('#search').value.toLowerCase();let a=DATA.filter(x=>(filter==='all'||x.category===filter)&&nice(x.name).toLowerCase().includes(q));let groups={carteiras:'Carteiras',acoes:'Análises · Ações',fiis:'Análises · FIIs'};let html='';
+for(const [k,label] of Object.entries(groups)){let rows=a.filter(x=>x.category===k);if(!rows.length)continue;html+=`<section class="section"><h2>${label}</h2><div class="hint">${rows.length} documento(s)</div><div class="grid">`;for(const x of rows){html+=`<article class="card"><div class="kicker">${k==='carteiras'?'CARTEIRA':k==='acoes'?'AÇÃO':'FII'}</div><div class="title">${esc(nice(x.name))}</div><div class="meta">PDF · GM Research</div><a class="open" target="_blank" href="${encodeURI(x.path)}">ABRIR PDF</a></article>`}html+='</div></section>'}document.querySelector('#content').innerHTML=html||'<div class="empty">Nenhum documento encontrado.</div>'}
+fetch('manifest.json?'+Date.now()).then(r=>r.json()).then(x=>{DATA=x;draw()}).catch(()=>document.querySelector('#content').innerHTML='<div class="empty">Biblioteca em atualização. Tente novamente em instantes.</div>');
+document.querySelector('#search').oninput=draw;document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;draw()});
+</script></body></html>

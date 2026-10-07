@@ -18,25 +18,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Preparar site e índice automático
+      - name: Preparar site e acervo
         run: |
-          rm -rf _site
-          mkdir -p _site
+          rm -rf _site _legacy
+          mkdir -p _site/documentos/{carteiras,acoes,fiis}
           cp index.html _site/index.html
-          if [ -d documentos ]; then cp -a documentos _site/documentos; fi
+
+          # Recupera o acervo que já havia sido separado para o Investidor10.
+          if [ -f GM_RESEARCH_INVESTIDOR10_PORTAL.zip ]; then
+            unzip -q GM_RESEARCH_INVESTIDOR10_PORTAL.zip -d _legacy
+            BASE="_legacy/GM_RESEARCH_INVESTIDOR10_PORTAL"
+            # Carteiras anteriores: setembro + histórico. Outubro vem sempre da pasta editável atual.
+            if [ -d "$BASE/01_CARTEIRAS/SETEMBRO_2026" ]; then cp -a "$BASE/01_CARTEIRAS/SETEMBRO_2026/." _site/documentos/carteiras/; fi
+            if [ -d "$BASE/01_CARTEIRAS/HISTORICO" ]; then cp -a "$BASE/01_CARTEIRAS/HISTORICO/." _site/documentos/carteiras/; fi
+            if [ -d "$BASE/02_ANALISES_ACOES" ]; then cp -a "$BASE/02_ANALISES_ACOES/." _site/documentos/acoes/; fi
+            if [ -d "$BASE/03_ANALISES_FIIS" ]; then cp -a "$BASE/03_ANALISES_FIIS/." _site/documentos/fiis/; fi
+          fi
+
+          # Arquivos enviados manualmente no GitHub têm prioridade sobre o acervo legado.
+          if [ -d documentos/carteiras ]; then find documentos/carteiras -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/carteiras/ \;; fi
+          if [ -d documentos/acoes ]; then find documentos/acoes -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/acoes/ \;; fi
+          if [ -d documentos/fiis ]; then find documentos/fiis -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/fiis/ \;; fi
+
           python3 - <<'PY'
           import os,json
           out=[]
-          roots=[('carteiras','documentos/carteiras'),('acoes','documentos/acoes'),('fiis','documentos/fiis')]
-          for cat,root in roots:
-              if not os.path.isdir(root): continue
-              for base,dirs,files in os.walk(root):
-                  for f in files:
-                      if f.lower().endswith('.pdf'):
-                          p=os.path.join(base,f).replace('\\','/')
-                          out.append({'category':cat,'name':f,'path':p})
+          for cat in ('carteiras','acoes','fiis'):
+              root=f'_site/documentos/{cat}'
+              for f in os.listdir(root):
+                  if f.lower().endswith('.pdf'):
+                      out.append({'category':cat,'name':f,'path':f'documentos/{cat}/{f}'})
           out.sort(key=lambda x:(x['category'],x['name'].lower()))
-          with open('_site/manifest.json','w',encoding='utf8') as h: json.dump(out,h,ensure_ascii=False,indent=2)
+          with open('_site/manifest.json','w',encoding='utf8') as h:
+              json.dump(out,h,ensure_ascii=False,indent=2)
+          print('Documentos publicados:',len(out))
           PY
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5

@@ -21,7 +21,7 @@ jobs:
       - name: Preparar site e acervo
         run: |
           rm -rf _site _legacy
-          mkdir -p _site/documentos/{carteiras,acoes,fiis}
+          mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa}
           cp index.html _site/index.html
 
           # Recupera o acervo que já havia sido separado para o Investidor10.
@@ -39,6 +39,8 @@ jobs:
           if [ -d documentos/carteiras ]; then find documentos/carteiras -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/carteiras/ \;; fi
           if [ -d documentos/acoes ]; then find documentos/acoes -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/acoes/ \;; fi
           if [ -d documentos/fiis ]; then find documentos/fiis -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/fiis/ \;; fi
+
+          if [ -d documentos/renda-fixa ]; then find documentos/renda-fixa -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/renda-fixa/ \;; fi
 
           python3 - <<'PY'
           import os,json
@@ -61,7 +63,7 @@ jobs:
                           # Mantém a descrição original, mas garante o ativo na frente.
                           return f'{label} · {rest}'
               return stem
-          for cat in ('carteiras','acoes','fiis'):
+          for cat in ('carteiras','acoes','fiis','renda-fixa'):
               root=f'_site/documentos/{cat}'
               for f in os.listdir(root):
                   if f.lower().endswith('.pdf'):

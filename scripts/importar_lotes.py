@@ -2,7 +2,6 @@
 """Importa PDFs de lotes ZIP para o site, sem extrair caminhos arbitrarios."""
 from pathlib import Path
 from zipfile import ZipFile, BadZipFile
-import re
 import shutil
 
 SITE = Path("_site/documentos")
@@ -44,7 +43,7 @@ def main():
                     if total > MAX_FILES or info.file_size > MAX_PDF:
                         raise ValueError("Limite de quantidade/tamanho de PDFs excedido")
                     filename = Path(info.filename.replace("\\", "/")).name
-                    if filename in ("", ".", "..") or not re.fullmatch(r"[^/\\\\\x00-\x1f]+\\.pdf", filename, re.I):
+                    if filename in ("", ".", "..") or any(ord(ch) < 32 for ch in filename):
                         raise ValueError(f"Nome de PDF invalido: {filename}")
                     cat = category(filename, info.filename)
                     dest = SITE / cat / filename

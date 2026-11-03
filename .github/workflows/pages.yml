@@ -21,7 +21,7 @@ jobs:
       - name: Preparar site e acervo
         run: |
           rm -rf _site _legacy
-          mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa}
+          mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa,editorial}
           cp index.html _site/index.html
 
           # Recupera o acervo que já havia sido separado para o Investidor10.
@@ -42,7 +42,7 @@ jobs:
 
           if [ -d documentos/renda-fixa ]; then find documentos/renda-fixa -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/renda-fixa/ \;; fi
 
-          # ZIPs enviados a lotes/ entram na mesma publicacao, sem mudar o acervo legado.
+          if [ -d documentos/editorial ]; then find documentos/editorial -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/editorial/ \;; fi\n\n          # ZIPs enviados a lotes/ entram na mesma publicacao, sem mudar o acervo legado.
           python3 scripts/importar_lotes.py
 
           python3 - <<'PY'
@@ -66,7 +66,7 @@ jobs:
                           # Mantém a descrição original, mas garante o ativo na frente.
                           return f'{label} · {rest}'
               return stem
-          for cat in ('carteiras','acoes','fiis','renda-fixa'):
+          for cat in ('carteiras','acoes','fiis','renda-fixa','editorial'):
               root=f'_site/documentos/{cat}'
               for f in os.listdir(root):
                   if f.lower().endswith('.pdf'):

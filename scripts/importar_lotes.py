@@ -14,7 +14,9 @@ def category(filename, member):
     path = member.lower().replace("\\", "/")
     if any(segment in ("renda-fixa", "renda_fixa") for segment in path.split("/")):
         return "renda-fixa"
-    if any(segment == "editorial" for segment in path.split("/")):\n        return "editorial"\n    if any(segment == "fiis" for segment in path.split("/")):
+    if any(segment == "editorial" for segment in path.split("/")):
+        return "editorial"
+    if any(segment == "fiis" for segment in path.split("/")):
         return "fiis"
     if any(segment in ("acoes", "ações", "dossies", "dossiês", "bdrs") for segment in path.split("/")):
         return "acoes"

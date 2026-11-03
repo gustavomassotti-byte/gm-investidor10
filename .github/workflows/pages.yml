@@ -23,6 +23,7 @@ jobs:
           rm -rf _site _legacy
           mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa,editorial}
           cp index.html _site/index.html
+          python3 scripts/patch_editorial.py
 
           # Recupera o acervo que já havia sido separado para o Investidor10.
           if [ -f GM_RESEARCH_INVESTIDOR10_PORTAL.zip ]; then

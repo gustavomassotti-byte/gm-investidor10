@@ -42,6 +42,9 @@ jobs:
 
           if [ -d documentos/renda-fixa ]; then find documentos/renda-fixa -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/renda-fixa/ \;; fi
 
+          # ZIPs enviados a lotes/ entram na mesma publicacao, sem mudar o acervo legado.
+          python3 scripts/importar_lotes.py
+
           python3 - <<'PY'
           import os,json
           out=[]

@@ -6,7 +6,7 @@ import shutil
 
 SITE = Path("_site/documentos")
 LOTES = Path("lotes")
-CATEGORIES = {"carteiras", "acoes", "fiis", "renda-fixa"}
+CATEGORIES = {"carteiras", "acoes", "fiis", "renda-fixa", "editorial"}
 MAX_PDF = 45 * 1024 * 1024
 MAX_FILES = 100
 
@@ -14,7 +14,7 @@ def category(filename, member):
     path = member.lower().replace("\\", "/")
     if any(segment in ("renda-fixa", "renda_fixa") for segment in path.split("/")):
         return "renda-fixa"
-    if any(segment == "fiis" for segment in path.split("/")):
+    if any(segment == "editorial" for segment in path.split("/")):\n        return "editorial"\n    if any(segment == "fiis" for segment in path.split("/")):
         return "fiis"
     if any(segment in ("acoes", "ações", "dossies", "dossiês", "bdrs") for segment in path.split("/")):
         return "acoes"
@@ -25,7 +25,7 @@ def category(filename, member):
         return "acoes"
     if "RENDA_FIXA" in name or "RENDA-FIXA" in name:
         return "renda-fixa"
-    raise ValueError(f"Categoria desconhecida: {filename}; use pasta carteiras/, acoes/, fiis/ ou renda-fixa/ no ZIP")
+    raise ValueError(f"Categoria desconhecida: {filename}; use pasta carteiras/, acoes/, fiis/, renda-fixa/ ou editorial/ no ZIP")
 
 def main():
     if not LOTES.exists():

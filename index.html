@@ -42,13 +42,54 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const nice=v=>String(v||'Documento').replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
 const dateLabel=x=>{const a=[];if(x.reference_month&&/^\d{4}-\d{2}$/.test(x.reference_month)){const [y,m]=x.reference_month.split('-');a.push('Referência: '+m+'/'+y)}if(x.published_at&&/^\d{4}-\d{2}-\d{2}$/.test(x.published_at)){const [y,m,d]=x.published_at.split('-');a.push('Publicado: '+d+'/'+m+'/'+y)}return a.length?' · '+a.join(' · '):' · Data não registrada'};
 function rowHTML(x,k){const name=esc(x.display_name||nice(x.name));const path=String(x.path||'');const href=path.split('/').map(encodeURIComponent).join('/');return '<div class="row"><div class="pdf">PDF</div><div><div class="docname" title="'+name+'">'+name+'</div><div class="meta">GM Research · '+esc(groups[k]) +dateLabel(x)+'</div></div><a class="open" target="_blank" rel="noopener" href="'+esc(href)+'">ABRIR</a></div>'}
+const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function portfolioType(x){
+ const n=(x.name+' '+(x.display_name||'')).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ if(/dividend/.test(n))return 'Dividendos';
+ if(/buy[\s_-]*(?:and[\s_-]*)?hold|buyhold/.test(n))return 'Buy & Hold';
+ if(/small[\s_-]*caps?/.test(n))return 'Small Caps';
+ if(/\bbdrs?\b|[_-]bdrs?[_-]/.test(n))return 'BDRs';
+ if(/\bfiis?\b|[_-]fiis?[_-]/.test(n))return 'Fundos Imobiliários (FIIs)';
+ return null;
+}
+function portfolioMonth(x){
+ if(x.reference_month&&/^\d{4}-(0[1-9]|1[0-2])$/.test(x.reference_month))return x.reference_month;
+ const n=(x.name||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ const names=['janeiro','fevereiro','marco','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+ for(let i=0;i<names.length;i++){let m=n.match(new RegExp(names[i]+'[\\s_-]*(20\\d{2})'));if(m)return m[1]+'-'+String(i+1).padStart(2,'0')}
+ let m=n.match(/(?:^|[^a-z])(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)[_-]?(20\d{2})/);
+ if(m)return m[2]+'-'+String(['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'].indexOf(m[1])+1).padStart(2,'0');
+ return null;
+}
+function portfolioTitle(x){const type=portfolioType(x);return type?'Carteira '+type: nice(x.name)}
+function portfolioVersion(x){const n=(x.name||'').toUpperCase();return /REV3/.test(n)?5:/REV2/.test(n)?4:/REV1/.test(n)?3:/FINAL/.test(n)?2:1}
+function visiblePortfolios(rows){
+ const best=new Map(),others=[];
+ for(const x of rows){const type=portfolioType(x),month=portfolioMonth(x);if(!type||!month){others.push(x);continue}
+ const key=month+'|'+type,prev=best.get(key);
+ if(!prev||portfolioVersion(x)>portfolioVersion(prev))best.set(key,x);
+ }
+ return [...best.values(),...others];
+}
+function portfolioHTML(rows){
+ const chosen=visiblePortfolios(rows),byMonth=new Map();
+ for(const x of chosen){const m=portfolioMonth(x)||'sem-data';if(!byMonth.has(m))byMonth.set(m,[]);byMonth.get(m).push(x)}
+ const keys=[...byMonth.keys()].sort((a,b)=>a==='sem-data'?1:b==='sem-data'?-1:b.localeCompare(a));
+ return keys.map(month=>{
+  const list=byMonth.get(month).sort((a,b)=>(portfolioType(a)||a.name).localeCompare(portfolioType(b)||b.name,'pt-BR'));
+  const label=month==='sem-data'?'Histórico sem mês identificado':MONTHS[Number(month.slice(5))-1]+' '+month.slice(0,4);
+  return '<section class="section"><div class="section-head"><h2>Carteiras · '+esc(label)+'</h2><span class="count">'+list.length+' carteiras</span></div><div class="library">'+list.map(x=>rowHTML({...x,display_name:portfolioTitle(x)},'carteiras')).join('')+'</div></section>'
+ }).join('');
+}
 function draw(){
  const search=document.getElementById('search'),content=document.getElementById('content'),stats=document.getElementById('stats');
  const q=(search.value||'').toLocaleLowerCase('pt-BR');
- const matches=DATA.filter(x=>(filter==='all'||x.category===filter)&&String(x.display_name||x.name||'').toLocaleLowerCase('pt-BR').includes(q));
- stats.innerHTML='<div class="stat total"><strong>'+DATA.length+'</strong>Total de documentos</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+DATA.filter(x=>x.category===k).length+'</strong>'+esc(v)+'</div>').join('');
+ const matches=DATA.filter(x=>(filter==='all'||x.category===filter)&&String((x.category==='carteiras'?portfolioTitle(x)+' ':'')+(x.display_name||x.name||'')).toLocaleLowerCase('pt-BR').includes(q));
+ const count=visiblePortfolios(DATA.filter(x=>x.category==='carteiras')).length;
+ stats.innerHTML='<div class="stat total"><strong>'+ (DATA.length-DATA.filter(x=>x.category==='carteiras').length+count)+'</strong>Documentos exibidos</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+(k==='carteiras'?count:DATA.filter(x=>x.category===k).length)+'</strong>'+esc(v)+'</div>').join('');
  let html='';
- for(const [k,label] of Object.entries(groups)){const rows=matches.filter(x=>x.category===k);if(!rows.length)continue;html+='<section class="section"><div class="section-head"><h2>'+esc(label)+'</h2><span class="count">'+rows.length+' documentos</span></div><div class="library">'+rows.map(x=>rowHTML(x,k)).join('')+'</div></section>'}
+ if(filter==='all'||filter==='carteiras')html+=portfolioHTML(matches.filter(x=>x.category==='carteiras'));
+ for(const [k,label] of Object.entries(groups)){if(k==='carteiras')continue;const rows=matches.filter(x=>x.category===k);if(!rows.length)continue;html+='<section class="section"><div class="section-head"><h2>'+esc(label)+'</h2><span class="count">'+rows.length+' documentos</span></div><div class="library">'+rows.map(x=>rowHTML(x,k)).join('')+'</div></section>'}
  content.innerHTML=html||'<div class="empty">Nenhum documento encontrado para esta pesquisa.</div>';
 }
 document.getElementById('search').addEventListener('input',draw);

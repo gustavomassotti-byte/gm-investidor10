@@ -139,22 +139,36 @@ function assetReportTitle(x,a){
  let kind=/graficos.?que.?provam|estudo.visual/.test(n)?'Estudo visual — Gráficos que Provam':/edicao.editorial/.test(n)?'Edição editorial':/3t26|resultado/.test(n)?'Dossiê e resultados do 3T26':'Dossiê completo';
  return kind+(when?' · '+when:'');
 }
+function topicInfo(x,k){
+ const n=(x.name+' '+(x.display_name||'')).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ if(k==='renda-fixa')return 'Renda Fixa e Crédito';
+ if(/RETORNOS?.{0,15}LONGO|HISTORIC|CICLOS?/.test(n))return 'História e Retornos';
+ if(/RISCO|CONCENTRAC|VOLATILIDADE|PROTEC|HEDGE/.test(n))return 'Riscos e Proteção';
+ if(/PATRIMONIO|ALOCA|BRASIL.?OU.?EXTERIOR|DIVERSIFIC/.test(n))return 'Patrimônio e Alocação';
+ if(/JUROS|DOLAR|CAMBIO|INFLAC|SELIC|FISCAL|ELEIC|MACRO/.test(n))return 'Economia e Macro';
+ if(/2027|OPORTUNIDADES|DINHEIRO|CENARIO/.test(n))return 'Perspectivas 2027';
+ if(/DIVIDEND|VALUATION|FUNDAMENTAL|METODOLOG/.test(n))return 'Estratégias de Investimento';
+ return k==='educacional'?'Conhecimento e Mercado':k==='cenarios'?'Estudos de Cenários':'Estudos e Publicações';
+}
 function shelfHTML(rows,k,label){
  if(!rows.length)return '';
  const by=new Map();
  for(const x of rows){
- const a=assetInfo(x),key=['acoes','bdrs','fiis','indices'].includes(k)?a.name:'Acervo';
+ const a=assetInfo(x),key=['acoes','bdrs','fiis','indices'].includes(k)?a.name:topicInfo(x,k);
  if(!by.has(key))by.set(key,{a,items:[]});by.get(key).items.push(x);
  }
  return '<section class="section"><div class="section-head"><h2>'+esc(label)+'</h2><span class="count">'+rows.length+' publicações</span></div><div class="month-grid">'+[...by.values()].sort((a,b)=>a.a.name.localeCompare(b.a.name,'pt-BR')).map(({a,items})=>{
  items.sort((x,y)=>String(y.reference_month||y.published_at||y.name).localeCompare(String(x.reference_month||x.published_at||x.name)));
  const isAsset=['acoes','bdrs','fiis','indices'].includes(k);
- const head=isAsset?'<div class="asset-ident">'+logoHTML(a)+'<div class="asset-name">'+esc(a.name)+'</div></div>':'<div class="month-title">'+esc(label)+'</div>';
+ const head=isAsset?'<div class="asset-ident">'+logoHTML(a)+'<div class="asset-name">'+esc(a.name)+'</div></div>':'<div class="month-title">'+esc(topicInfo(items[0],k))+'</div>';
  return '<details class="month-card"'+(by.size===1?' open':'')+'><summary><div>'+head+(isAsset?'':'<span class="month-sub">'+items.length+' '+(items.length===1?'publicação':'publicações')+'</span>')+'</div><span class="month-arrow">›</span></summary><div class="month-links">'+items.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');const title=isAsset?assetReportTitle(x,a):(x.display_name||nice(x.name));return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(title)+'</span><span>PDF ↗</span></a>'}).join('')+'</div></details>';
  }).join('')+'</div></section>';
 }
 function classify(x){
- const n=String(x.name||'').toUpperCase();
+ const n=String(x.name||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ if(/RETORNOS?.{0,15}LONGO|GRAFICOS.?QUE.?PROVAM.?RETORNOS/.test(n))return 'educacional';
+ if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
+ if(x.category==='acoes'&&/(?:2027|PATRIMONIO|AJUSTE_FISCAL|BRASIL_OU_EXTERIOR|JUROS_DOLAR|OPORTUNIDADES|ELEICOES_BOLSA)/.test(n))return 'cenarios';
  if(x.category==='carteiras'||(x.category==='fiis'&&/CARTEIRA/.test(n)))return 'carteiras';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
  if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';

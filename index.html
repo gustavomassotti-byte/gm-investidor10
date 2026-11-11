@@ -58,14 +58,14 @@ footer{background:#ede9df;border-top:1px solid #ddd7cb;color:#7c8288;text-align:
 <main class="wrap">
 <div class="top"><div><h1>Biblioteca de Research</h1><p>Carteiras e análises GM Research em um ambiente único e organizado.</p></div><input id="search" class="search" placeholder="Buscar ativo, carteira ou relatório…"></div>
 <div id="stats" class="stats" aria-live="polite"></div>
-<div class="library-layout"><aside class="side-panel"><div class="side-heading">EXPLORAR BIBLIOTECA</div><nav class="tabs" aria-label="Categorias da biblioteca"><button class="tab" data-filter="all">Todos</button><button class="tab active" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="indices">Índices e ETFs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="educacional">Educacional</button><button class="tab" data-filter="editorial">Editorial</button></nav><div class="side-note">Selecione uma categoria para explorar os relatórios.</div></aside><div class="library-main">
+<div class="library-layout"><aside class="side-panel"><div class="side-heading">EXPLORAR BIBLIOTECA</div><nav class="tabs" aria-label="Categorias da biblioteca"><button class="tab" data-filter="all">Todos</button><button class="tab active" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="indices">Índices e ETFs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="conhecimento">Conhecimento GM</button></nav><div class="side-note">Selecione uma categoria para explorar os relatórios.</div></aside><div class="library-main">
 <div id="adminbar" class="adminbar"><span><b>Gestão da biblioteca</b> · adicionar, substituir ou excluir PDFs</span><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/carteiras">CARTEIRAS</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/acoes">AÇÕES</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/fiis">FIIs</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/renda-fixa">RENDA FIXA</a></div>
 <div id="content"><div class="empty">Carregando biblioteca…</div></div>
 <div id="manage-note" class="manage-note">Os documentos são atualizados pelas pastas de gestão. A publicação do portal é automática.</div></div></div>
 </main>
 <footer>GM RESEARCH × INVESTIDOR10 · BIBLIOTECA DE RESEARCH</footer>
 <script>
-const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior',fiis:'FIIs',indices:'Índices e ETFs', 'renda-fixa':'Renda Fixa',cenarios:'Cenários e Macro',educacional:'Educacional',editorial:'Editorial GM'};
+const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior',fiis:'FIIs',indices:'Índices e ETFs', 'renda-fixa':'Renda Fixa',cenarios:'Cenários e Macro',conhecimento:'Conhecimento GM'};
 let DATA=[],filter='carteiras';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nice=v=>String(v||'Documento').replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
@@ -166,13 +166,17 @@ function assetReportTitle(x,a){
 function topicInfo(x,k){
  const n=(x.name+' '+(x.display_name||'')).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  if(k==='renda-fixa')return 'Renda Fixa e Crédito';
+ if(/LONG.?SHORT|ESTRATEGIAS.?RELATIVAS|PARES/.test(n))return 'Long & Short';
+ if(/DERIVATIV|OPCOES|COLLAR|TRAVA|HEDGE/.test(n))return 'Derivativos e Opções';
+ if(/VALUATION|FUNDAMENTAL|BALANCO/.test(n))return 'Fundamentos e Valuation';
+ if(/ANALISE.?TECNICA|TRADING|INDICADORES/.test(n))return 'Análise Técnica e Trading';
  if(/RETORNOS?.{0,15}LONGO|HISTORIC|CICLOS?/.test(n))return 'História e Retornos';
  if(/RISCO|CONCENTRAC|VOLATILIDADE|PROTEC|HEDGE/.test(n))return 'Riscos e Proteção';
  if(/PATRIMONIO|ALOCA|BRASIL.?OU.?EXTERIOR|DIVERSIFIC/.test(n))return 'Patrimônio e Alocação';
  if(/JUROS|DOLAR|CAMBIO|INFLAC|SELIC|FISCAL|ELEIC|MACRO/.test(n))return 'Economia e Macro';
  if(/2027|OPORTUNIDADES|DINHEIRO|CENARIO/.test(n))return 'Perspectivas 2027';
  if(/DIVIDEND|VALUATION|FUNDAMENTAL|METODOLOG/.test(n))return 'Estratégias de Investimento';
- return k==='educacional'?'Conhecimento e Mercado':k==='cenarios'?'Estudos de Cenários':'Estudos e Publicações';
+ return k==='conhecimento'?'Guias e Estudos':k==='cenarios'?'Estudos de Cenários':'Estudos e Publicações';
 }
 function readableTitle(x){
  const raw=nice(x.display_name||x.name).replace(/\s+(?:FINAL|REV\d+|V\d+)$/i,'');
@@ -211,13 +215,14 @@ function shelfHTML(rows,k,label){
 }
 function classify(x){
  const n=String(x.name||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
- if(/RETORNOS?.{0,15}LONGO|GRAFICOS.?QUE.?PROVAM.?RETORNOS/.test(n))return 'educacional';
+ if(/RETORNOS?.{0,15}LONGO|GRAFICOS.?QUE.?PROVAM.?RETORNOS/.test(n))return 'conhecimento';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
  if(x.category==='acoes'&&/(?:2027|PATRIMONIO|AJUSTE_FISCAL|BRASIL_OU_EXTERIOR|JUROS_DOLAR|OPORTUNIDADES|ELEICOES_BOLSA)/.test(n))return 'cenarios';
  if(x.category==='carteiras'||(x.category==='fiis'&&/CARTEIRA/.test(n)))return 'carteiras';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
  if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';
  if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO)/.test(n))return 'cenarios';
+ if(x.category==='educacional'||x.category==='editorial')return 'conhecimento';
  return x.category;
 }
 function draw(){

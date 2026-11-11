@@ -230,7 +230,7 @@ function draw(){
  const q=(search.value||'').toLocaleLowerCase('pt-BR');
  const matches=DATA.filter(x=>(filter==='all'||classify(x)===filter)&&String((classify(x)==='carteiras'?portfolioTitle(x)+' ':'')+assetInfo(x).name+' '+assetInfo(x).ticker+' '+(x.display_name||x.name||'')).toLocaleLowerCase('pt-BR').includes(q));
  const count=visiblePortfolios(DATA.filter(x=>classify(x)==='carteiras')).length;
- stats.innerHTML='<div class="stat total"><strong>'+ (DATA.length-DATA.filter(x=>x.category==='carteiras').length+count)+'</strong>Documentos exibidos</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+(k==='carteiras'?count:DATA.filter(x=>classify(x)===k).length)+'</strong>'+esc(v)+'</div>').join('');
+ stats.innerHTML='<div class="stat total"><strong>'+ DATA.length +'</strong>PDFs no acervo</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+(k==='carteiras'?count:DATA.filter(x=>classify(x)===k).length)+'</strong>'+esc(v)+'</div>').join('');
  let html='';
  if(filter==='all'||filter==='carteiras')html+=portfolioHTML(matches.filter(x=>classify(x)==='carteiras'));
  for(const [k,label] of Object.entries(groups)){if(k==='carteiras')continue;const rows=matches.filter(x=>classify(x)===k);html+=shelfHTML(rows,k,label)}
@@ -241,7 +241,7 @@ document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{doc
 if(new URLSearchParams(location.search).get('admin')==='1'){document.getElementById('adminbar').classList.add('show');document.getElementById('manage-note').classList.add('show')}
 async function loadLibrary(){
  const content=document.getElementById('content');
- try{const response=await fetch('./manifest.json?v='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const data=await response.json();if(!Array.isArray(data))throw new Error('Formato do catálogo inválido');DATA=data.filter(x=>x&&typeof x==='object'&&groups[x.category]&&typeof x.path==='string');draw();}
+ try{const response=await fetch('./manifest.json?v='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const data=await response.json();if(!Array.isArray(data))throw new Error('Formato do catálogo inválido');DATA=data.filter(x=>x&&typeof x==='object'&&(groups[x.category]||x.category==='editorial'||x.category==='educacional')&&typeof x.path==='string');draw();}
  catch(error){content.innerHTML='<div class="empty">Não foi possível carregar o catálogo ('+esc(error.message)+'). <button id="retry-library" type="button">Tentar novamente</button></div>';document.getElementById('retry-library').addEventListener('click',loadLibrary);console.error('GM Research: falha ao carregar biblioteca',error)}
 }
 loadLibrary();

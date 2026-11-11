@@ -113,9 +113,9 @@ const ASSETS=[
 ];
 const DOMAINS={Petrobras:'petrobras.com.br',Vale:'vale.com',Nike:'nike.com',ExxonMobil:'exxonmobil.com',Microsoft:'microsoft.com',Amazon:'amazon.com', 'Alphabet (Google)':'google.com','Meta Platforms':'meta.com','Mercado Livre':'mercadolivre.com.br',TOTVS:'totvs.com',Bradesco:'bradesco.com.br',Sabesp:'sabesp.com.br',Unipar:'unipar.com',TIM:'tim.com.br','Banco do Brasil':'bb.com.br',Direcional:'direcional.com.br',PRIO:'prio3.com.br',Copel:'copel.com',Itaúsa:'itausa.com.br',TSMC:'tsmc.com','BTG Pactual':'btgpactual.com','Ibovespa':'b3.com.br','S&P 500':'spglobal.com',EWZ:'ishares.com'};
 const EXTRA_ASSETS=[
- {name:'Copel',re:/CPL[E]?[36]|COPEL/i},
- {name:'Itaúsa',re:/ITSA[34]|ITAUSA|ITAÚSA/i},
- {name:'TSMC',re:/TSMC34|TSMC/i},
+ {name:'Copel',re:/COPEL|CPLE[36]/i},
+ {name:'Itaúsa',re:/ITA[UÚ]SA|ITSA[34]/i},
+ {name:'TSMC',re:/TSMC|TSM[C]?34/i},
  {name:'BTLG11',re:/BTLG11/i},{name:'GARE11',re:/GARE11/i},{name:'HGLG11',re:/HGLG11/i},
  {name:'HGRU11',re:/HGRU11/i},{name:'PVBI11',re:/PVBI11/i},{name:'TRXF11',re:/TRXF11/i},
  {name:'XPML11',re:/XPML11/i},{name:'KNRI11',re:/KNRI11/i},{name:'VISC11',re:/VISC11/i},
@@ -131,7 +131,7 @@ function assetInfo(x){
  if(found)return found;
  const fii=n.match(/\b[A-Z]{4}11\b/i);if(fii)return {name:fii[0].toUpperCase()};
  const ticker=n.match(/\b[A-Z]{4}[346]\b/i);if(ticker)return {name:ticker[0].toUpperCase()};
- return {name:nice(x.display_name||x.name),ticker:'',symbol:'GM'};
+ return {name:nice(x.display_name||x.name).replace(/^(?:GM Research\s*)?Dossie\s*/i,'').split(/\s+(?:Dossie|Analise|Carteira|BuyHold|Completo|Setembro|Outubro|Novembro|2026)\b/i)[0]||'Outros',ticker:'',symbol:'GM'};
 }
 function assetReportTitle(x,a){
  const n=(x.name+' '+(x.display_name||'')).toLowerCase();

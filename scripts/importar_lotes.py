@@ -12,6 +12,8 @@ MAX_FILES = 100
 
 def category(filename, member):
     path = member.lower().replace("\\", "/")
+    if any(segment == "carteiras" for segment in path.split("/")):
+        return "carteiras"
     if any(segment in ("renda-fixa", "renda_fixa") for segment in path.split("/")):
         return "renda-fixa"
     if any(segment == "editorial" for segment in path.split("/")):
@@ -47,6 +49,13 @@ def main():
                     filename = Path(info.filename.replace("\\", "/")).name
                     if filename in ("", ".", "..") or any(ord(ch) < 32 for ch in filename):
                         raise ValueError(f"Nome de PDF invalido: {filename}")
+                    # A edicao corrigida REV3 substitui as cinco carteiras de novembro anteriores.
+                    # Preservamos os ZIPs originais no repositorio como historico.
+                    if archive.name == "GM_PUBLISHER_CARTEIRAS_NOVEMBRO_2026.zip":
+                        stem = filename.lower()
+                        if ("novembro" in stem or "nov2026" in stem) and any(k in stem for k in ("dividend", "buy", "small", "bdr", "fii")):
+                            print(f"  Ignorando versao antiga: {filename}")
+                            continue
                     cat = category(filename, info.filename)
                     dest = SITE / cat / filename
                     dest.parent.mkdir(parents=True, exist_ok=True)

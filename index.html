@@ -23,6 +23,9 @@ header{background:var(--navy);color:#fff;border-bottom:3px solid var(--gold)}
 .empty{padding:25px;color:var(--muted);background:#fff;border:1px dashed #cfc8ba;border-radius:10px}.manage-note{display:none;margin-top:30px;color:var(--muted);font-size:11px}.manage-note.show{display:block}
 footer{background:#ede9df;border-top:1px solid #ddd7cb;color:#7c8288;text-align:center;font-size:10px;letter-spacing:.09em;padding:21px}
 @media(max-width:700px){.head{padding:20px}.partner{display:none}.top{display:block}.search{margin-top:17px;width:100%}.wrap{padding:27px 15px 45px}.top h1{font-size:27px}.row{grid-template-columns:38px minmax(0,1fr) 68px;padding:8px 10px}.docname{font-size:14px}.open{padding:7px 5px}.gm-mark{width:42px;height:42px}.brandcopy b{font-size:18px}}
+
+/* Navegação editorial compacta */
+.hero-note{font-size:12px;color:var(--muted);margin-top:10px}.month-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:14px;margin:18px 0 26px}.month-card{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:0 4px 16px rgba(24,36,52,.035)}.month-card.featured{border-color:#c6a553}.month-card summary{list-style:none;cursor:pointer;padding:18px 18px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px}.month-card summary::-webkit-details-marker{display:none}.month-card summary:hover{background:#fbf9f2}.month-card .month-title{font:700 20px Georgia,serif}.month-card .month-sub{display:block;color:var(--muted);font-size:11px;margin-top:5px}.month-card .month-arrow{color:var(--gold);font-size:21px}.month-card[open] .month-arrow{transform:rotate(90deg)}.month-links{padding:0 13px 13px;display:grid;gap:6px}.month-link{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 11px;border-radius:7px;background:#f7f5ef;border:1px solid #eee8dd;text-decoration:none;color:var(--ink);font-size:13px;font-weight:650}.month-link:hover{background:#fff7e4;border-color:var(--gold)}.month-link span:last-child{font-size:10px;color:#87691c;font-weight:800}.shelf-heading{font:700 21px Georgia,serif;margin:24px 0 8px}.shelf-intro{color:var(--muted);font-size:12px;margin:0 0 10px}.month-card:not([open]) .month-links{display:none}@media(max-width:700px){.month-grid{grid-template-columns:1fr}.month-card summary{padding:15px}}
 </style></head>
 <body>
 <header><div class="head"><div class="brandline"><div class="gm-mark">GM</div><div class="brandcopy"><b>GM RESEARCH</b><span>ANALYSIS · STRATEGY · PERFORMANCE</span></div></div><div class="partner"><span>Biblioteca exclusiva</span><span class="x">×</span><span class="i10">investidor<em>10</em></span></div></div></header>
@@ -75,11 +78,13 @@ function portfolioHTML(rows){
  const chosen=visiblePortfolios(rows),byMonth=new Map();
  for(const x of chosen){const m=portfolioMonth(x)||'sem-data';if(!byMonth.has(m))byMonth.set(m,[]);byMonth.get(m).push(x)}
  const keys=[...byMonth.keys()].sort((a,b)=>a==='sem-data'?1:b==='sem-data'?-1:b.localeCompare(a));
- return keys.map(month=>{
-  const list=byMonth.get(month).sort((a,b)=>(portfolioType(a)||a.name).localeCompare(portfolioType(b)||b.name,'pt-BR'));
-  const label=month==='sem-data'?'Histórico sem mês identificado':MONTHS[Number(month.slice(5))-1]+' '+month.slice(0,4);
-  return '<section class="section"><div class="section-head"><h2>Carteiras · '+esc(label)+'</h2><span class="count">'+list.length+(list.length===1?' carteira':' carteiras')+(list.length===5?' · coleção completa':' · histórico parcial')+'</span></div><div class="library">'+list.map(x=>rowHTML({...x,display_name:portfolioTitle(x)},'carteiras')).join('')+'</div></section>'
- }).join('');
+ if(!keys.length)return '';
+ return '<h2 class="shelf-heading">Carteiras mensais</h2><p class="shelf-intro">Escolha uma edição para acessar diretamente as cinco estratégias. O histórico fica recolhido.</p><div class="month-grid">'+keys.map((month,i)=>{
+  const list=byMonth.get(month).sort((a,b)=>['Dividendos','Buy & Hold','Small Caps','BDRs','Fundos Imobiliários (FIIs)'].indexOf(portfolioType(a))-['Dividendos','Buy & Hold','Small Caps','BDRs','Fundos Imobiliários (FIIs)'].indexOf(portfolioType(b)));
+  const label=month==='sem-data'?'Sem referência definida':MONTHS[Number(month.slice(5))-1]+' '+month.slice(0,4);
+  const links=list.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(portfolioTitle(x))+'</span><span>PDF ↗</span></a>'}).join('');
+  return '<details class="month-card'+(i===0?' featured':'')+'"'+(i===0?' open':'')+'><summary><div><div class="month-title">'+esc(label)+'</div><span class="month-sub">'+list.length+' de 5 carteiras'+(list.length===5?' · edição completa':' · acervo histórico')+'</span></div><span class="month-arrow">›</span></summary><div class="month-links">'+links+'</div></details>';
+ }).join('')+'</div>';
 }
 function draw(){
  const search=document.getElementById('search'),content=document.getElementById('content'),stats=document.getElementById('stats');

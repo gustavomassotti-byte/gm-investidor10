@@ -92,7 +92,8 @@ function assetInfo(x){
  const match=n.match(/\b(?:[A-Z]{4}\d{1,2}|[A-Z]{3,5}34|EWZ|SPY|QQQ|XOM|NKE|MELI)\b/);
  const ticker=match?match[0]:null;
  const aliases={SBSP3:'Sabesp',UNIP6:'Unipar',TIMS3:'TIM',MSFT34:'Microsoft',EXXO34:'ExxonMobil',VALE3:'Vale',PETR4:'Petrobras',PETR3:'Petrobras',BBAS3:'Banco do Brasil',DIRR3:'Direcional',PRIO3:'PRIO',AMZO34:'Amazon',GOGL34:'Alphabet',NKE:'Nike',EWZ:'EWZ',SPY:'S&P 500'};
- return {ticker,title:aliases[ticker]||(ticker||nice(x.name))};
+ const company=Object.entries({PETROBRAS:'Petrobras',EXXON:'ExxonMobil',MICROSOFT:'Microsoft',AMAZON:'Amazon',ALPHABET:'Alphabet',GOOGLE:'Alphabet',MERCADO_LIVRE:'Mercado Livre',IBOVESPA:'Ibovespa',TSMC:'TSMC',ITAUSA:'Itaúsa',VALE:'Vale',NIKE:'Nike',META:'Meta',XPML11:'XPML11'}).find(([key])=>n.includes(key));
+ return {ticker,title:aliases[ticker]||(company?company[1]:ticker||nice(x.name))};
 }
 function shelfHTML(rows,k,label){
  if(!rows.length)return '';
@@ -102,18 +103,19 @@ function shelfHTML(rows,k,label){
 }
 function classify(x){
  const n=String(x.name||'').toUpperCase();
- if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|BDR)/.test(n))return 'bdrs';
+ if(x.category==='carteiras'||(x.category==='fiis'&&/CARTEIRA/.test(n)))return 'carteiras';
+ if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|NIKE|MERCADO_LIVRE)/.test(n))return 'bdrs';
  if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO|IBOVESPA|SP500|S&P)/.test(n))return 'cenarios';
  return x.category;
 }
 function draw(){
  const search=document.getElementById('search'),content=document.getElementById('content'),stats=document.getElementById('stats');
  const q=(search.value||'').toLocaleLowerCase('pt-BR');
- const matches=DATA.filter(x=>(filter==='all'||classify(x)===filter)&&String((x.category==='carteiras'?portfolioTitle(x)+' ':'')+(x.display_name||x.name||'')).toLocaleLowerCase('pt-BR').includes(q));
- const count=visiblePortfolios(DATA.filter(x=>x.category==='carteiras')).length;
+ const matches=DATA.filter(x=>(filter==='all'||classify(x)===filter)&&String((classify(x)==='carteiras'?portfolioTitle(x)+' ':'')+(x.display_name||x.name||'')).toLocaleLowerCase('pt-BR').includes(q));
+ const count=visiblePortfolios(DATA.filter(x=>classify(x)==='carteiras')).length;
  stats.innerHTML='<div class="stat total"><strong>'+ (DATA.length-DATA.filter(x=>x.category==='carteiras').length+count)+'</strong>Documentos exibidos</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+(k==='carteiras'?count:DATA.filter(x=>classify(x)===k).length)+'</strong>'+esc(v)+'</div>').join('');
  let html='';
- if(filter==='all'||filter==='carteiras')html+=portfolioHTML(matches.filter(x=>x.category==='carteiras'));
+ if(filter==='all'||filter==='carteiras')html+=portfolioHTML(matches.filter(x=>classify(x)==='carteiras'));
  for(const [k,label] of Object.entries(groups)){if(k==='carteiras')continue;const rows=matches.filter(x=>classify(x)===k);html+=shelfHTML(rows,k,label)}
  content.innerHTML=html||'<div class="empty">Nenhum documento encontrado para esta pesquisa.</div>';
 }

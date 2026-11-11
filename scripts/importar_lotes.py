@@ -10,7 +10,7 @@ CATEGORIES = {"carteiras", "acoes", "fiis", "renda-fixa", "editorial"}
 MAX_PDF = 45 * 1024 * 1024
 MAX_FILES = 100
 
-def category(filename, member):
+def category(filename, member, archive_name=""):
     path = member.lower().replace("\\", "/")
     if any(segment == "carteiras" for segment in path.split("/")):
         return "carteiras"
@@ -22,6 +22,9 @@ def category(filename, member):
         return "fiis"
     if any(segment in ("acoes", "ações", "dossies", "dossiês", "bdrs") for segment in path.split("/")):
         return "acoes"
+    archive_upper = archive_name.upper()
+    if "EDITORIAL" in archive_upper or "MACRO_2027" in archive_upper:
+        return "editorial"
     name = filename.upper()
     if "CARTEIRA" in name:
         return "carteiras"
@@ -56,7 +59,7 @@ def main():
                         if ("novembro" in stem or "nov2026" in stem) and any(k in stem for k in ("dividend", "buy", "small", "bdr", "fii")):
                             print(f"  Ignorando versao antiga: {filename}")
                             continue
-                    cat = category(filename, info.filename)
+                    cat = category(filename, info.filename, archive.name)
                     dest = SITE / cat / filename
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     with z.open(info) as source, dest.open("wb") as target:

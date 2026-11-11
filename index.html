@@ -32,14 +32,14 @@ footer{background:#ede9df;border-top:1px solid #ddd7cb;color:#7c8288;text-align:
 <main class="wrap">
 <div class="top"><div><h1>Biblioteca de Research</h1><p>Carteiras e análises GM Research em um ambiente único e organizado.</p></div><input id="search" class="search" placeholder="Buscar ativo, carteira ou relatório…"></div>
 <div id="stats" class="stats" aria-live="polite"></div>
-<div class="tabs"><button class="tab active" data-filter="all">Todos</button><button class="tab" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="editorial">Editorial e Macro</button></div>
+<div class="tabs"><button class="tab active" data-filter="all">Todos</button><button class="tab" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="educacional">Educacional</button><button class="tab" data-filter="editorial">Editorial</button></div>
 <div id="adminbar" class="adminbar"><span><b>Gestão da biblioteca</b> · adicionar, substituir ou excluir PDFs</span><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/carteiras">CARTEIRAS</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/acoes">AÇÕES</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/fiis">FIIs</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/renda-fixa">RENDA FIXA</a></div>
 <div id="content"><div class="empty">Carregando biblioteca…</div></div>
 <div id="manage-note" class="manage-note">Os documentos são atualizados pelas pastas de gestão. A publicação do portal é automática.</div>
 </main>
 <footer>GM RESEARCH × INVESTIDOR10 · BIBLIOTECA DE RESEARCH</footer>
 <script>
-const groups={carteiras:'Carteiras',acoes:'Análises · Ações',fiis:'Análises · FIIs','renda-fixa':'Renda Fixa & Crédito Privado',editorial:'Editorial · Estudos e Macro'};
+const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior',fiis:'FIIs', 'renda-fixa':'Renda Fixa',cenarios:'Cenários e Macro',educacional:'Educacional',editorial:'Editorial GM'};
 let DATA=[],filter='all';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nice=v=>String(v||'Documento').replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
@@ -86,15 +86,35 @@ function portfolioHTML(rows){
   return '<details class="month-card'+(i===0?' featured':'')+'"'+(i===0?' open':'')+'><summary><div><div class="month-title">'+esc(label)+'</div><span class="month-sub">'+list.length+' de 5 carteiras'+(list.length===5?' · edição completa':' · acervo histórico')+'</span></div><span class="month-arrow">›</span></summary><div class="month-links">'+links+'</div></details>';
  }).join('')+'</div>';
 }
+
+function assetInfo(x){
+ const n=(x.name+' '+(x.display_name||'')).toUpperCase();
+ const match=n.match(/\b(?:[A-Z]{4}\d{1,2}|[A-Z]{3,5}34|EWZ|SPY|QQQ|XOM|NKE|MELI)\b/);
+ const ticker=match?match[0]:null;
+ const aliases={SBSP3:'Sabesp',UNIP6:'Unipar',TIMS3:'TIM',MSFT34:'Microsoft',EXXO34:'ExxonMobil',VALE3:'Vale',PETR4:'Petrobras',PETR3:'Petrobras',BBAS3:'Banco do Brasil',DIRR3:'Direcional',PRIO3:'PRIO',AMZO34:'Amazon',GOGL34:'Alphabet',NKE:'Nike',EWZ:'EWZ',SPY:'S&P 500'};
+ return {ticker,title:aliases[ticker]||(ticker||nice(x.name))};
+}
+function shelfHTML(rows,k,label){
+ if(!rows.length)return '';
+ const groupsBy=new Map();
+ for(const x of rows){const a=assetInfo(x),key=['acoes','bdrs','fiis'].includes(k)?a.title:'Acervo';if(!groupsBy.has(key))groupsBy.set(key,[]);groupsBy.get(key).push(x)}
+ return '<section class="section"><div class="section-head"><h2>'+esc(label)+'</h2><span class="count">'+rows.length+' publicações</span></div><div class="month-grid">'+[...groupsBy].sort((a,b)=>a[0].localeCompare(b[0],'pt-BR')).map(([name,items])=>'<details class="month-card"'+(groupsBy.size===1?' open':'')+'><summary><div><div class="month-title">'+esc(name)+'</div><span class="month-sub">'+items.length+' '+(items.length===1?'documento':'documentos')+'</span></div><span class="month-arrow">›</span></summary><div class="month-links">'+items.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(x.display_name||nice(x.name))+'</span><span>PDF ↗</span></a>'}).join('')+'</div></details>').join('')+'</div></section>';
+}
+function classify(x){
+ const n=String(x.name||'').toUpperCase();
+ if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|BDR)/.test(n))return 'bdrs';
+ if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO|IBOVESPA|SP500|S&P)/.test(n))return 'cenarios';
+ return x.category;
+}
 function draw(){
  const search=document.getElementById('search'),content=document.getElementById('content'),stats=document.getElementById('stats');
  const q=(search.value||'').toLocaleLowerCase('pt-BR');
- const matches=DATA.filter(x=>(filter==='all'||x.category===filter)&&String((x.category==='carteiras'?portfolioTitle(x)+' ':'')+(x.display_name||x.name||'')).toLocaleLowerCase('pt-BR').includes(q));
+ const matches=DATA.filter(x=>(filter==='all'||classify(x)===filter)&&String((x.category==='carteiras'?portfolioTitle(x)+' ':'')+(x.display_name||x.name||'')).toLocaleLowerCase('pt-BR').includes(q));
  const count=visiblePortfolios(DATA.filter(x=>x.category==='carteiras')).length;
- stats.innerHTML='<div class="stat total"><strong>'+ (DATA.length-DATA.filter(x=>x.category==='carteiras').length+count)+'</strong>Documentos exibidos</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+(k==='carteiras'?count:DATA.filter(x=>x.category===k).length)+'</strong>'+esc(v)+'</div>').join('');
+ stats.innerHTML='<div class="stat total"><strong>'+ (DATA.length-DATA.filter(x=>x.category==='carteiras').length+count)+'</strong>Documentos exibidos</div>'+Object.entries(groups).map(([k,v])=>'<div class="stat"><strong>'+(k==='carteiras'?count:DATA.filter(x=>classify(x)===k).length)+'</strong>'+esc(v)+'</div>').join('');
  let html='';
  if(filter==='all'||filter==='carteiras')html+=portfolioHTML(matches.filter(x=>x.category==='carteiras'));
- for(const [k,label] of Object.entries(groups)){if(k==='carteiras')continue;const rows=matches.filter(x=>x.category===k);if(!rows.length)continue;html+='<section class="section"><div class="section-head"><h2>'+esc(label)+'</h2><span class="count">'+rows.length+' documentos</span></div><div class="library">'+rows.map(x=>rowHTML(x,k)).join('')+'</div></section>'}
+ for(const [k,label] of Object.entries(groups)){if(k==='carteiras')continue;const rows=matches.filter(x=>classify(x)===k);html+=shelfHTML(rows,k,label)}
  content.innerHTML=html||'<div class="empty">Nenhum documento encontrado para esta pesquisa.</div>';
 }
 document.getElementById('search').addEventListener('input',draw);

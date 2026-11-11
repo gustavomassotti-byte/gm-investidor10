@@ -28,21 +28,45 @@ footer{background:#ede9df;border-top:1px solid #ddd7cb;color:#7c8288;text-align:
 .hero-note{font-size:12px;color:var(--muted);margin-top:10px}.month-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:14px;margin:18px 0 26px}.month-card{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:0 4px 16px rgba(24,36,52,.035)}.month-card.featured{border-color:#c6a553}.month-card summary{list-style:none;cursor:pointer;padding:18px 18px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px}.month-card summary::-webkit-details-marker{display:none}.month-card summary:hover{background:#fbf9f2}.month-card .month-title{font:700 20px Georgia,serif}.month-card .month-sub{display:block;color:var(--muted);font-size:11px;margin-top:5px}.month-card .month-arrow{color:var(--gold);font-size:21px}.month-card[open] .month-arrow{transform:rotate(90deg)}.month-links{padding:0 13px 13px;display:grid;gap:6px}.month-link{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 11px;border-radius:7px;background:#f7f5ef;border:1px solid #eee8dd;text-decoration:none;color:var(--ink);font-size:13px;font-weight:650}.month-link:hover{background:#fff7e4;border-color:var(--gold)}.month-link span:last-child{font-size:10px;color:#87691c;font-weight:800}.shelf-heading{font:700 21px Georgia,serif;margin:24px 0 8px}.shelf-intro{color:var(--muted);font-size:12px;margin:0 0 10px}.month-card:not([open]) .month-links{display:none}@media(max-width:700px){.month-grid{grid-template-columns:1fr}.month-card summary{padding:15px}}
 .asset-ident{display:flex;align-items:center;gap:12px}.asset-symbol{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:12px;background:#142d37;color:#d6b466;font:800 13px/1 system-ui;letter-spacing:-.035em;border:1px solid #d9d0b6}.asset-name{font:700 19px Georgia,serif}.asset-ticker{font:650 11px system-ui;color:#777;letter-spacing:.04em;margin-top:4px}.month-card summary .asset-ident{min-width:0}.month-card summary .asset-ident>div:last-child{min-width:0}.month-link span:first-child{flex:1}.asset-symbol[data-kind="bdrs"]{background:#1d3550;color:#e8d8a6}.asset-symbol[data-kind="fiis"]{background:#25483b;color:#e6d4a0}@media(max-width:700px){.asset-symbol{width:38px;height:38px;flex-basis:38px}.asset-name{font-size:17px}}
 .asset-logo{width:40px;height:40px;flex:0 0 40px;object-fit:contain;background:#fff;border:1px solid #eee7dc;border-radius:9px;padding:5px}.asset-ident{gap:10px}.asset-name{font:700 16px/1.25 Georgia,serif;overflow-wrap:anywhere}.month-card summary{min-height:78px}.month-card summary>.month-arrow{flex-shrink:0}.month-card .asset-ident .asset-symbol{width:40px;height:40px;flex-basis:40px}@media(max-width:700px){.asset-logo{width:38px;height:38px;flex-basis:38px}}
+
+/* Navegação lateral e leitura editorial */
+.wrap{max-width:1420px}
+.library-layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:30px;align-items:start;margin-top:22px}
+.side-panel{position:sticky;top:18px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 12px;box-shadow:0 5px 24px rgba(24,36,52,.035)}
+.side-heading{font-size:10px;font-weight:850;letter-spacing:.13em;color:#8c7b5b;padding:5px 10px 14px}
+.side-panel .tabs{display:flex;flex-direction:column;gap:4px;border:0;padding:0}
+.side-panel .tab{width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:12px 13px;font-size:13px;font-weight:700}
+.side-panel .tab:hover{background:#f6f3eb}
+.side-panel .tab.active{background:var(--navy);color:#fff}
+.side-note{border-top:1px solid var(--line);margin:15px 8px 0;padding-top:12px;color:var(--muted);font-size:11px;line-height:1.5}
+.library-main{min-width:0}
+.library-main .section:first-child{margin-top:0}
+.library-main .month-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.month-card{min-width:0}
+.month-card .month-title{font-size:17px;line-height:1.25}
+.month-links{min-width:0}
+.month-link{min-width:0;line-height:1.35;font-size:12px}
+.month-link span:first-child{min-width:0;white-space:normal;overflow-wrap:anywhere}
+.month-link span:last-child{white-space:nowrap;flex:0 0 auto}
+.month-card summary>div{min-width:0}
+@media(min-width:1250px){.library-main .month-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.library-layout{grid-template-columns:1fr;gap:18px}.side-panel{position:static;padding:10px}.side-heading,.side-note{display:none}.side-panel .tabs{flex-direction:row;overflow-x:auto;flex-wrap:nowrap;gap:5px}.side-panel .tab{width:auto;white-space:nowrap;flex:0 0 auto;padding:10px 12px}.library-main .month-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.library-main .month-grid{grid-template-columns:1fr}.library-layout{gap:12px}}
 </style></head>
 <body>
 <header><div class="head"><div class="brandline"><div class="gm-mark">GM</div><div class="brandcopy"><b>GM RESEARCH</b><span>ANALYSIS · STRATEGY · PERFORMANCE</span></div></div><div class="partner"><span>Biblioteca exclusiva</span><span class="x">×</span><span class="i10">investidor<em>10</em></span></div></div></header>
 <main class="wrap">
 <div class="top"><div><h1>Biblioteca de Research</h1><p>Carteiras e análises GM Research em um ambiente único e organizado.</p></div><input id="search" class="search" placeholder="Buscar ativo, carteira ou relatório…"></div>
 <div id="stats" class="stats" aria-live="polite"></div>
-<div class="tabs"><button class="tab active" data-filter="all">Todos</button><button class="tab" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="indices">Índices e ETFs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="educacional">Educacional</button><button class="tab" data-filter="editorial">Editorial</button></div>
+<div class="library-layout"><aside class="side-panel"><div class="side-heading">EXPLORAR BIBLIOTECA</div><nav class="tabs" aria-label="Categorias da biblioteca"><button class="tab" data-filter="all">Todos</button><button class="tab active" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="indices">Índices e ETFs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="educacional">Educacional</button><button class="tab" data-filter="editorial">Editorial</button></nav><div class="side-note">Selecione uma categoria para explorar os relatórios.</div></aside><div class="library-main">
 <div id="adminbar" class="adminbar"><span><b>Gestão da biblioteca</b> · adicionar, substituir ou excluir PDFs</span><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/carteiras">CARTEIRAS</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/acoes">AÇÕES</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/fiis">FIIs</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/renda-fixa">RENDA FIXA</a></div>
 <div id="content"><div class="empty">Carregando biblioteca…</div></div>
-<div id="manage-note" class="manage-note">Os documentos são atualizados pelas pastas de gestão. A publicação do portal é automática.</div>
+<div id="manage-note" class="manage-note">Os documentos são atualizados pelas pastas de gestão. A publicação do portal é automática.</div></div></div>
 </main>
 <footer>GM RESEARCH × INVESTIDOR10 · BIBLIOTECA DE RESEARCH</footer>
 <script>
 const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior',fiis:'FIIs',indices:'Índices e ETFs', 'renda-fixa':'Renda Fixa',cenarios:'Cenários e Macro',educacional:'Educacional',editorial:'Editorial GM'};
-let DATA=[],filter='all';
+let DATA=[],filter='carteiras';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nice=v=>String(v||'Documento').replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
 const dateLabel=x=>{const a=[];if(x.reference_month&&/^\d{4}-\d{2}$/.test(x.reference_month)){const [y,m]=x.reference_month.split('-');a.push('Referência: '+m+'/'+y)}if(x.published_at&&/^\d{4}-\d{2}-\d{2}$/.test(x.published_at)){const [y,m,d]=x.published_at.split('-');a.push('Publicado: '+d+'/'+m+'/'+y)}return a.length?' · '+a.join(' · '):' · Data não registrada'};
@@ -150,6 +174,27 @@ function topicInfo(x,k){
  if(/DIVIDEND|VALUATION|FUNDAMENTAL|METODOLOG/.test(n))return 'Estratégias de Investimento';
  return k==='educacional'?'Conhecimento e Mercado':k==='cenarios'?'Estudos de Cenários':'Estudos e Publicações';
 }
+function readableTitle(x){
+ const raw=nice(x.display_name||x.name).replace(/\s+(?:FINAL|REV\d+|V\d+)$/i,'');
+ const n=raw.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ const known=[
+ [/RENDA FIXA.*CREDITO PRIVADO/,'Renda Fixa e Crédito Privado'],
+ [/RISCOS INVISIVEIS/,'Os Riscos Invisíveis da Sua Carteira em 2027'],
+ [/BOLSA 2027.*CENARIOS.*RISCOS/,'Bolsa em 2027 — Cenários e Riscos'],
+ [/JUROS.*DOLAR.*BOLSA.*2027/,'Juros, Dólar e Bolsa em 2027'],
+ [/AJUSTE FISCAL.*2027/,'Ajuste Fiscal e seus Impactos em 2027'],
+ [/ONDE ESTARA.*DINHEIRO.*2027/,'Onde Estará o Dinheiro em 2027?'],
+ [/MAPA.*OPORTUNIDADES.*2027/,'O Mapa das Oportunidades de 2027'],
+ [/ANO POS ELEITORAL.*2027/,'O Ano Pós-Eleitoral de 2027'],
+ [/SEU PATRIMONIO.*PREPARADO/,'Seu Patrimônio Está Preparado para 2027?'],
+ [/PATRIMONIO.*2027/,'Patrimônio 2027 — Estratégia e Alocação'],
+ [/BRASIL.*EXTERIOR.*2027/,'Brasil ou Exterior: Onde Alocar em 2027?'],
+ [/RETORNOS.*LONGO PRAZO/,'Retornos de Longo Prazo no Brasil']
+ ];
+ const match=known.find(([re])=>re.test(n));
+ if(match)return match[1];
+ return raw.replace(/^GM\s+Research\s+/i,'').replace(/^GM\s+/i,'').replace(/\s+(?:Novembro|Outubro|Setembro|Agosto|Julho|Junho)\s*2026.*$/i,'').replace(/\s+2026\s+FINAL$/i,'').trim();
+}
 function shelfHTML(rows,k,label){
  if(!rows.length)return '';
  const by=new Map();
@@ -161,7 +206,7 @@ function shelfHTML(rows,k,label){
  items.sort((x,y)=>String(y.reference_month||y.published_at||y.name).localeCompare(String(x.reference_month||x.published_at||x.name)));
  const isAsset=['acoes','bdrs','fiis','indices'].includes(k);
  const head=isAsset?'<div class="asset-ident">'+logoHTML(a)+'<div class="asset-name">'+esc(a.name)+'</div></div>':'<div class="month-title">'+esc(topicInfo(items[0],k))+'</div>';
- return '<details class="month-card"'+(by.size===1?' open':'')+'><summary><div>'+head+(isAsset?'':'<span class="month-sub">'+items.length+' '+(items.length===1?'publicação':'publicações')+'</span>')+'</div><span class="month-arrow">›</span></summary><div class="month-links">'+items.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');const title=isAsset?assetReportTitle(x,a):(x.display_name||nice(x.name));return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(title)+'</span><span>PDF ↗</span></a>'}).join('')+'</div></details>';
+ return '<details class="month-card"'+(by.size===1?' open':'')+'><summary><div>'+head+(isAsset?'':'<span class="month-sub">'+items.length+' '+(items.length===1?'publicação':'publicações')+'</span>')+'</div><span class="month-arrow">›</span></summary><div class="month-links">'+items.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');const title=isAsset?assetReportTitle(x,a):readableTitle(x);return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(title)+'</span><span>PDF ↗</span></a>'}).join('')+'</div></details>';
  }).join('')+'</div></section>';
 }
 function classify(x){

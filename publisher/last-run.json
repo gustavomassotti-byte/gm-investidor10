@@ -1,0 +1,13 @@
+{
+  "checked_at_utc": "2026-11-15T12:44:13.373914+00:00",
+  "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
+  "files": [
+    {
+      "path": "documentos/fiis/GM_Research_Dossie_PVBI11_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "e9102ad296e62f3e585e5987191053fbe1ac4ea10875eb48680b1fdfa6fd8c1f"
+    }
+  ],
+  "checked": 1,
+  "published": 1
+}

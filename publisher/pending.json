@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "batch_id": "gm-2026-11-15-piloto-pvbi11",
+  "batch_id": "gm-nov-2026-17-aprovados",
   "files": [
     {
       "category": "fiis",
@@ -8,6 +8,118 @@
       "url": "https://gm-central.floot.app/_cdn/static/9b6b4d45-70ec-4b34-8ee7-d2009aa7c13d-GM_Research_Dossie_PVBI11_Novembro_2026.pdf",
       "size_bytes": 2531896,
       "sha256": "e9102ad296e62f3e585e5987191053fbe1ac4ea10875eb48680b1fdfa6fd8c1f"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_HGLG11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/276e6aa9-8139-4fb3-9457-998ec0413c87-GM_Research_Dossie_HGLG11_Novembro_2026.pdf",
+      "size_bytes": 2543231,
+      "sha256": "27c8adc1ea94d612392a98e7fbb5bd1d161445d091ca37970401830070147d14"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_VISC11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/dd4d8e3d-a8cf-4f19-99ff-a8446400a937-GM_Research_Dossie_VISC11_Novembro_2026.pdf",
+      "size_bytes": 2787318,
+      "sha256": "ff71e74436874ebb29918fd849f376f235ff4f33b6bc13d3c35bb3ddfbceb52d"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_XPML11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/6b00a6a9-f9ce-4754-83a3-75449bff14a3-GM_Research_Dossie_XPML11_Novembro_2026.pdf",
+      "size_bytes": 2636091,
+      "sha256": "503eb879929c4a9403e954675ab7d8310a9ac348991ec7f5ebbfc1295ff522d9"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_GARE11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/9ddccd19-4980-49f2-ac62-cdd6e4a4389c-GM_Research_Dossie_GARE11_Novembro_2026.pdf",
+      "size_bytes": 2574500,
+      "sha256": "f7791f4816d646a90a8766c1c43be57760a3162ef342ce1e7c81245f4138657a"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_JURO11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/f9a1119c-4a4e-4569-9289-52848f0ca843-GM_Research_Dossie_JURO11_Novembro_2026.pdf",
+      "size_bytes": 2735854,
+      "sha256": "8cbe5c648c8936c9c9cd25fe5d2f5bd15a633f71a1bfa6d632a3529efe17afd1"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_KNIP11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/3aad4178-02ec-4df8-b2e5-20f96a073acb-GM_Research_Dossie_KNIP11_Novembro_2026.pdf",
+      "size_bytes": 2871311,
+      "sha256": "9bea2a3fdb18fa00c2be24e5c4b86ef9d927866187b328cf436711e539b6b0d8"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_KNCA11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/d603e98e-f66a-40d2-bbb6-fb356805330f-GM_Research_Dossie_KNCA11_Novembro_2026.pdf",
+      "size_bytes": 2630379,
+      "sha256": "165c86bd20d2af201709cb1fc1e65ace18ee3044664dc5470818e0e18eab11dc"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_XPCI11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/35f360e4-0327-44ad-ae84-fe3603de6e40-GM_Research_Dossie_XPCI11_Novembro_2026.pdf",
+      "size_bytes": 2735328,
+      "sha256": "30ab9b96684e7279d6492b35d1d8c01b5ca83d2d283ba609debae3a93d173b34"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_XPLG11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/784d35c4-f670-4fc4-8c73-0c92ccd56441-GM_Research_Dossie_XPLG11_Novembro_2026.pdf",
+      "size_bytes": 2528315,
+      "sha256": "505e59ca5b8cde210df734f3e51010b5ffb95ffa13456cc91963069e36b7c295"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_SNAG11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/76d72def-cc1a-4143-8ea6-c7fcee4b3a3c-GM_Research_Dossie_SNAG11_Novembro_2026.pdf",
+      "size_bytes": 2603763,
+      "sha256": "7e078aae811ab1f84020112c4b464cb2a580dbefc279079fc1afb9c9e74cbbbf"
+    },
+    {
+      "category": "fiis",
+      "filename": "GM_Research_Dossie_MXRF11_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/ab477d6d-4a13-4415-b33c-a8c62a7f17de-GM_Research_Dossie_MXRF11_Novembro_2026.pdf",
+      "size_bytes": 2482557,
+      "sha256": "79456555b7092c1b1baf5e73ac004e1c8a1187cdcc01b448e1dc884e1b13c835"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Berkshire_Hathaway_BERK34_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/e5ce289e-beec-46a5-ae0a-23dc1b209f27-GM_Research_Dossie_Berkshire_Hathaway_BERK34_Novembro_2026.pdf",
+      "size_bytes": 2225414,
+      "sha256": "61b4b931e5a4742f32113cea2a480b09c6201ac0c8e38ef7172a0eb340ba04f3"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Brava_Energia_BRAV3_Novembro_2026.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/56e0e968-ceed-429f-9801-d91f604ce80c-GM_Research_Dossie_Brava_Energia_BRAV3_Novembro_2026.pdf",
+      "size_bytes": 2696838,
+      "sha256": "aa5e3c9febde2d7ee371902ddedca0f6c44b247a0a054abbb390e4b4bde8e6a2"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_InterCo_INBR34_INTR_Novembro_2026_Edicao_Editorial.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/a9bc0a67-afbc-4e93-a95f-5ee170440d64-GM_Research_Dossie_InterCo_INBR34_INTR_Novembro_2026_Edicao_Editorial.pdf",
+      "size_bytes": 3348986,
+      "sha256": "c246d0c8c26924352afedbafd7e8773091c9ba555663d281f4162ab48a898176"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Completo_BBAS3_3T26_Novembro_2026_Edicao_Editorial.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/06af5b54-f6e7-4fc8-bb5b-0bf39c36789e-GM_Research_Dossie_Completo_BBAS3_3T26_Novembro_2026_Edicao_Editorial.pdf",
+      "size_bytes": 4613176,
+      "sha256": "f28c3217aba54ba9615b54f6ae537cfb37eb603a7cdf3ad5f19b33d0f5e82641"
+    },
+    {
+      "category": "editorial",
+      "filename": "GM_Research_O_Preco_da_Fragilidade_2026_REVISADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/45c6c693-445e-4a40-a311-6e793dae2c5d-GM_Research_O_Preco_da_Fragilidade_2026_REVISADO.pdf",
+      "size_bytes": 3694404,
+      "sha256": "60193fdc7cf60c3cca8dad4679162518992c11fef890c72ebf03dac809ea892c"
     }
   ]
 }

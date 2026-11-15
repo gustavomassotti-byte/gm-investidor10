@@ -1,0 +1,43 @@
+name: GM Publisher - Biblioteca aprovada
+on:
+  push:
+    branches: [main]
+    paths:
+      - publisher/pending.json
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: gm-publisher
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Importar PDFs, validar SHA256 e categoria
+        run: python3 scripts/gm_sync_public_assets.py
+      - name: Criar commit com os PDFs e relatório de execução
+        id: commit
+        run: |
+          git config user.name "gm-research-publisher[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add documentos publisher/last-run.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Todos os PDFs já estavam presentes."
+          else
+            git commit -m "GM Publisher: sincronizar PDFs aprovados"
+            git push origin HEAD:main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Atualizar portal Pages após o commit de PDFs
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

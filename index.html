@@ -122,6 +122,11 @@ const ASSETS=[
  {name:'Amazon',ticker:'AMZO34',symbol:'AMZ',re:/AMZO34|AMAZON/i},
  {name:'Alphabet (Google)',ticker:'GOGL34',symbol:'G',re:/GOGL34|ALPHABET|GOOGLE/i},
  {name:'Meta Platforms',ticker:'M1TA34',symbol:'META',re:/M1TA34|META[_\s-]/i},
+ {name:'Taiwan Semiconductor',ticker:'TSMC34',symbol:'TSMC',re:/TSMC34|TAIWAN[_\s-]?SEMICONDUCTOR|TSMC/i},
+ {name:'XP Inc.',ticker:'XPBR31',symbol:'XP',re:/XPBR31|XP[_\s-]?INC/i},
+ {name:'BlackRock',ticker:'BLAK34',symbol:'BLK',re:/BLAK34|BLACKROCK/i},
+ {name:'Micron Technology',ticker:'MUTC34',symbol:'MU',re:/MUTC34|MICRON/i},
+ {name:'Aura Minerals',ticker:'AURA33',symbol:'AURA',re:/AURA33|AURA[_\s-]?MINERALS/i},
  {name:'Mercado Livre',ticker:'MELI / MELI34',symbol:'MELI',re:/MELI34|MERCADOLIBRE|MERCADO[_\s-]?LIVRE/i},
  {name:'TOTVS',ticker:'TOTS3',symbol:'TOT',re:/TOTS3|TOTVS/i},
  {name:'Bradesco',ticker:'BBDC4',symbol:'BBDC',re:/BBDC[34]|BRADESCO/i},
@@ -135,7 +140,7 @@ const ASSETS=[
  {name:'S&P 500',ticker:'SPX / SPY',symbol:'SPX',re:/SP500|S&P[_\s-]?500|S_P_500/i},
  {name:'EWZ',ticker:'EWZ',symbol:'EWZ',re:/(?:^|[_\s-])EWZ(?:[_\s-]|$)/i}
 ];
-const DOMAINS={Petrobras:'petrobras.com.br',Vale:'vale.com',Nike:'nike.com',ExxonMobil:'exxonmobil.com',Microsoft:'microsoft.com',Amazon:'amazon.com', 'Alphabet (Google)':'google.com','Meta Platforms':'meta.com','Mercado Livre':'mercadolivre.com.br',TOTVS:'totvs.com',Bradesco:'bradesco.com.br',Sabesp:'sabesp.com.br',Unipar:'unipar.com',TIM:'tim.com.br','Banco do Brasil':'bb.com.br',Direcional:'direcional.com.br',PRIO:'prio3.com.br',Copel:'copel.com',Itaúsa:'itausa.com.br',TSMC:'tsmc.com','BTG Pactual':'btgpactual.com','Ibovespa':'b3.com.br','S&P 500':'spglobal.com',EWZ:'ishares.com'};
+const DOMAINS={Petrobras:'petrobras.com.br',Vale:'vale.com',Nike:'nike.com',ExxonMobil:'exxonmobil.com',Microsoft:'microsoft.com',Amazon:'amazon.com', 'Alphabet (Google)':'google.com','Meta Platforms':'meta.com','Mercado Livre':'mercadolivre.com.br',TOTVS:'totvs.com',Bradesco:'bradesco.com.br',Sabesp:'sabesp.com.br',Unipar:'unipar.com',TIM:'tim.com.br','Banco do Brasil':'bb.com.br',Direcional:'direcional.com.br',PRIO:'prio3.com.br',Copel:'copel.com',Itaúsa:'itausa.com.br',TSMC:'tsmc.com','Taiwan Semiconductor':'tsmc.com','XP Inc.':'xpinc.com',BlackRock:'blackrock.com','Micron Technology':'micron.com','Aura Minerals':'auraminerals.com','BTG Pactual':'btgpactual.com','Ibovespa':'b3.com.br','S&P 500':'spglobal.com',EWZ:'ishares.com'};
 const EXTRA_ASSETS=[
  {name:'Copel',re:/COPEL|CPLE[36]/i},
  {name:'Itaúsa',re:/ITA[UÚ]SA|ITSA[34]/i},
@@ -220,7 +225,7 @@ function classify(x){
  if(x.category==='acoes'&&/(?:2027|PATRIMONIO|AJUSTE_FISCAL|BRASIL_OU_EXTERIOR|JUROS_DOLAR|OPORTUNIDADES|ELEICOES_BOLSA)/.test(n))return 'cenarios';
  if(x.category==='carteiras'||(x.category==='fiis'&&/CARTEIRA/.test(n)))return 'carteiras';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
- if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';
+ if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|TSMC34|XPBR31|BLAK34|MUTC34|AURA33|BERK34|INBR34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';
  if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO)/.test(n))return 'cenarios';
  if(x.category==='educacional'||x.category==='editorial')return 'conhecimento';
  return x.category;

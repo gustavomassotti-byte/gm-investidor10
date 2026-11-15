@@ -1,0 +1,23 @@
+name: GM Publisher - auditoria pública
+on:
+  workflow_run:
+    workflows: ["Publicar Portal Investidor10"]
+    types: [completed]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/gm-site-audit.yml"]
+permissions:
+  contents: read
+concurrency:
+  group: gm-audit
+  cancel-in-progress: true
+jobs:
+  verify:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar catálogo público e links dos PDFs
+        run: python3 scripts/gm_verify_site.py

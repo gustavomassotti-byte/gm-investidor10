@@ -1,223 +1,63 @@
 {
-  "checked_at_utc": "2026-11-17T14:39:16.863580+00:00",
+  "checked_at_utc": "2026-11-17T20:19:39.569760+00:00",
   "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
   "files": [
     {
-      "path": "documentos/fiis/GM_Research_Dossie_PVBI11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "e9102ad296e62f3e585e5987191053fbe1ac4ea10875eb48680b1fdfa6fd8c1f"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_HGLG11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "27c8adc1ea94d612392a98e7fbb5bd1d161445d091ca37970401830070147d14"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_VISC11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "ff71e74436874ebb29918fd849f376f235ff4f33b6bc13d3c35bb3ddfbceb52d"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_XPML11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "503eb879929c4a9403e954675ab7d8310a9ac348991ec7f5ebbfc1295ff522d9"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_GARE11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "f7791f4816d646a90a8766c1c43be57760a3162ef342ce1e7c81245f4138657a"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_JURO11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "8cbe5c648c8936c9c9cd25fe5d2f5bd15a633f71a1bfa6d632a3529efe17afd1"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_KNIP11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "9bea2a3fdb18fa00c2be24e5c4b86ef9d927866187b328cf436711e539b6b0d8"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_KNCA11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "165c86bd20d2af201709cb1fc1e65ace18ee3044664dc5470818e0e18eab11dc"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_XPCI11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "30ab9b96684e7279d6492b35d1d8c01b5ca83d2d283ba609debae3a93d173b34"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_XPLG11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "505e59ca5b8cde210df734f3e51010b5ffb95ffa13456cc91963069e36b7c295"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_SNAG11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "7e078aae811ab1f84020112c4b464cb2a580dbefc279079fc1afb9c9e74cbbbf"
-    },
-    {
-      "path": "documentos/fiis/GM_Research_Dossie_MXRF11_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "79456555b7092c1b1baf5e73ac004e1c8a1187cdcc01b448e1dc884e1b13c835"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Berkshire_Hathaway_BERK34_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "61b4b931e5a4742f32113cea2a480b09c6201ac0c8e38ef7172a0eb340ba04f3"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Brava_Energia_BRAV3_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "aa5e3c9febde2d7ee371902ddedca0f6c44b247a0a054abbb390e4b4bde8e6a2"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_InterCo_INBR34_INTR_Novembro_2026_Edicao_Editorial.pdf",
-      "status": "already-present",
-      "sha256": "c246d0c8c26924352afedbafd7e8773091c9ba555663d281f4162ab48a898176"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Completo_BBAS3_3T26_Novembro_2026_Edicao_Editorial.pdf",
-      "status": "already-present",
-      "sha256": "f28c3217aba54ba9615b54f6ae537cfb37eb603a7cdf3ad5f19b33d0f5e82641"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_O_Preco_da_Fragilidade_2026_REVISADO.pdf",
-      "status": "already-present",
-      "sha256": "60193fdc7cf60c3cca8dad4679162518992c11fef890c72ebf03dac809ea892c"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_TSMC34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "87d2956c75a2dd4c4ea13594941134231d8803f2f19c9a5d5bbc6bcb267e78f5"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_XPBR31_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "b313e40366fd9abcb632b85ab3bd7b4e2911116328f18fa919b0677ce59b91ca"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_GOGL34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "15360ddbd3711d5feeac7a62f5fd2f3e127f909ca3f4f1f6653f37a5e834b3f3"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_BLAK34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "73f7d06a0e0e1fe0c623d3f88c8c12c0a99d44bedbaa942176bb165ba1f3a095"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_MUTC34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "13627c195d011645ccf6a1f74ce7145e22877ad96fb5e72398e2d5b5a680da09"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_M1TA34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "552ebd9669817e725783027ca1a263dad19488f056dee3577184ac5a42472514"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_AMZO34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "909ad69d605f220ebc1348b51659c8557eaecfdaa2d20be6a3a759b4b085ef83"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_AURA33_Novembro_2026_V3_APROVADO.pdf",
-      "status": "already-present",
-      "sha256": "e722aab267c9dd6ae64cdf5cd245cfa1898706a490700754efce5571c0d1d196"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Petrobras_3T26_Novembro_2026_Edicao_Editorial.pdf",
-      "status": "already-present",
-      "sha256": "d4d9567abff9c9325c806c3a31649070acd0e02943358921a6e3a3b222d09900"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Petrobras_3T26_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "fd3a6ae611dfa9e113b86fb04bdf132a0098950918f041cb5ae33e968080bdd4"
-    },
-    {
-      "path": "documentos/acoes/Vale_VALE3_Dossie_GM_Novembro_2026_3T26_FINAL.pdf",
-      "status": "already-present",
-      "sha256": "ac53d55296b56c0b3f4ac70bbcec764d1ee96eff38ed02c7c09d13b5cf487d57"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Ibovespa_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "bdecc6c4ce7e9980c3ae180f4eac13279108b07305bf4c7e8a73fd186708fa38"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_SP500_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "c8f43f1b49519128d246ba2360181d6effbb21488674c9eed6eaee504c8d5dd5"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_EWZ_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "41a60cea62bcc5f84e214d1a96f58c95152006a71effd748c858cad696fe619b"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_EXXO34_XOM_3T26_Novembro2026.pdf",
-      "status": "already-present",
-      "sha256": "f41621206649cfb4d97e94311c11bdda79aa258c67edbcf5246d40360897585a"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_Mapa_das_Oportunidades_2027_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "e80ca428a9a53686773c15bd52229b1e71dcd6099b56fdf8101803be9a69e3fe"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_Brasil_ou_Exterior_2027_Novembro_2026.pdf",
-      "status": "already-present",
-      "sha256": "ad00588ee11388c39d9f5abf53732c98532953fa24f75c4ec7548b1d206a8d1c"
-    },
-    {
-      "path": "documentos/acoes/GM_CPLE3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_KEPL3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "e817d941c457095723a5be52ff0da99df4109a2cebbdd20489e128b85267d9aa"
+      "sha256": "a43f8f585d2ab616d62c75dc14f06f4dfa54e86b45b6acc8a05a38f4fe1baf4a"
     },
     {
-      "path": "documentos/acoes/GM_B3SA3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_ITSA4_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "8ba17af0621d750c59e9e2994f6ba9d68dc8ad35834fb02352e171b8ff9dbc33"
+      "sha256": "97951ddd07e6edc2be3edd1ff3fb62c91f6d19e49eec4e2e88bca647933bd39f"
     },
     {
-      "path": "documentos/acoes/GM_CPFE3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_PRIO3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "e67a892862851f6bf1dff34cb52681ef246fe9da0d8f7aa9b147da7e84d67293"
+      "sha256": "6375a8fbc1b7e20b8311123e9da6b19101af3a5b02749a4af8220b97340a3d5b"
     },
     {
-      "path": "documentos/acoes/GM_WEGE3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_ALOS3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "f5ef6bfd27d89e8ab71af8019a0acb416eb493fff956fde008f40c676f2ffdf7"
+      "sha256": "dae3d0ff04416903cf0f8c52f7be099565077aaa65eabf7cc505a043f2a46ac8"
     },
     {
-      "path": "documentos/acoes/GM_SUZB3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_AXIA3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "68439773e10af211a50acc0a19a63fb8bf0c00d08a3d91bb155b26574e8f15c0"
+      "sha256": "e10252455ce0e62209596b3fe0ce6c651d04c4410953b4940b62c53e3f4e5210"
     },
     {
-      "path": "documentos/acoes/GM_VIVT3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_IRBR3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "56be021012056bd42776a987379e37cb108b0cc54aa3de7e6260035e977ef4da"
+      "sha256": "55670f1ab773fb025783ceaae39576b9122bf5a7c4b3d619df7c343befe3de4b"
     },
     {
-      "path": "documentos/acoes/GM_PSSA3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_KLBN11_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "5f9ede7ed4a3cf33469e94e343d2766f7f9ea6ff01c2185e83e411f97d7c4426"
+      "sha256": "aeb85797469b33e84ff9b1a65226dd00eebc3aae081d70abd9e3bf4dab0712f0"
     },
     {
-      "path": "documentos/acoes/GM_RANI3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_SBSP3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "3acf9f58673375c1fc633ee993871e023c94bb72f92be7bfa33c2153b67e5592"
+      "sha256": "243b480bf12a8aee74a8de55065a3e17267f38a14b28d319ba3595c00486c1f4"
     },
     {
-      "path": "documentos/acoes/GM_TAEE11_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_TIMS3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "d8f0bc46c370cbf4d921b9c3823fafb0fdfad033ed555e2c0355ff1c2b4d1c93"
+      "sha256": "c97f389db4172175fb293923fff65fc3a3eb53d49e49721ea64bebc828fab73c"
+    },
+    {
+      "path": "documentos/acoes/GM_UNIP6_Novembro_2026_APROVADO.pdf",
+      "status": "published",
+      "sha256": "63049ddb612dc28da08a1e9d9d2f87422efed7e4c228fe44c15cbfc52cf811d2"
+    },
+    {
+      "path": "documentos/editorial/GM_Research_Especial_Ibovespa_2026_APROVADO.pdf",
+      "status": "published",
+      "sha256": "7e64fd0f2043268656ba7e5138d72f13982ba007e21a09fc1d8f693fa8e5cef0"
     }
   ],
-  "checked": 43,
-  "published": 9
+  "checked": 11,
+  "published": 11
 }

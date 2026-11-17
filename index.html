@@ -205,6 +205,9 @@ function assetInfo(x){
 }
 function assetReportTitle(x,a){
  const n=(x.name+' '+(x.display_name||'')).toLowerCase();
+ if(/especial[_\s-]?ibovespa/.test(n))return 'Ibovespa em Duas Moedas — Ciclos da Bolsa, composição e EWZ · 41 páginas';
+ if(/dossie[_\s-]?ibovespa[_\s-]?novembro/.test(n))return 'Dossiê de Índice: Ibovespa · edição de 10/11 · 19 páginas';
+ if(/dossie[_\s-]?ewz[_\s-]?novembro/.test(n))return 'Dossiê de ETF: EWZ · edição de 10/11 · 23 páginas';
  const month=portfolioMonth(x),when=month?MONTHS[Number(month.slice(5))-1]+' '+month.slice(0,4):'';
  let kind=/graficos.?que.?provam|estudo.visual/.test(n)?'Estudo visual — Gráficos que Provam':/edicao.editorial/.test(n)?'Edição editorial':/3t26|resultado/.test(n)?'Dossiê e resultados do 3T26':'Dossiê completo';
  return kind+(when?' · '+when:'');
@@ -228,8 +231,8 @@ function readableTitle(x){
  const raw=nice(x.display_name||x.name).replace(/\s+(?:FINAL|REV\d+|V\d+)$/i,'');
  const n=raw.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  const known=[
-  [/ESPECIAL.*DOLAR/,'Especial Dólar — Câmbio, Riscos e Estratégias'],
-  [/ESPECIAL.*IBOVESPA/,'Especial Ibovespa — Análise do Índice'],
+  [/ESPECIAL.*DOLAR/,'O Dólar Está Caro? — Preço, Risco e Proteção · 19 páginas'],
+  [/ESPECIAL.*IBOVESPA/,'Ibovespa em Duas Moedas — Ciclos da Bolsa Brasileira · 41 páginas'],
  [/RENDA FIXA.*CREDITO PRIVADO/,'Renda Fixa e Crédito Privado'],
  [/RISCOS INVISIVEIS/,'Os Riscos Invisíveis da Sua Carteira em 2027'],
  [/BOLSA 2027.*CENARIOS.*RISCOS/,'Bolsa em 2027 — Cenários e Riscos'],

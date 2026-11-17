@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Preparar site e acervo
         run: |
           rm -rf _site _legacy
@@ -49,8 +51,22 @@ jobs:
           python3 scripts/importar_lotes.py
 
           python3 - <<'PY'
-          import os,json
+          import os,json,subprocess
           out=[]
+          # Registrar a data real do primeiro commit de cada arquivo PDF.
+          # Não criar datas fictícias para PDFs legados extraídos de ZIPs.
+          first_added={}
+          history=subprocess.run(
+              ['git','log','--reverse','--diff-filter=A','--format=GM_DATE:%cs','--name-only','--','documentos/'],
+              capture_output=True,text=True,check=True
+          )
+          day=None
+          for line in history.stdout.splitlines():
+              line=line.strip()
+              if line.startswith('GM_DATE:'):
+                  day=line.partition(':')[2]
+              elif line.startswith('documentos/') and line.lower().endswith('.pdf') and day:
+                  first_added.setdefault(line,day)
           LABELS={
             # Ações
             'DIRR3':'Direcional (DIRR3)','PETR4':'Petrobras (PETR4)','BBAS3':'Banco do Brasil (BBAS3)',
@@ -83,7 +99,7 @@ jobs:
               root=f'_site/documentos/{cat}'
               for f in os.listdir(root):
                   if f.lower().endswith('.pdf'):
-                      out.append({'category':cat,'name':f,'display_name':display_name(f,cat),'path':f'documentos/{cat}/{f}', 'reference_month':reference_month(f), 'published_at': '2026-11-11' if f.endswith('_REV3.pdf') or f.startswith(('GM_Research_Dossie_EXXO34_XOM_3T26','GM_Research_Dossie_Ibovespa_Novembro','GM_Research_Dossie_SP500_Novembro','GM_Research_Dossie_EWZ_Novembro','GM_Research_Dossie_Retornos_de_Longo_Prazo')) else None})
+                      out.append({'category':cat,'name':f,'display_name':display_name(f,cat),'path':f'documentos/{cat}/{f}', 'reference_month':reference_month(f), 'published_at': first_added.get(f'documentos/{cat}/{f}')})
           out.sort(key=lambda x:(x['category'],x['name'].lower()))
           with open('_site/manifest.json','w',encoding='utf8') as h:
               json.dump(out,h,ensure_ascii=False,indent=2)

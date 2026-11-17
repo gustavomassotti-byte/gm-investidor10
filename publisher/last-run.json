@@ -1,63 +1,43 @@
 {
-  "checked_at_utc": "2026-11-17T20:19:39.569760+00:00",
+  "checked_at_utc": "2026-11-17T20:42:03.984816+00:00",
   "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
   "files": [
     {
-      "path": "documentos/acoes/GM_Research_Dossie_KEPL3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_ABCB4_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "a43f8f585d2ab616d62c75dc14f06f4dfa54e86b45b6acc8a05a38f4fe1baf4a"
+      "sha256": "e1779a1db4f7cd7d1599eaa47ae6504eadbc9ad5c0098395dd96f650b90cecd6"
     },
     {
-      "path": "documentos/acoes/GM_ITSA4_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_AGRO3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "97951ddd07e6edc2be3edd1ff3fb62c91f6d19e49eec4e2e88bca647933bd39f"
+      "sha256": "49e359ee121fe94d9025809d8133fef1f95491b15bc92315e077dd94b3e51e3e"
     },
     {
-      "path": "documentos/acoes/GM_PRIO3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_FIQE3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "6375a8fbc1b7e20b8311123e9da6b19101af3a5b02749a4af8220b97340a3d5b"
+      "sha256": "eed39768229416447af1ef21e1d505870265b34db1621a664c73ba3d9625c560"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_ALOS3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_FLRY3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "dae3d0ff04416903cf0f8c52f7be099565077aaa65eabf7cc505a043f2a46ac8"
+      "sha256": "58398c6594642e4c8363e4cdb773303309176c85c6b08a039dae5573b0e629be"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_AXIA3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_SMFT3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "e10252455ce0e62209596b3fe0ce6c651d04c4410953b4940b62c53e3f4e5210"
+      "sha256": "4fb3c776cf31cb4726b37b3e0774e270785235e47aaa9d506dc8475cd7ce5103"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_IRBR3_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/acoes/GM_Research_Dossie_TOTS3_Novembro_2026_APROVADO.pdf",
       "status": "published",
-      "sha256": "55670f1ab773fb025783ceaae39576b9122bf5a7c4b3d619df7c343befe3de4b"
+      "sha256": "524de61be659fdeb4e725087127850ae94a58e87ead660092dd60fcfcd5caeab"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_KLBN11_Novembro_2026_APROVADO.pdf",
+      "path": "documentos/editorial/GM_Research_Especial_Dolar_2026.pdf",
       "status": "published",
-      "sha256": "aeb85797469b33e84ff9b1a65226dd00eebc3aae081d70abd9e3bf4dab0712f0"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_SBSP3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "243b480bf12a8aee74a8de55065a3e17267f38a14b28d319ba3595c00486c1f4"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_TIMS3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "c97f389db4172175fb293923fff65fc3a3eb53d49e49721ea64bebc828fab73c"
-    },
-    {
-      "path": "documentos/acoes/GM_UNIP6_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "63049ddb612dc28da08a1e9d9d2f87422efed7e4c228fe44c15cbfc52cf811d2"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_Especial_Ibovespa_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "7e64fd0f2043268656ba7e5138d72f13982ba007e21a09fc1d8f693fa8e5cef0"
+      "sha256": "6c9ebbb4241f80b9d59ab758d3c61fee8d78caab5bf385deee317389ef477be6"
     }
   ],
-  "checked": 11,
-  "published": 11
+  "checked": 7,
+  "published": 7
 }

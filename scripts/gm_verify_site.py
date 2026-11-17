@@ -23,7 +23,7 @@ def request(url, method="GET"):
 
 
 def audit():
-    for attempt in range(1, 7):
+    # GitHub Pages pode levar mais de um minuto para concluir a implantação.\n    # Aguarde a versão pública, evitando falsos negativos de corrida.\n    for attempt in range(1, 25):
         try:
             url = SITE + "manifest.json?gm_audit=" + str(int(time.time()))
             status, mime, raw = request(url)
@@ -45,8 +45,8 @@ def audit():
                 raise RuntimeError(f"PDF(s) inacessíveis: {bad}")
             return {"status":"success","validated":len(wanted),"manifest_total":len(catalog),"date_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"site":SITE}
         except Exception as exc:
-            print(f"Tentativa {attempt}/6: {exc}", flush=True)
-            if attempt == 6:
+            print(f"Tentativa {attempt}/24: {exc}", flush=True)
+            if attempt == 24:
                 raise
             time.sleep(10)
 

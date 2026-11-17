@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-15T20:01:07.351526+00:00",
+  "checked_at_utc": "2026-11-17T13:25:31.120059+00:00",
   "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
   "files": [
     {
@@ -89,45 +89,90 @@
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_TSMC34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "87d2956c75a2dd4c4ea13594941134231d8803f2f19c9a5d5bbc6bcb267e78f5"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_XPBR31_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "b313e40366fd9abcb632b85ab3bd7b4e2911116328f18fa919b0677ce59b91ca"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_GOGL34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "15360ddbd3711d5feeac7a62f5fd2f3e127f909ca3f4f1f6653f37a5e834b3f3"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_BLAK34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "73f7d06a0e0e1fe0c623d3f88c8c12c0a99d44bedbaa942176bb165ba1f3a095"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_MUTC34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "13627c195d011645ccf6a1f74ce7145e22877ad96fb5e72398e2d5b5a680da09"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_M1TA34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "552ebd9669817e725783027ca1a263dad19488f056dee3577184ac5a42472514"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_AMZO34_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "909ad69d605f220ebc1348b51659c8557eaecfdaa2d20be6a3a759b4b085ef83"
     },
     {
       "path": "documentos/acoes/GM_Research_Dossie_AURA33_Novembro_2026_V3_APROVADO.pdf",
-      "status": "published",
+      "status": "already-present",
       "sha256": "e722aab267c9dd6ae64cdf5cd245cfa1898706a490700754efce5571c0d1d196"
+    },
+    {
+      "path": "documentos/acoes/GM_Research_Dossie_Petrobras_3T26_Novembro_2026_Edicao_Editorial.pdf",
+      "status": "published",
+      "sha256": "d4d9567abff9c9325c806c3a31649070acd0e02943358921a6e3a3b222d09900"
+    },
+    {
+      "path": "documentos/acoes/GM_Research_Dossie_Petrobras_3T26_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "fd3a6ae611dfa9e113b86fb04bdf132a0098950918f041cb5ae33e968080bdd4"
+    },
+    {
+      "path": "documentos/acoes/Vale_VALE3_Dossie_GM_Novembro_2026_3T26_FINAL.pdf",
+      "status": "published",
+      "sha256": "ac53d55296b56c0b3f4ac70bbcec764d1ee96eff38ed02c7c09d13b5cf487d57"
+    },
+    {
+      "path": "documentos/acoes/GM_Research_Dossie_Ibovespa_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "bdecc6c4ce7e9980c3ae180f4eac13279108b07305bf4c7e8a73fd186708fa38"
+    },
+    {
+      "path": "documentos/acoes/GM_Research_Dossie_SP500_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "c8f43f1b49519128d246ba2360181d6effbb21488674c9eed6eaee504c8d5dd5"
+    },
+    {
+      "path": "documentos/acoes/GM_Research_Dossie_EWZ_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "41a60cea62bcc5f84e214d1a96f58c95152006a71effd748c858cad696fe619b"
+    },
+    {
+      "path": "documentos/acoes/GM_Research_Dossie_EXXO34_XOM_3T26_Novembro2026.pdf",
+      "status": "published",
+      "sha256": "f41621206649cfb4d97e94311c11bdda79aa258c67edbcf5246d40360897585a"
+    },
+    {
+      "path": "documentos/editorial/GM_Research_Mapa_das_Oportunidades_2027_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "e80ca428a9a53686773c15bd52229b1e71dcd6099b56fdf8101803be9a69e3fe"
+    },
+    {
+      "path": "documentos/editorial/GM_Research_Brasil_ou_Exterior_2027_Novembro_2026.pdf",
+      "status": "published",
+      "sha256": "ad00588ee11388c39d9f5abf53732c98532953fa24f75c4ec7548b1d206a8d1c"
     }
   ],
-  "checked": 25,
-  "published": 8
+  "checked": 34,
+  "published": 9
 }

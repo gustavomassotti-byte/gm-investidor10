@@ -1,43 +1,13 @@
 {
-  "checked_at_utc": "2026-11-17T20:42:03.984816+00:00",
+  "checked_at_utc": "2026-11-17T23:32:32.857523+00:00",
   "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
   "files": [
     {
-      "path": "documentos/acoes/GM_Research_Dossie_ABCB4_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "e1779a1db4f7cd7d1599eaa47ae6504eadbc9ad5c0098395dd96f650b90cecd6"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_AGRO3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "49e359ee121fe94d9025809d8133fef1f95491b15bc92315e077dd94b3e51e3e"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_FIQE3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "eed39768229416447af1ef21e1d505870265b34db1621a664c73ba3d9625c560"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_FLRY3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "58398c6594642e4c8363e4cdb773303309176c85c6b08a039dae5573b0e629be"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_SMFT3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "4fb3c776cf31cb4726b37b3e0774e270785235e47aaa9d506dc8475cd7ce5103"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_TOTS3_Novembro_2026_APROVADO.pdf",
-      "status": "published",
-      "sha256": "524de61be659fdeb4e725087127850ae94a58e87ead660092dd60fcfcd5caeab"
-    },
-    {
       "path": "documentos/editorial/GM_Research_Especial_Dolar_2026.pdf",
       "status": "published",
-      "sha256": "6c9ebbb4241f80b9d59ab758d3c61fee8d78caab5bf385deee317389ef477be6"
+      "sha256": "fbed9632e448fee26150a3461f040709a69549d0d2026adf92f1ef882a6cb611"
     }
   ],
-  "checked": 7,
-  "published": 7
+  "checked": 1,
+  "published": 1
 }

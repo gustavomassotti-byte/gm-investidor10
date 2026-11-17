@@ -52,6 +52,10 @@ footer{background:#ede9df;border-top:1px solid #ddd7cb;color:#7c8288;text-align:
 @media(min-width:1250px){.library-main .month-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.library-layout{grid-template-columns:1fr;gap:18px}.side-panel{position:static;padding:10px}.side-heading,.side-note{display:none}.side-panel .tabs{flex-direction:row;overflow-x:auto;flex-wrap:nowrap;gap:5px}.side-panel .tab{width:auto;white-space:nowrap;flex:0 0 auto;padding:10px 12px}.library-main .month-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.library-main .month-grid{grid-template-columns:1fr}.library-layout{gap:12px}}
+.month-link .report-info{display:block;min-width:0;flex:1}
+.month-link .publication-meta{display:block;margin-top:5px;font-size:10px;font-weight:500;line-height:1.35;color:#66717c}
+.month-link .shortcut{white-space:nowrap;flex:0 0 auto;color:#87691c;font-size:10px;font-weight:800}
+.month-link .document-tag{display:inline-block;margin-right:5px;padding:2px 5px;border-radius:4px;background:#ede4cd;color:#5c491f;font-size:9px;font-weight:800;letter-spacing:.03em}
 </style></head>
 <body>
 <header><div class="head"><div class="brandline"><div class="gm-mark">GM</div><div class="brandcopy"><b>GM RESEARCH</b><span>ANALYSIS · STRATEGY · PERFORMANCE</span></div></div><div class="partner"><span>Biblioteca exclusiva</span><span class="x">×</span><span class="i10">investidor<em>10</em></span></div></div></header>
@@ -69,6 +73,9 @@ const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior'
 let DATA=[],filter='carteiras';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nice=v=>String(v||'Documento').replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
+const formatDate=x=>/^\d{4}-\d{2}-\d{2}$/.test(x||'')?x.slice(8,10)+'/'+x.slice(5,7)+'/'+x.slice(0,4):null;
+const publicationMeta=x=>{const a=[];if(x.reference_month&&/^\d{4}-\d{2}$/.test(x.reference_month)){const [y,m]=x.reference_month.split('-');a.push('Referência: '+m+'/'+y)}const p=formatDate(x.published_at),u=formatDate(x.updated_at);a.push(p?'Publicado: '+p:'Data de publicação não registrada');if(u&&u!==p)a.push('Atualizado: '+u);return '<small class="publication-meta">'+esc(a.join(' · '))+'</small>'};
+const publicationTag=x=>/ESPECIAL[_\s-]?DOLAR/i.test(x.name)?'<span class="document-tag">DÓLAR · CÂMBIO</span>':/ESPECIAL[_\s-]?IBOVESPA/i.test(x.name)?'<span class="document-tag">ESPECIAL IBOVESPA</span>':/(?:^|[_-])EWZ(?:[_-]|[.])/i.test(x.name)?'<span class="document-tag">ETF · BRASIL USD</span>':'';
 const dateLabel=x=>{const a=[];if(x.reference_month&&/^\d{4}-\d{2}$/.test(x.reference_month)){const [y,m]=x.reference_month.split('-');a.push('Referência: '+m+'/'+y)}if(x.published_at&&/^\d{4}-\d{2}-\d{2}$/.test(x.published_at)){const [y,m,d]=x.published_at.split('-');a.push('Publicado: '+d+'/'+m+'/'+y)}return a.length?' · '+a.join(' · '):' · Data não registrada'};
 function rowHTML(x,k){const name=esc(x.display_name||nice(x.name));const path=String(x.path||'');const href=path.split('/').map(encodeURIComponent).join('/');return '<div class="row"><div class="pdf">PDF</div><div><div class="docname" title="'+name+'">'+name+'</div><div class="meta">GM Research · '+esc(groups[k]) +dateLabel(x)+'</div></div><a class="open" target="_blank" rel="noopener" href="'+esc(href)+'">ABRIR</a></div>'}
 const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -108,7 +115,7 @@ function portfolioHTML(rows){
  return '<h2 class="shelf-heading">Carteiras mensais</h2><p class="shelf-intro">Escolha uma edição para acessar diretamente as cinco estratégias. O histórico fica recolhido.</p><div class="month-grid">'+keys.map((month,i)=>{
   const list=byMonth.get(month).sort((a,b)=>['Dividendos','Buy & Hold','Small Caps','BDRs','Fundos Imobiliários (FIIs)'].indexOf(portfolioType(a))-['Dividendos','Buy & Hold','Small Caps','BDRs','Fundos Imobiliários (FIIs)'].indexOf(portfolioType(b)));
   const label=month==='sem-data'?'Sem referência definida':MONTHS[Number(month.slice(5))-1]+' '+month.slice(0,4);
-  const links=list.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(portfolioTitle(x))+'</span><span>PDF ↗</span></a>'}).join('');
+  const links=list.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span class="report-info">'+esc(portfolioTitle(x))+publicationMeta(x)+'</span><span class="shortcut">PDF ↗</span></a>'}).join('');
   return '<details class="month-card'+(i===0?' featured':'')+'"'+(i===0?' open':'')+'><summary><div><div class="month-title">'+esc(label)+'</div><span class="month-sub">'+list.length+' de 5 carteiras'+(list.length===5?' · edição completa':' · acervo histórico')+'</span></div><span class="month-arrow">›</span></summary><div class="month-links">'+links+'</div></details>';
  }).join('')+'</div>';
 }
@@ -141,6 +148,36 @@ const ASSETS=[
  {name:'EWZ',ticker:'EWZ',symbol:'EWZ',re:/(?:^|[_\s-])EWZ(?:[_\s-]|$)/i}
 ];
 const DOMAINS={Petrobras:'petrobras.com.br',Vale:'vale.com',Nike:'nike.com',ExxonMobil:'exxonmobil.com',Microsoft:'microsoft.com',Amazon:'amazon.com', 'Alphabet (Google)':'google.com','Meta Platforms':'meta.com','Mercado Livre':'mercadolivre.com.br',TOTVS:'totvs.com',Bradesco:'bradesco.com.br',Sabesp:'sabesp.com.br',Unipar:'unipar.com',TIM:'tim.com.br','Banco do Brasil':'bb.com.br',Direcional:'direcional.com.br',PRIO:'prio3.com.br',Copel:'copel.com',Itaúsa:'itausa.com.br',TSMC:'tsmc.com','Taiwan Semiconductor':'tsmc.com','XP Inc.':'xpinc.com',BlackRock:'blackrock.com','Micron Technology':'micron.com','Aura Minerals':'auraminerals.com','BTG Pactual':'btgpactual.com','Ibovespa':'b3.com.br','S&P 500':'spglobal.com',EWZ:'ishares.com'};
+
+Object.assign(DOMAINS,{
+ 'WEG':'weg.net','Suzano':'suzano.com.br','Taesa':'taesa.com.br',
+ 'Vivo':'vivo.com.br','Porto':'porto.com.br','CPFL Energia':'cpfl.com.br',
+ 'B3':'b3.com.br','Irani':'irani.com.br','Klabin':'klabin.com.br',
+ 'IRB(Re)':'irbbrasilre.com','AXIA Energia':'axia.com.br','ALLOS':'allos.com.br',
+ 'Kepler Weber':'kepler.com.br','Banco ABC Brasil':'abcbrasil.com.br',
+ 'BrasilAgro':'brasil-agro.com','Unifique':'unifique.com.br',
+ 'Grupo Fleury':'grupofleury.com.br','Smart Fit':'smartfit.com.br'
+});
+const MORE_ASSETS=[
+ {name:'Banco ABC Brasil',ticker:'ABCB4',re:/ABCB4|BANCO[_\s-]?ABC/i},
+ {name:'BrasilAgro',ticker:'AGRO3',re:/AGRO3|BRASIL[_\s-]?AGRO/i},
+ {name:'Unifique',ticker:'FIQE3',re:/FIQE3|UNIFIQUE/i},
+ {name:'Grupo Fleury',ticker:'FLRY3',re:/FLRY3|FLEURY/i},
+ {name:'Smart Fit',ticker:'SMFT3',re:/SMFT3|SMART[_\s-]?FIT/i},
+ {name:'WEG',ticker:'WEGE3',re:/WEGE3|(?:^|[_\s-])WEG(?:[_\s-]|$)/i},
+ {name:'Suzano',ticker:'SUZB3',re:/SUZB3|SUZANO/i},
+ {name:'Taesa',ticker:'TAEE11',re:/TAEE11|TAESA/i},
+ {name:'Vivo',ticker:'VIVT3',re:/VIVT3|TELEFONICA|TELEFÔNICA/i},
+ {name:'Porto',ticker:'PSSA3',re:/PSSA3|PORTO[_\s-]?SEGURO/i},
+ {name:'CPFL Energia',ticker:'CPFE3',re:/CPFE3|CPFL/i},
+ {name:'B3',ticker:'B3SA3',re:/B3SA3/i},
+ {name:'Irani',ticker:'RANI3',re:/RANI3|IRANI/i},
+ {name:'Klabin',ticker:'KLBN11',re:/KLBN11|KLABIN/i},
+ {name:'IRB(Re)',ticker:'IRBR3',re:/IRBR3|IRB[_\s-]?BRASIL/i},
+ {name:'AXIA Energia',ticker:'AXIA3',re:/AXIA3|AXIA[_\s-]?ENERGIA/i},
+ {name:'ALLOS',ticker:'ALOS3',re:/ALOS3|ALLOS/i},
+ {name:'Kepler Weber',ticker:'KEPL3',re:/KEPL3|KEPLER/i}
+];
 const EXTRA_ASSETS=[
  {name:'Copel',re:/COPEL|CPLE[36]/i},
  {name:'Itaúsa',re:/ITA[UÚ]SA|ITSA[34]/i},
@@ -156,7 +193,7 @@ function logoHTML(a){
 }
 function assetInfo(x){
  const n=(x.name+' '+(x.display_name||''));
- const found=ASSETS.find(a=>a.re.test(n))||EXTRA_ASSETS.find(a=>a.re.test(n));
+ const found=MORE_ASSETS.find(a=>a.re.test(n))||ASSETS.find(a=>a.re.test(n))||EXTRA_ASSETS.find(a=>a.re.test(n));
  if(found)return found;
  const fii=n.match(/\b[A-Z]{4}11\b/i);if(fii)return {name:fii[0].toUpperCase()};
  const ticker=n.match(/\b[A-Z]{4}[346]\b/i);if(ticker)return {name:ticker[0].toUpperCase()};
@@ -187,6 +224,8 @@ function readableTitle(x){
  const raw=nice(x.display_name||x.name).replace(/\s+(?:FINAL|REV\d+|V\d+)$/i,'');
  const n=raw.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  const known=[
+  [/ESPECIAL.*DOLAR/,'Especial Dólar — Câmbio, Riscos e Estratégias'],
+  [/ESPECIAL.*IBOVESPA/,'Especial Ibovespa — Análise do Índice'],
  [/RENDA FIXA.*CREDITO PRIVADO/,'Renda Fixa e Crédito Privado'],
  [/RISCOS INVISIVEIS/,'Os Riscos Invisíveis da Sua Carteira em 2027'],
  [/BOLSA 2027.*CENARIOS.*RISCOS/,'Bolsa em 2027 — Cenários e Riscos'],
@@ -215,7 +254,7 @@ function shelfHTML(rows,k,label){
  items.sort((x,y)=>String(y.reference_month||y.published_at||y.name).localeCompare(String(x.reference_month||x.published_at||x.name)));
  const isAsset=['acoes','bdrs','fiis','indices'].includes(k);
  const head=isAsset?'<div class="asset-ident">'+logoHTML(a)+'<div class="asset-name">'+esc(a.name)+'</div></div>':'<div class="month-title">'+esc(topicInfo(items[0],k))+'</div>';
- return '<details class="month-card"'+(by.size===1?' open':'')+'><summary><div>'+head+(isAsset?'':'<span class="month-sub">'+items.length+' '+(items.length===1?'publicação':'publicações')+'</span>')+'</div><span class="month-arrow">›</span></summary><div class="month-links">'+items.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');const title=isAsset?assetReportTitle(x,a):readableTitle(x);return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span>'+esc(title)+'</span><span>PDF ↗</span></a>'}).join('')+'</div></details>';
+ return '<details class="month-card"'+(by.size===1?' open':'')+'><summary><div>'+head+(isAsset?'':'<span class="month-sub">'+items.length+' '+(items.length===1?'publicação':'publicações')+'</span>')+'</div><span class="month-arrow">›</span></summary><div class="month-links">'+items.map(x=>{const href=String(x.path||'').split('/').map(encodeURIComponent).join('/');const title=isAsset?assetReportTitle(x,a):readableTitle(x);return '<a class="month-link" target="_blank" rel="noopener" href="'+esc(href)+'"><span class="report-info">'+publicationTag(x)+esc(title)+publicationMeta(x)+'</span><span class="shortcut">PDF ↗</span></a>'}).join('')+'</div></details>';
  }).join('')+'</div></section>';
 }
 function classify(x){
@@ -226,7 +265,7 @@ function classify(x){
  if(x.category==='carteiras'||(x.category==='fiis'&&/CARTEIRA/.test(n)))return 'carteiras';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
  if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|TSMC34|XPBR31|BLAK34|MUTC34|AURA33|BERK34|INBR34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';
- if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO)/.test(n))return 'cenarios';
+ if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO|ESPECIAL_DOLAR|CAMBIO)/.test(n))return 'cenarios';
  if(x.category==='educacional'||x.category==='editorial')return 'conhecimento';
  return x.category;
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "batch_id": "gm-2026-11-17-revisao-publicacoes",
+  "batch_id": "gm-2026-11-17-buyhold-9-aprovados",
   "files": [
     {
       "category": "fiis",
@@ -239,6 +239,69 @@
       "url": "https://gm-central.floot.app/_cdn/static/66682352-3f6e-468e-abf0-3d3f63608357-GM_Research_Brasil_ou_Exterior_2027_Novembro_2026.pdf",
       "size_bytes": 136997,
       "sha256": "ad00588ee11388c39d9f5abf53732c98532953fa24f75c4ec7548b1d206a8d1c"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_CPLE3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/a3d0b1aa-f365-4011-ae6f-10963c4fdb63-GM_CPLE3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2384924,
+      "sha256": "e817d941c457095723a5be52ff0da99df4109a2cebbdd20489e128b85267d9aa"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_B3SA3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/0cc49036-ecf1-4ea0-842e-b47d70dd7f31-GM_B3SA3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2379026,
+      "sha256": "8ba17af0621d750c59e9e2994f6ba9d68dc8ad35834fb02352e171b8ff9dbc33"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_CPFE3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/8656b064-be62-41d3-9f74-81e9d390b99e-GM_CPFE3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2441915,
+      "sha256": "e67a892862851f6bf1dff34cb52681ef246fe9da0d8f7aa9b147da7e84d67293"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_WEGE3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/ea463c0a-b576-4292-a5f4-6ccf8978fbba-GM_WEGE3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2406696,
+      "sha256": "f5ef6bfd27d89e8ab71af8019a0acb416eb493fff956fde008f40c676f2ffdf7"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_SUZB3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/0365b07b-251a-4246-839a-30c2c7082220-GM_SUZB3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2420898,
+      "sha256": "68439773e10af211a50acc0a19a63fb8bf0c00d08a3d91bb155b26574e8f15c0"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_VIVT3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/5dd16471-1aed-4163-b14c-a74a7fb89286-GM_VIVT3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2428561,
+      "sha256": "56be021012056bd42776a987379e37cb108b0cc54aa3de7e6260035e977ef4da"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_PSSA3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/2c232bbc-e55a-42a3-ba94-624ed86eec51-GM_PSSA3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2382463,
+      "sha256": "5f9ede7ed4a3cf33469e94e343d2766f7f9ea6ff01c2185e83e411f97d7c4426"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_RANI3_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/7cbfc4d2-8dba-4da4-887b-a20b27abaeef-GM_RANI3_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2370924,
+      "sha256": "3acf9f58673375c1fc633ee993871e023c94bb72f92be7bfa33c2153b67e5592"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_TAEE11_Novembro_2026_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/9f0af5b0-e0b3-421b-8fa8-7afb0610180c-GM_TAEE11_Novembro_2026_APROVADO.pdf",
+      "size_bytes": 2359671,
+      "sha256": "d8f0bc46c370cbf4d921b9c3823fafb0fdfad033ed555e2c0355ff1c2b4d1c93"
     }
   ]
 }

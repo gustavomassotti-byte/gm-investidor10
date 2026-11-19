@@ -12,7 +12,7 @@ from pathlib import Path
 
 import fitz
 
-NON_ASSET_CATEGORIES = {'carteiras', 'editorial', 'renda-fixa', 'educacional'}
+NON_ASSET_CATEGORIES = {'carteiras', 'editorial', 'renda-fixa', 'educacional', 'analista-curioso'}
 THEMATIC_ACTIONS = re.compile(
     r'2027|PATRIMONIO|AJUSTE_FISCAL|BRASIL_OU_EXTERIOR|JUROS_DOLAR|'
     r'OPORTUNIDADES|ELEICOES_BOLSA', re.I,

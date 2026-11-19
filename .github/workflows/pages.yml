@@ -29,6 +29,9 @@ jobs:
           rm -rf _site _legacy
           mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa,editorial,analista-curioso}
           cp index.html _site/index.html
+          # Recursos da Biblioteca V2: cópia somente de interface, sem tocar PDFs.
+          if [ -d assets ]; then mkdir -p _site/assets; cp -a assets/. _site/assets/; fi
+          if [ -f v2.html ]; then cp v2.html _site/v2.html; fi
           python3 scripts/patch_editorial.py
 
           # Recupera o acervo que já havia sido separado para o Investidor10.

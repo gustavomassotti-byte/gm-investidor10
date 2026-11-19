@@ -291,14 +291,66 @@ function portfolioFamily(x){
  if(/BDRs/i.test(n))return 'BDRs';
  return 'Outras carteiras';
 }
+function portfolioMonthInfo(x){
+ const m=filenameMonth(x);
+ if(!/^\d{4}-\d{2}$/.test(m||''))return {month:'Arquivo',year:'Histórico',full:'Edição do acervo'};
+ const names=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+ const i=Number(m.slice(5))-1;
+ return {month:names[i]||'Edição',year:m.slice(0,4),full:(names[i]||'Edição')+' de '+m.slice(0,4)};
+}
+const portfolioDescriptions={
+ 'Dividendos':'Ações com foco em dividendos e geração de renda.',
+ 'Buy & Hold':'Investimentos pensados para o longo prazo.',
+ 'Small Caps':'Empresas de menor capitalização e potencial de crescimento.',
+ 'Fundos Imobiliários':'Fundos imobiliários e geração recorrente de renda.',
+ 'BDRs':'Diversificação internacional com exposição a empresas globais.'
+};
+const portfolioSymbols={
+ 'Dividendos':'◇','Buy & Hold':'∞','Small Caps':'↗','Fundos Imobiliários':'▣','BDRs':'◎'
+};
+function portfolioMonthCard(x,fam,isNewest){
+ const info=portfolioMonthInfo(x),src=coverSrc(x);
+ const cover=src
+  ?'<img loading="lazy" src="'+esc(src)+'" alt="Capa da edição de '+esc(info.full)+'">'
+  :'<span class="portfolio-cover-fallback">GM RESEARCH<br>'+esc(fam)+'</span>';
+ return '<a class="portfolio-month-card'+(isNewest?' current':'')+'" href="'+esc(href(x))+'" target="_blank" rel="noopener" title="'+esc(x.name)+'" aria-label="Abrir '+esc(fam)+', edição '+esc(info.full)+'">'
+  +'<span class="portfolio-month-cover">'+cover+'</span>'
+  +'<span class="portfolio-edition-details">'
+  +(isNewest?'<span class="portfolio-current-tag">Mais recente</span>':'')
+  +'<span class="portfolio-month-label">'+esc(info.month)+'</span>'
+  +'<span class="portfolio-month-year">'+esc(info.year)+'</span>'
+  +'<span class="portfolio-edition-link">Abrir PDF ↗</span>'
+  +'</span></a>';
+}
 function renderCarteiras(){
  const rows=DATA.filter(x=>section(x)==='carteiras'),filtered=filterRows(rows,'carteiras');
- const by=new Map;for(const x of filtered){const fam=portfolioFamily(x);if(!by.has(fam))by.set(fam,[]);by.get(fam).push(x)}
- const families=[...by.entries()].sort((a,b)=>a[0].localeCompare(b[0],'pt-BR'));
- return sectionHead('Carteiras GM Research','Cinco linhas de alocação, com a edição mais recente em evidência e acesso à evolução histórica mês a mês.',rows.length)
-  +'<div class="page-width content-area">'+optionsUI('carteiras')+families.map(([fam,list])=>{list.sort((a,b)=>score(b).localeCompare(score(a)));return '<section class="shelf"><div class="block-heading"><div><h2>'+esc(fam)+'</h2><p>Edição de destaque e histórico da carteira — '+list.length+' documento(s).</p></div></div>'
-   +'<div class="editorial-grid">'+list.slice(0,1).map(card).join('')+'</div>'
-   +(list.length>1?'<details class="history" style="margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:8px"><summary>Consultar '+(list.length-1)+' edições anteriores <span>⌄</span></summary><ol>'+list.slice(1).map(x=>'<li><a href="'+esc(href(x))+'" rel="noopener" target="_blank">'+esc(title(x))+'</a><small>'+moreMeta(x)+'</small></li>').join('')+'</ol></details>':'')+'</section>'}).join('')+'</div>';
+ const by=new Map;
+ for(const x of filtered){
+  const fam=portfolioFamily(x);
+  if(!by.has(fam))by.set(fam,[]);
+  by.get(fam).push(x);
+ }
+ const familyOrder=['Dividendos','Buy & Hold','Small Caps','Fundos Imobiliários','BDRs','Outras carteiras'];
+ const families=[...by.entries()].sort((a,b)=>familyOrder.indexOf(a[0])-familyOrder.indexOf(b[0]));
+ const html=families.map(([fam,list])=>{
+  list.sort((a,b)=>(filenameMonth(b)||'').localeCompare(filenameMonth(a)||'')||score(b).localeCompare(score(a)));
+  return '<section class="portfolio-shelf" aria-label="Carteira '+esc(fam)+'">'
+   +'<div class="portfolio-family">'
+   +'<span class="portfolio-family-symbol" aria-hidden="true">'+esc(portfolioSymbols[fam]||'GM')+'</span>'
+   +'<span class="portfolio-family-label">CARTEIRA GM RESEARCH</span>'
+   +'<h2>'+esc(fam)+'</h2>'
+   +'<p>'+esc(portfolioDescriptions[fam]||'Carteiras de investimento da GM Research.')+'</p>'
+   +'<span class="portfolio-count">'+list.length+' '+(list.length===1?'edição disponível':'edições disponíveis')+'</span></div>'
+   +'<div class="portfolio-month-line">'
+   +'<div class="portfolio-line-heading"><span>Edições por mês</span><span>Selecione uma capa para abrir ↗</span></div>'
+   +'<div class="portfolio-months" role="list" aria-label="Meses disponíveis: '+esc(fam)+'">'
+   +list.map((x,i)=>portfolioMonthCard(x,fam,i===0)).join('')+'</div>'
+   +'</div></section>';
+ }).join('');
+ return sectionHead('Carteiras GM Research','Cada carteira tem sua própria linha de edições. Compare os meses lado a lado e abra diretamente a versão desejada, sem perder o histórico.',rows.length)
+  +'<div class="page-width content-area">'+optionsUI('carteiras')
+  +(families.length?'<div class="portfolio-shelves">'+html+'</div>':'<div class="empty">Nenhuma carteira nesta seleção.</div>')
+  +'<p class="portfolio-helper">Todas as versões continuam disponíveis nos mesmos arquivos. A identificação “Mais recente” considera a edição mais nova encontrada no acervo.</p></div>';
 }
 function renderCenarios(){
  const rows=DATA.filter(x=>section(x)==='cenarios'),filtered=sortDocs(filterRows(rows,'cenarios'));

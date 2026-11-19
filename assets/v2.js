@@ -228,7 +228,9 @@ function titleForAsset(x,a){const n=x.name;
 function assetLogo(a){
  const domain=DOMAINS[a.name];
  const initials=(a.name||'GM').slice(0,2).toUpperCase();
- return '<div class="asset-logo">'+(domain?'<img src="https://www.google.com/s2/favicons?domain='+encodeURIComponent(domain)+'&sz=128" alt="" loading="lazy" onerror="this.remove()">':'')+'<span>'+esc(initials)+'</span></div>';
+ return '<div class="asset-logo">'+(domain
+  ?'<img src="https://www.google.com/s2/favicons?domain='+encodeURIComponent(domain)+'&sz=128" alt="" loading="lazy" onerror="this.nextElementSibling.style.display=\'grid\';this.remove()"><span style="display:none">'+esc(initials)+'</span>'
+  :'<span>'+esc(initials)+'</span>')+'</div>';
 }
 function groupsForAssets(rows){
  const by=new Map;

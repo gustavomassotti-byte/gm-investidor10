@@ -116,5 +116,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+      - name: Aguardar indexação do artefato no GitHub Actions
+        run: sleep 12
       - id: deployment
         uses: actions/deploy-pages@v4

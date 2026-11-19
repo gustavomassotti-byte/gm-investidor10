@@ -171,7 +171,7 @@ Object.assign(DOMAINS,{
  'Kepler Weber':'kepler.com.br','Banco ABC Brasil':'abcbrasil.com.br',
  'BrasilAgro':'brasil-agro.com','Unifique':'unifique.com.br',
  'Grupo Fleury':'grupofleury.com.br','Smart Fit':'smartfit.com.br',
- 'Brava Energia':'bravaenergia.com.br','Banco Inter':'inter.co','Berkshire Hathaway':'berkshirehathaway.com'
+ 'Brava Energia':'bravaenergia.com.br','Banco Inter':'inter.co','Berkshire Hathaway':'berkshirehathaway.com','NVIDIA':'nvidia.com','Apple':'apple.com','Tesla':'tesla.com','Broadcom':'broadcom.com','Ambev':'ambev.com.br','Itaú Unibanco':'itau.com.br','Embraer':'embraer.com'
 });
 const MORE_ASSETS=[
  {name:'Banco ABC Brasil',ticker:'ABCB4',re:/ABCB4|BANCO[_\s-]?ABC/i},
@@ -194,7 +194,14 @@ const MORE_ASSETS=[
  {name:'Kepler Weber',ticker:'KEPL3',re:/KEPL3|KEPLER/i},
  {name:'Brava Energia',ticker:'BRAV3',re:/BRAV3|BRAVA[_\s-]?ENERGIA/i},
  {name:'Banco Inter',ticker:'INBR34',re:/INBR34|INTERCO/i},
- {name:'Berkshire Hathaway',ticker:'BERK34',re:/BERK34|BERKSHIRE/i}
+ {name:'Berkshire Hathaway',ticker:'BERK34',re:/BERK34|BERKSHIRE/i},
+ {name:'NVIDIA',ticker:'NVDA / NVDC34',re:/NVDC34|\bNVIDIA\b/i},
+ {name:'Apple',ticker:'AAPL / AAPL34',re:/AAPL34|\bAPPLE\b/i},
+ {name:'Tesla',ticker:'TSLA / TSLA34',re:/TSLA34|\bTESLA\b/i},
+ {name:'Broadcom',ticker:'AVGO / AVGO34',re:/AVGO34|\bBROADCOM\b/i},
+ {name:'Ambev',ticker:'ABEV3',re:/ABEV3|\bAMBEV\b/i},
+ {name:'Itaú Unibanco',ticker:'ITUB4',re:/ITUB4|ITAU[_\s-]?UNIBANCO/i},
+ {name:'Embraer',ticker:'EMBJ3',re:/EMBJ3|\bEMBRAER\b/i}
 ];
 const EXTRA_ASSETS=[
  {name:'Copel',re:/COPEL|CPLE[36]/i},
@@ -250,6 +257,9 @@ function readableTitle(x){
  const raw=nice(x.display_name||x.name).replace(/\s+(?:FINAL|REV\d+|V\d+)$/i,'');
  const n=raw.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  const known=[
+   [/OBSERVATORIO.*GESTORAS/,'Observatório de Gestoras — Quando o Consenso Muda'],
+   [/ESPECIAL.*BITCOIN/,'Bitcoin — O Ciclo Mudou?'],
+   [/IBOVESPA.*3T26.*TESTE.*CAIXA/,'O Teste do Caixa — Balanços e Bolsa Brasileira'],
   [/ESPECIAL.*DOLAR/,'O Dólar Está Caro? — Preço, Risco e Proteção · 19 páginas'],
   [/ESPECIAL.*IBOVESPA/,'Ibovespa em Duas Moedas — Ciclos da Bolsa Brasileira · 41 páginas'],
  [/RENDA FIXA.*CREDITO PRIVADO/,'Renda Fixa e Crédito Privado'],
@@ -291,7 +301,7 @@ function classify(x){
  if(x.category==='acoes'&&/(?:2027|PATRIMONIO|AJUSTE_FISCAL|BRASIL_OU_EXTERIOR|JUROS_DOLAR|OPORTUNIDADES|ELEICOES_BOLSA)/.test(n))return 'cenarios';
  if(x.category==='carteiras'||(x.category==='fiis'&&/CARTEIRA/.test(n)))return 'carteiras';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';
- if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|TSMC34|XPBR31|BLAK34|MUTC34|AURA33|BERK34|INBR34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';
+ if(x.category==='acoes'&&/(?:MSFT34|EXXO34|AMZO34|GOGL34|M1TA34|TSMC34|XPBR31|BLAK34|MUTC34|AURA33|BERK34|INBR34|AAPL34|AVGO34|NVDC34|TSLA34|MELI34|NKE|NIKE|BDR|MICROSOFT|AMAZON|ALPHABET|GOOGLE|EXXON|TSMC|META|MERCADOLIBRE|MERCADO_LIVRE)/.test(n))return 'bdrs';
  if(x.category==='editorial'&&/(?:2027|MACRO|CENARIO|CENÁRIO|ESPECIAL_DOLAR|CAMBIO)/.test(n))return 'cenarios';
  if(x.category==='educacional'||x.category==='editorial')return 'conhecimento';
  return x.category;

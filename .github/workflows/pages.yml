@@ -27,7 +27,7 @@ jobs:
       - name: Preparar site e acervo
         run: |
           rm -rf _site _legacy
-          mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa,editorial}
+          mkdir -p _site/documentos/{carteiras,acoes,fiis,renda-fixa,editorial,analista-curioso}
           cp index.html _site/index.html
           python3 scripts/patch_editorial.py
 
@@ -50,6 +50,7 @@ jobs:
           if [ -d documentos/renda-fixa ]; then find documentos/renda-fixa -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/renda-fixa/ \;; fi
 
           if [ -d documentos/editorial ]; then find documentos/editorial -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/editorial/ \;; fi
+          if [ -d documentos/analista-curioso ]; then find documentos/analista-curioso -maxdepth 1 -type f -iname '*.pdf' -exec cp -f {} _site/documentos/analista-curioso/ \;; fi
 
           # ZIPs enviados a lotes/ entram na mesma publicacao, sem mudar o acervo legado.
           python3 scripts/importar_lotes.py
@@ -99,7 +100,7 @@ jobs:
                           # Mantém a descrição original, mas garante o ativo na frente.
                           return f'{label} · {rest}'
               return stem
-          for cat in ('carteiras','acoes','fiis','renda-fixa','editorial'):
+          for cat in ('carteiras','acoes','fiis','renda-fixa','editorial','analista-curioso'):
               root=f'_site/documentos/{cat}'
               for f in os.listdir(root):
                   if f.lower().endswith('.pdf'):

@@ -1,14 +1,27 @@
 {
   "schema_version": 1,
-  "batch_id": "gm-2026-11-17-dolar-revisado-substituicao",
+  "batch_id": "gm-2026-11-19-analista-curioso-vol-001-003-final",
   "files": [
     {
-      "category": "editorial",
-      "filename": "GM_Research_Especial_Dolar_2026.pdf",
-      "url": "https://gm-central.floot.app/_cdn/static/13a89647-8b73-43e2-b466-8fc97218b5b5-GM_Research_Especial_Dolar_2026.pdf",
-      "size_bytes": 1831213,
-      "sha256": "fbed9632e448fee26150a3461f040709a69549d0d2026adf92f1ef882a6cb611",
-      "replace": true
+      "category": "analista-curioso",
+      "filename": "GM_O_Analista_Curioso_Vol_001_Mercado_Precificou_2027_2026-11-19_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/c89fadee-4e36-44d9-bdf3-7f67c24dd42f-GM_O_Analista_Curioso_Vol_001_Mercado_Precificou_2027_2026-11-19_APROVADO.pdf",
+      "size_bytes": 5995210,
+      "sha256": "93f5ba5ffb5f3ae3bf69137b01a19d23939e1fb4412f91c62148562524c3630f"
+    },
+    {
+      "category": "analista-curioso",
+      "filename": "GM_O_Analista_Curioso_Vol_002_E_Se_2027_For_Diferente_2026-11-19_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/f47e8c39-f07c-4487-b537-f8e4748dd73c-GM_O_Analista_Curioso_Vol_002_E_Se_2027_For_Diferente_2026-11-19_APROVADO.pdf",
+      "size_bytes": 6522562,
+      "sha256": "59e6bb466124d826d0f02f59439240a5fff7d9ca414e1049ccfb02964a2188df"
+    },
+    {
+      "category": "analista-curioso",
+      "filename": "GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/a746249e-4826-497e-8271-423091467089-GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf",
+      "size_bytes": 6236447,
+      "sha256": "e95bc110cb66486ff28866c8a5ea07851e5e82df05a9e5e6c5be054cf824d2e5"
     }
   ]
 }

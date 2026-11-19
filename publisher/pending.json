@@ -1,27 +1,76 @@
 {
   "schema_version": 1,
-  "batch_id": "gm-2026-11-19-analista-curioso-vol-001-003-final",
+  "batch_id": "gm-2026-11-19-novos-dossies7-editoriais3",
   "files": [
     {
-      "category": "analista-curioso",
-      "filename": "GM_O_Analista_Curioso_Vol_001_Mercado_Precificou_2027_2026-11-19_APROVADO.pdf",
-      "url": "https://gm-central.floot.app/_cdn/static/c89fadee-4e36-44d9-bdf3-7f67c24dd42f-GM_O_Analista_Curioso_Vol_001_Mercado_Precificou_2027_2026-11-19_APROVADO.pdf",
-      "size_bytes": 5995210,
-      "sha256": "93f5ba5ffb5f3ae3bf69137b01a19d23939e1fb4412f91c62148562524c3630f"
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Ambev_ABEV3_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/d667c19a-00e8-431e-9efd-039bccdc8a74-GM_Research_Dossie_Ambev_ABEV3_2026-11-18_APROVADO.pdf",
+      "size_bytes": 3138362,
+      "sha256": "6b62195f9064375c4d7808253d6ea0630e798fcc7cb778d1126ba5a5ebe5496f"
     },
     {
-      "category": "analista-curioso",
-      "filename": "GM_O_Analista_Curioso_Vol_002_E_Se_2027_For_Diferente_2026-11-19_APROVADO.pdf",
-      "url": "https://gm-central.floot.app/_cdn/static/f47e8c39-f07c-4487-b537-f8e4748dd73c-GM_O_Analista_Curioso_Vol_002_E_Se_2027_For_Diferente_2026-11-19_APROVADO.pdf",
-      "size_bytes": 6522562,
-      "sha256": "59e6bb466124d826d0f02f59439240a5fff7d9ca414e1049ccfb02964a2188df"
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Apple_AAPL_AAPL34_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/40ec2247-484e-4704-be18-73c06e90b493-GM_Research_Dossie_Apple_AAPL_AAPL34_2026-11-18_APROVADO.pdf",
+      "size_bytes": 3234185,
+      "sha256": "06d9be34a045e818cd3d6b519b71906333b33aa2ad324fb15f6e1cbd1884e065"
     },
     {
-      "category": "analista-curioso",
-      "filename": "GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf",
-      "url": "https://gm-central.floot.app/_cdn/static/a746249e-4826-497e-8271-423091467089-GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf",
-      "size_bytes": 6236447,
-      "sha256": "e95bc110cb66486ff28866c8a5ea07851e5e82df05a9e5e6c5be054cf824d2e5"
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Broadcom_AVGO_AVGO34_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/f3261d9a-ee4d-4ca2-bd09-759dff02f04f-GM_Research_Dossie_Broadcom_AVGO_AVGO34_2026-11-18_APROVADO.pdf",
+      "size_bytes": 2945869,
+      "sha256": "351c2adb322282ca98dfada6c89e4039d526e8aadf91563fe516906934030609"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Embraer_EMBJ3_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/59be76eb-70da-4fc8-aa0f-2d142b9ecfd0-GM_Research_Dossie_Embraer_EMBJ3_2026-11-18_APROVADO.pdf",
+      "size_bytes": 2924406,
+      "sha256": "f9426f35e50c48634178f70f704dc8e0a80ebd3603922e2051401fc5d92e91fd"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Itau_ITUB4_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/0ed8b596-2bb0-4206-b145-a924a4a308ba-GM_Research_Dossie_Itau_ITUB4_2026-11-18_APROVADO.pdf",
+      "size_bytes": 3074114,
+      "sha256": "a1b1e03b079470efbcf5d370fd434f155ed6d628d4e2e81e26bf90f619d42ab5"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_NVIDIA_NVDA_NVDC34_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/ffae697c-9444-45e6-9d76-2c7635dc28fc-GM_Research_Dossie_NVIDIA_NVDA_NVDC34_2026-11-18_APROVADO.pdf",
+      "size_bytes": 2603389,
+      "sha256": "3ee2db072aba83c3aef4d0a68b1096ed9c2a3e20955a388cec5828957eec6d3e"
+    },
+    {
+      "category": "acoes",
+      "filename": "GM_Research_Dossie_Tesla_TSLA_TSLA34_2026-11-18_APROVADO.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/e3511067-47d7-48bb-b181-0e77d2af7e4f-GM_Research_Dossie_Tesla_TSLA_TSLA34_2026-11-18_APROVADO.pdf",
+      "size_bytes": 3125210,
+      "sha256": "0a523f222dbb969283a063fa6f05cdf667be86a6c78e273e286d70662e1488e2"
+    },
+    {
+      "category": "editorial",
+      "filename": "GM_Research_Especial_Bitcoin_2026-11-19_CAPA_NOVA.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/04b70c9a-8761-4a4e-844d-cbf52230d108-GM_Research_Especial_Bitcoin_2026-11-19_CAPA_NOVA.pdf",
+      "size_bytes": 4488585,
+      "sha256": "2096ec3c3f697b409c7359966ec3e1987c05bca67cd5b555397705977d3cecf3"
+    },
+    {
+      "category": "editorial",
+      "filename": "GM_Research_Ibovespa_3T26_O_Teste_do_Caixa.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/578f9ff0-1c63-427a-b1b9-778456343be8-GM_Research_Ibovespa_3T26_O_Teste_do_Caixa.pdf",
+      "size_bytes": 1924100,
+      "sha256": "3a5dd0468f5467ef0df46ac735c35d41e8bdfb63855bee6284a7fa7109f32e74"
+    },
+    {
+      "category": "editorial",
+      "filename": "GM_Research_Observatorio_de_Gestoras_2026-11-19_CAPA_NOVA.pdf",
+      "url": "https://gm-central.floot.app/_cdn/static/ce9ef1d2-1ff4-4e72-86ae-c0361e5ebc14-GM_Research_Observatorio_de_Gestoras_2026-11-19_CAPA_NOVA.pdf",
+      "size_bytes": 5457748,
+      "sha256": "33431beb30c5e189384fc07ca5686cd187dfad0025ff8a3d070e3b7e824b0129"
     }
   ]
 }

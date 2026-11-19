@@ -1,13 +1,23 @@
 {
-  "checked_at_utc": "2026-11-17T23:32:32.857523+00:00",
+  "checked_at_utc": "2026-11-19T15:49:02.316285+00:00",
   "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
   "files": [
     {
-      "path": "documentos/editorial/GM_Research_Especial_Dolar_2026.pdf",
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_001_Mercado_Precificou_2027_2026-11-19_APROVADO.pdf",
       "status": "published",
-      "sha256": "fbed9632e448fee26150a3461f040709a69549d0d2026adf92f1ef882a6cb611"
+      "sha256": "93f5ba5ffb5f3ae3bf69137b01a19d23939e1fb4412f91c62148562524c3630f"
+    },
+    {
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_002_E_Se_2027_For_Diferente_2026-11-19_APROVADO.pdf",
+      "status": "published",
+      "sha256": "59e6bb466124d826d0f02f59439240a5fff7d9ca414e1049ccfb02964a2188df"
+    },
+    {
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf",
+      "status": "published",
+      "sha256": "e95bc110cb66486ff28866c8a5ea07851e5e82df05a9e5e6c5be054cf824d2e5"
     }
   ],
-  "checked": 1,
-  "published": 1
+  "checked": 3,
+  "published": 3
 }

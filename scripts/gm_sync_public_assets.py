@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ALLOWED_CATEGORIES = {"fiis", "acoes", "carteiras", "editorial", "renda-fixa"}
+ALLOWED_CATEGORIES = {"fiis", "acoes", "carteiras", "editorial", "renda-fixa", "analista-curioso"}
 ALLOWED_HOST = "gm-central.floot.app"
 MAX_FILE_BYTES = 25 * 1024 * 1024
 

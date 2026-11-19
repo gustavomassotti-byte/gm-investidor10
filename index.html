@@ -65,14 +65,14 @@ footer{background:#ede9df;border-top:1px solid #ddd7cb;color:#7c8288;text-align:
 <main class="wrap">
 <div class="top"><div><h1>Biblioteca de Research</h1><p>Carteiras e análises GM Research em um ambiente único e organizado.</p></div><input id="search" class="search" placeholder="Buscar ativo, carteira ou relatório…"></div>
 <div id="stats" class="stats" aria-live="polite"></div>
-<div class="library-layout"><aside class="side-panel"><div class="side-heading">EXPLORAR BIBLIOTECA</div><nav class="tabs" aria-label="Categorias da biblioteca"><button class="tab" data-filter="all">Todos</button><button class="tab active" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="indices">Índices e ETFs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="conhecimento">Conhecimento GM</button></nav><div class="side-note">Selecione uma categoria para explorar os relatórios.</div></aside><div class="library-main">
+<div class="library-layout"><aside class="side-panel"><div class="side-heading">EXPLORAR BIBLIOTECA</div><nav class="tabs" aria-label="Categorias da biblioteca"><button class="tab" data-filter="all">Todos</button><button class="tab active" data-filter="carteiras">Carteiras</button><button class="tab" data-filter="acoes">Ações B3</button><button class="tab" data-filter="bdrs">BDRs</button><button class="tab" data-filter="fiis">FIIs</button><button class="tab" data-filter="indices">Índices e ETFs</button><button class="tab" data-filter="renda-fixa">Renda Fixa</button><button class="tab" data-filter="cenarios">Cenários</button><button class="tab" data-filter="conhecimento">Conhecimento GM</button><button class="tab" data-filter="analista-curioso">O Analista Curioso</button></nav><div class="side-note">Selecione uma categoria para explorar os relatórios.</div></aside><div class="library-main">
 <div id="adminbar" class="adminbar"><span><b>Gestão da biblioteca</b> · adicionar, substituir ou excluir PDFs</span><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/carteiras">CARTEIRAS</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/acoes">AÇÕES</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/fiis">FIIs</a><a target="_blank" href="https://github.com/gustavomassotti-byte/gm-investidor10/tree/main/documentos/renda-fixa">RENDA FIXA</a></div>
 <div id="content"><div class="empty">Carregando biblioteca…</div></div>
 <div id="manage-note" class="manage-note">Os documentos são atualizados pelas pastas de gestão. A publicação do portal é automática.</div></div></div>
 </main>
 <footer>GM RESEARCH × INVESTIDOR10 · BIBLIOTECA DE RESEARCH</footer>
 <script>
-const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior',fiis:'FIIs',indices:'Índices e ETFs', 'renda-fixa':'Renda Fixa',cenarios:'Cenários e Macro',conhecimento:'Conhecimento GM'};
+const groups={carteiras:'Carteiras',acoes:'Ações da B3',bdrs:'BDRs e Exterior',fiis:'FIIs',indices:'Índices e ETFs', 'renda-fixa':'Renda Fixa',cenarios:'Cenários e Macro',conhecimento:'Conhecimento GM','analista-curioso':'O Analista Curioso'};
 let DATA=[],filter='carteiras';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nice=v=>String(v||'Documento').replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
@@ -84,7 +84,7 @@ const COVER_URLS={
 };
 const coverHTML=x=>{
  const k=classify(x);
- const eligible=['carteiras','cenarios','conhecimento','renda-fixa'].includes(k)||Boolean(COVER_URLS[x.name]);
+ const eligible=['carteiras','cenarios','conhecimento','renda-fixa','analista-curioso'].includes(k)||Boolean(COVER_URLS[x.name]);
  if(!eligible)return '';
  const src=x.cover_path||COVER_URLS[x.name];
  return src?'<img class="report-cover" src="'+esc(src)+'" alt="Capa do relatório" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">':'';
@@ -227,6 +227,10 @@ function assetReportTitle(x,a){
  return kind+(when?' · '+when:'');
 }
 function topicInfo(x,k){
+  if(k==='analista-curioso'){
+    const m=(x.name||'').match(/_Vol_(00[123])_/i);
+    return m?({'001':'Volume 001 — O Mercado Já Precificou 2027?','002':'Volume 002 — E Se 2027 For Diferente?','003':'Volume 003 — Onde Está a Assimetria em 2027?'}[m[1]]||'O Analista Curioso'):'O Analista Curioso';
+  }
  const n=(x.name+' '+(x.display_name||'')).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  if(k==='renda-fixa')return 'Renda Fixa e Crédito';
  if(/LONG.?SHORT|ESTRATEGIAS.?RELATIVAS|PARES/.test(n))return 'Long & Short';
@@ -242,6 +246,7 @@ function topicInfo(x,k){
  return k==='conhecimento'?'Guias e Estudos':k==='cenarios'?'Estudos de Cenários':'Estudos e Publicações';
 }
 function readableTitle(x){
+  if(x.category==='analista-curioso')return topicInfo(x,'analista-curioso').replace(/^Volume /,'Edição ');
  const raw=nice(x.display_name||x.name).replace(/\s+(?:FINAL|REV\d+|V\d+)$/i,'');
  const n=raw.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  const known=[
@@ -279,6 +284,7 @@ function shelfHTML(rows,k,label){
  }).join('')+'</div></section>';
 }
 function classify(x){
+  if(x.category==='analista-curioso')return 'analista-curioso';
  const n=String(x.name||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  if(/RETORNOS?.{0,15}LONGO|GRAFICOS.?QUE.?PROVAM.?RETORNOS/.test(n))return 'conhecimento';
  if(/IBOVESPA|SP500|S&P.?500|(?:^|[_-])EWZ(?:[_-]|[.])/.test(n)&&x.category!=='carteiras')return 'indices';

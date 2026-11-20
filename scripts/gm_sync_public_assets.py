@@ -5,6 +5,7 @@ The manifest in publisher/pending.json is generated from files already approved
 in GM Research's Library. This script refuses any arbitrary host, path traversal,
 mismatched content hashes and accidental overwrites.
 """
+import base64
 import hashlib
 import json
 import os
@@ -35,9 +36,17 @@ def check_item(item):
     if filename != Path(filename).name or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._()-]{0,180}\.pdf", filename):
         fail(f"Nome de PDF inválido: {filename!r}")
     url = item.get("url", "")
-    parts = urllib.parse.urlparse(url)
-    if parts.scheme != "https" or parts.hostname != ALLOWED_HOST or parts.port is not None or not parts.path.startswith("/_cdn/static/") or parts.query or parts.fragment:
-        fail(f"Origem não autorizada para {filename}")
+    blob_parts = item.get("git_blob_parts")
+    if blob_parts is not None:
+        if (not isinstance(blob_parts, list) or not 1 <= len(blob_parts) <= 20 or
+            any(not isinstance(part, str) or not re.fullmatch(r"[a-f0-9]{40}", part) for part in blob_parts)):
+            fail(f"Partes Git inválidas para {filename}")
+        if url:
+            fail(f"Escolha uma única origem para {filename}")
+    else:
+        parts = urllib.parse.urlparse(url)
+        if parts.scheme != "https" or parts.hostname != ALLOWED_HOST or parts.port is not None or not parts.path.startswith("/_cdn/static/") or parts.query or parts.fragment:
+            fail(f"Origem não autorizada para {filename}")
     sha = item.get("sha256", "")
     if not re.fullmatch(r"[a-f0-9]{64}", sha):
         fail(f"SHA256 inválido para {filename}")
@@ -66,6 +75,36 @@ def fetch_checked(url, sha, size):
     return data
 
 
+def fetch_from_github_blobs(item, sha, size):
+    """Reconstruct exact approved bytes from GitHub's immutable Git blob objects."""
+    repo = os.environ.get("GITHUB_REPOSITORY")
+    token = os.environ.get("GH_TOKEN")
+    if repo != "gustavomassotti-byte/gm-investidor10" or not token:
+        fail("Repositório/token GitHub não identificado para reconstrução dos PDFs")
+    chunks = []
+    for blob_sha in item["git_blob_parts"]:
+        url = f"https://api.github.com/repos/{repo}/git/blobs/{blob_sha}"
+        req = urllib.request.Request(url, headers={
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {token}",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "GMResearchPublisher/1.1",
+        })
+        with urllib.request.urlopen(req, timeout=90) as response:
+            obj = json.load(response)
+        if obj.get("sha") != blob_sha or obj.get("encoding") != "base64":
+            fail(f"Parte de Git inválida para {item['filename']}")
+        part = base64.b64decode(obj["content"], validate=False)
+        actual = hashlib.sha1(b"blob " + str(len(part)).encode() + b"\0" + part).hexdigest()
+        if actual != blob_sha:
+            fail(f"Parte de Git corrompida para {item['filename']}")
+        chunks.append(part)
+    data = b"".join(chunks)
+    if len(data) != size or not data.startswith(b"%PDF-") or hashlib.sha256(data).hexdigest() != sha:
+        fail(f"PDF reconstruído não confere com a versão aprovada: {item['filename']}")
+    return data
+
+
 def main():
     manifest_path = ROOT / "publisher" / "pending.json"
     config = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -85,7 +124,9 @@ def main():
             continue
         if target.exists() and item.get("replace") is not True:
             fail(f"Destino existente diferente, substituição não autorizada: {target}")
-        data = fetch_checked(url, sha, item["size_bytes"])
+        data = (fetch_from_github_blobs(item, sha, item["size_bytes"])
+                if item.get("git_blob_parts") is not None
+                else fetch_checked(url, sha, item["size_bytes"]))
         staged.append((target, data, "to-publish", sha))
         print(f"VALIDADO: {category}/{filename} ({len(data)} bytes)")
     # Atomicity within the script: download and validate EVERY PDF before writing ANY PDF.

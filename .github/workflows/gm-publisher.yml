@@ -21,6 +21,8 @@ jobs:
         with:
           persist-credentials: true
       - name: Importar PDFs, validar SHA256 e categoria
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python3 scripts/gm_sync_public_assets.py
       - name: Criar commit com os PDFs e relatório de execução
         id: commit

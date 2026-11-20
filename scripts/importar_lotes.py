@@ -6,7 +6,7 @@ import shutil
 
 SITE = Path("_site/documentos")
 LOTES = Path("lotes")
-CATEGORIES = {"carteiras", "acoes", "fiis", "renda-fixa", "editorial"}
+CATEGORIES = {"carteiras", "acoes", "fiis", "renda-fixa", "editorial", "analista-curioso"}
 MAX_PDF = 45 * 1024 * 1024
 MAX_FILES = 100
 
@@ -16,6 +16,8 @@ def category(filename, member, archive_name=""):
         return "carteiras"
     if any(segment in ("renda-fixa", "renda_fixa") for segment in path.split("/")):
         return "renda-fixa"
+    if any(segment == "analista-curioso" for segment in path.split("/")):
+        return "analista-curioso"
     if any(segment == "editorial" for segment in path.split("/")):
         return "editorial"
     if any(segment == "fiis" for segment in path.split("/")):

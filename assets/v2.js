@@ -51,6 +51,9 @@ const topicTitle={
  'GM_O_Analista_Curioso_Vol_005_E_Se_o_Consenso_Estiver_Errado_2026-11-19_APROVADO.pdf':'E Se o Consenso Estiver Errado?',
  'GM_O_Analista_Curioso_Vol_006_O_Mercado_Esta_Otimista_Demais_2026-11-20_APROVADO.pdf':'O Mercado Está Otimista Demais?',
  'GM_O_Analista_Curioso_Vol_007_O_Mercado_Esta_Pessimista_Demais_2026-11-20_APROVADO.pdf':'O Mercado Está Pessimista Demais?',
+ 'GM_Research_Custo_Brasil_2026-11-19_APROVADO.pdf':'Custo Brasil — Edição Aprovada',
+ 'GM_Research_Emergentes_IA_Estudo_Estrutural_2026-11-20_APROVADO.pdf':'Emergentes sob Pressão — IA e Mercados',
+ 'GM_O_Analista_Curioso_A_Divida_de_1624_2026-11-19_APROVADO.pdf':'A Dívida de 1624',
  'GM_Research_Custo_Brasil_2026-11-19_DEFINITIVO.pdf':'Custo Brasil — Edição Definitiva',
  'Analista_Curioso_Divida_1624.pdf':'A Dívida de 1624'
 };

@@ -1,58 +1,33 @@
 {
-  "checked_at_utc": "2026-11-19T15:59:29.708434+00:00",
+  "checked_at_utc": "2026-11-20T23:49:53.297267+00:00",
   "source": "Biblioteca GM aprovada -> Floot asset -> GitHub",
   "files": [
     {
-      "path": "documentos/acoes/GM_Research_Dossie_Ambev_ABEV3_2026-11-18_APROVADO.pdf",
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_004_As_20_Perguntas_Que_Podem_Mudar_2027_2026-11-19_APROVADO.pdf",
       "status": "published",
-      "sha256": "6b62195f9064375c4d7808253d6ea0630e798fcc7cb778d1126ba5a5ebe5496f"
+      "sha256": "e47ccb31e63f3a77f1dbac521e7f1e6ed97b44c4e57cd28d5d2492de55fd2e97"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_Apple_AAPL_AAPL34_2026-11-18_APROVADO.pdf",
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_005_E_Se_o_Consenso_Estiver_Errado_2026-11-19_APROVADO.pdf",
       "status": "published",
-      "sha256": "06d9be34a045e818cd3d6b519b71906333b33aa2ad324fb15f6e1cbd1884e065"
+      "sha256": "7c0d8a300133c361e8975d054945e06ccaa57a364c8c6c5c44b8a233d2024444"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_Broadcom_AVGO_AVGO34_2026-11-18_APROVADO.pdf",
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_006_O_Mercado_Esta_Otimista_Demais_2026-11-20_APROVADO.pdf",
       "status": "published",
-      "sha256": "351c2adb322282ca98dfada6c89e4039d526e8aadf91563fe516906934030609"
+      "sha256": "8caf4d46221e2d9655fed337f82e499e85a23341d63f0a8b06a379c312450f52"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_Embraer_EMBJ3_2026-11-18_APROVADO.pdf",
+      "path": "documentos/analista-curioso/GM_O_Analista_Curioso_Vol_007_O_Mercado_Esta_Pessimista_Demais_2026-11-20_APROVADO.pdf",
       "status": "published",
-      "sha256": "f9426f35e50c48634178f70f704dc8e0a80ebd3603922e2051401fc5d92e91fd"
+      "sha256": "d0806136ccdc3159b0b01e160775c7e6cce703d487e4e90b6e52ab45b4b23e6a"
     },
     {
-      "path": "documentos/acoes/GM_Research_Dossie_Itau_ITUB4_2026-11-18_APROVADO.pdf",
+      "path": "documentos/editorial/GM_Research_Custo_Brasil_2026-11-19_DEFINITIVO.pdf",
       "status": "published",
-      "sha256": "a1b1e03b079470efbcf5d370fd434f155ed6d628d4e2e81e26bf90f619d42ab5"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_NVIDIA_NVDA_NVDC34_2026-11-18_APROVADO.pdf",
-      "status": "published",
-      "sha256": "3ee2db072aba83c3aef4d0a68b1096ed9c2a3e20955a388cec5828957eec6d3e"
-    },
-    {
-      "path": "documentos/acoes/GM_Research_Dossie_Tesla_TSLA_TSLA34_2026-11-18_APROVADO.pdf",
-      "status": "published",
-      "sha256": "0a523f222dbb969283a063fa6f05cdf667be86a6c78e273e286d70662e1488e2"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_Especial_Bitcoin_2026-11-19_CAPA_NOVA.pdf",
-      "status": "published",
-      "sha256": "2096ec3c3f697b409c7359966ec3e1987c05bca67cd5b555397705977d3cecf3"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_Ibovespa_3T26_O_Teste_do_Caixa.pdf",
-      "status": "published",
-      "sha256": "3a5dd0468f5467ef0df46ac735c35d41e8bdfb63855bee6284a7fa7109f32e74"
-    },
-    {
-      "path": "documentos/editorial/GM_Research_Observatorio_de_Gestoras_2026-11-19_CAPA_NOVA.pdf",
-      "status": "published",
-      "sha256": "33431beb30c5e189384fc07ca5686cd187dfad0025ff8a3d070e3b7e824b0129"
+      "sha256": "5220b415ab7b078e31aa8b6b0cebbcf2658eeefb10e18d67c5f6a4d9c1916d43"
     }
   ],
-  "checked": 10,
-  "published": 10
+  "checked": 5,
+  "published": 5
 }

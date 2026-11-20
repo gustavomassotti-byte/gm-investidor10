@@ -46,7 +46,13 @@ const topicTitle={
  'GM_Research_Dossie_Retornos_de_Longo_Prazo_Brasil.pdf':'Retornos de Longo Prazo no Brasil',
  'GM_O_Analista_Curioso_Vol_001_Mercado_Precificou_2027_2026-11-19_APROVADO.pdf':'O Mercado Já Precificou 2027?',
  'GM_O_Analista_Curioso_Vol_002_E_Se_2027_For_Diferente_2026-11-19_APROVADO.pdf':'E Se 2027 For Diferente?',
- 'GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf':'Assimetria 2027'
+ 'GM_O_Analista_Curioso_Vol_003_Assimetria_2027_2026-11-19_APROVADO.pdf':'Assimetria 2027',
+ 'GM_O_Analista_Curioso_Vol_004_As_20_Perguntas_Que_Podem_Mudar_2027_2026-11-19_APROVADO.pdf':'As 20 Perguntas Que Podem Mudar 2027',
+ 'GM_O_Analista_Curioso_Vol_005_E_Se_o_Consenso_Estiver_Errado_2026-11-19_APROVADO.pdf':'E Se o Consenso Estiver Errado?',
+ 'GM_O_Analista_Curioso_Vol_006_O_Mercado_Esta_Otimista_Demais_2026-11-20_APROVADO.pdf':'O Mercado Está Otimista Demais?',
+ 'GM_O_Analista_Curioso_Vol_007_O_Mercado_Esta_Pessimista_Demais_2026-11-20_APROVADO.pdf':'O Mercado Está Pessimista Demais?',
+ 'GM_Research_Custo_Brasil_2026-11-19_DEFINITIVO.pdf':'Custo Brasil — Edição Definitiva',
+ 'Analista_Curioso_Divida_1624.pdf':'A Dívida de 1624'
 };
 const blurbs=[
  [/Observatorio_de_Gestoras/i,'Uma leitura das mudanças de posicionamento e narrativas das principais gestoras.'],
@@ -375,10 +381,23 @@ function renderEditorial(){
   +'<div class="page-width content-area">'+optionsUI('editorial')+'<div class="editorial-shelves">'+(UI.sub==='todos'?renderBucketed(filtered,buckets):sectionBlock((subOptions.editorial.find(x=>x[0]===UI.sub)||[])[1]||'Obras','',filtered))+'</div></div>';
 }
 function renderCurioso(){
- const rows=DATA.filter(x=>section(x)==='curioso').sort((a,b)=>{const ia=(a.name.match(/_Vol_(\d+)/)||[])[1]||'999';const ib=(b.name.match(/_Vol_(\d+)/)||[])[1]||'999';return ia.localeCompare(ib)});
+ const rows=DATA.filter(x=>section(x)==='curioso');
+ const volumes=rows.filter(x=>/_Vol_(\d{3})_/i.test(x.name)).sort((a,b)=>{
+   const aa=(a.name.match(/_Vol_(\d{3})_/i)||[])[1]||'999',bb=(b.name.match(/_Vol_(\d{3})_/i)||[])[1]||'999';
+   return aa.localeCompare(bb);
+ });
+ const extras=rows.filter(x=>!/_Vol_(\d{3})_/i.test(x.name));
+ const volumeCards=volumes.map((x,i)=>'<article class="report-card">'+cardCover(x)
+   +'<div class="report-card-content"><div class="card-index">VOLUME '+esc((x.name.match(/_Vol_(\d{3})_/i)||[])[1]||String(i+1).padStart(3,'0'))+'</div>'
+   +'<h3>'+esc(title(x))+'</h3><div class="doc-meta">'+moreMeta(x)+'</div>'
+   +'<a class="report-action" href="'+esc(href(x))+'" target="_blank" rel="noopener">Ler volume <span aria-hidden="true">↗</span></a></div></article>').join('');
+ const specialShelf=extras.length?'<section class="section-block"><div class="block-heading"><div><div class="eyebrow">CADERNOS COMPLEMENTARES</div><h2>Estudos especiais da coleção</h2><p>Publicações independentes, fora da numeração dos volumes.</p></div></div>'+cards(extras)+'</section>':'';
  return sectionHead('O Analista Curioso','Uma coleção de perguntas que desafiam respostas fáceis sobre o mercado e a economia.',rows.length)
-  +'<div class="page-width content-area"><div class="curious-intro"><div><div class="eyebrow light">COLEÇÃO GM · EDIÇÕES NUMERADAS</div><h2>Curiosidade como método. Análise como resposta.</h2><p>Uma série editorial própria, com volumes numerados. Somente os exemplares definitivos aparecem nesta estante; protótipos e revisões não são publicados.</p></div><div class="curious-num" aria-hidden="true">03</div></div>'
-  +'<div class="curious-grid">'+rows.map((x,i)=>'<article class="report-card">'+cardCover(x)+'<div class="report-card-content"><div class="card-index">VOLUME '+String((x.name.match(/_Vol_(\d+)/)||[])[1]||i+1)+'</div><h3>'+esc(title(x))+'</h3><div class="doc-meta">'+moreMeta(x)+'</div><a class="report-action" href="'+esc(href(x))+'" target="_blank" rel="noopener">Ler volume <span aria-hidden="true">↗</span></a></div></article>').join('')+'</div></div>';
+  +'<div class="page-width content-area"><div class="curious-intro"><div><div class="eyebrow light">COLEÇÃO GM · EDIÇÕES NUMERADAS</div>'
+  +'<h2>Curiosidade como método. Análise como resposta.</h2>'
+  +'<p>Volumes definitivos e aprovados, preservados em ordem numérica. Protótipos e versões em avaliação não entram no catálogo.</p></div>'
+  +'<div class="curious-num" aria-label="'+volumes.length+' volumes">'+String(volumes.length).padStart(2,'0')+'</div></div>'
+  +'<div class="curious-grid">'+volumeCards+'</div>'+specialShelf+'</div>';
 }
 function archiveRows(rows){
  const visible=rows.slice(0,UI.page*PAGE);

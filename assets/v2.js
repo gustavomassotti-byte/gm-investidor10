@@ -3,7 +3,7 @@
 (function(){
 'use strict';
 const ROOT='./', PAGE=28, SEC=['inicio','dossies','carteiras','cenarios','editorial','curioso','arquivo'];
-let DATA=[], UI={section:'inicio',sub:'todos',sort:'recentes',query:'',page:1}, lastSection='inicio';
+let DATA=[], UI={section:'inicio',sub:'todos',sort:'recentes',sortBy:{},query:'',page:1}, lastSection='inicio';
 const $=s=>document.querySelector(s);
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
 const plain=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -277,14 +277,31 @@ function filterRows(rows,sec){
  if(sec==='arquivo')return rows.filter(x=>section(x)===UI.sub);
  return rows.filter(x=>subType(x)===UI.sub);
 }
-function optionsUI(sec){
- const o=subOptions[sec]||[];
- const sortControl=sec==='dossies'
-  ?'<span class="sort" aria-label="Dossiês organizados alfabeticamente">Ativos em ordem alfabética (A–Z)</span>'
-  :'<label class="sort">Organizar por <select id="sorter"><option value="recentes"'+(UI.sort==='recentes'?' selected':'')+'>Mais recentes</option><option value="az"'+(UI.sort==='az'?' selected':'')+'>Ordem alfabética</option></select></label>';
- return '<div class="controls"><div class="filter-pills" role="group" aria-label="Filtrar publicações">'+o.map(([k,v])=>'<button type="button" class="pill'+(UI.sub===k?' active':'')+'" data-sub="'+esc(k)+'" aria-pressed="'+(UI.sub===k?'true':'false')+'">'+esc(v)+'</button>').join('')+'</div>'+sortControl+'</div>';
+function sortMode(sec=UI.query?'busca':UI.section){
+ return UI.sortBy[sec]||(sec==='dossies'?'az':sec==='arquivo'||sec==='busca'?'recentes':'padrao');
 }
-function sortDocs(rows){return rows.slice().sort((a,b)=>UI.sort==='az'?title(a).localeCompare(title(b),'pt-BR'):score(b).localeCompare(score(a)))}
+function chronology(x){
+ const pub=/^\d{4}-\d{2}-\d{2}$/.test(x.published_at||'')?x.published_at:'';
+ const month=filenameMonth(x);
+ return pub||(/^\d{4}-\d{2}$/.test(month)?month+'-01':'0000-00-00');
+}
+function compareChronology(a,b){return chronology(b).localeCompare(chronology(a))||score(b).localeCompare(score(a))}
+function optionsUI(sec){
+ const o=subOptions[sec]||[],selected=sortMode(sec);
+ const sortControl='<label class="sort" for="sorter">Organizar por <select id="sorter" aria-label="Ordenar publicações">'
+  +'<option value="padrao"'+(selected==='padrao'?' selected':'')+'>Padrão da coleção</option>'
+  +'<option value="az"'+(selected==='az'?' selected':'')+'>Nome (A–Z)</option>'
+  +'<option value="recentes"'+(selected==='recentes'?' selected':'')+'>Mais recentes</option>'
+  +'</select></label>';
+ return '<div class="controls"><div class="filter-pills" role="group" aria-label="Filtrar publicações">'+o.map(([k,v])=>'<button type="button" class="pill'+(UI.sub===k?' active':'')+'" data-sub="'+esc(k)+'" aria-pressed="'+(UI.sub===k?'true':'false')+'">'+esc(v)+'</button>').join('')+'</div>'+sortControl+'</div>'
+  +(selected==='recentes'?'<p class="sort-note">Ordenação pela data de publicação, quando registrada; caso contrário, pelo mês da edição. Não indica revisão do conteúdo.</p>':'');
+}
+function sortDocs(rows,sec=UI.query?'busca':UI.section){
+ const mode=sortMode(sec);
+ return rows.slice().sort((a,b)=>mode==='az'
+  ?title(a).localeCompare(title(b),'pt-BR',{sensitivity:'base'})||compareChronology(a,b)
+  :mode==='recentes'?compareChronology(a,b):score(b).localeCompare(score(a)));
+}
 function sectionHead(t,subtitle,n){
  return '<div class="subhero"><div class="page-width subhero-inner"><div><div class="eyebrow">BIBLIOTECA GM RESEARCH</div><h1>'+esc(t)+'</h1><p>'+esc(subtitle)+'</p></div><div class="subhero-count">'+moneyCount(n)+'<small>documentos no acervo</small></div></div></div>';
 }
@@ -295,7 +312,9 @@ function renderDossies(){
  const rows=DATA.filter(x=>section(x)==='dossies');
  const filtered=filterRows(rows,'dossies');
  const groups=groupsForAssets(filtered);
- groups.sort((a,b)=>a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'}));
+ groups.sort((a,b)=>sortMode('dossies')==='recentes'
+   ?compareChronology(a.items[0],b.items[0])||a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'})
+   :a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'}));
  return sectionHead('Dossiês de investimentos','Análises por empresa e ativo. A edição mais recente aparece primeiro; os estudos antigos continuam preservados em cada ficha.',rows.length)
   +'<div class="page-width content-area">'+optionsUI('dossies')+'<p class="result-line">'+groups.length+' ativos · '+filtered.length+' documentos nesta seleção</p>'
   +(groups.length?'<div class="asset-grid">'+groups.map(assetCard).join('')+'</div>':'<div class="empty">Nenhum dossiê nesta categoria.</div>')+'</div>';
@@ -349,7 +368,11 @@ function renderCarteiras(){
   by.get(fam).push(x);
  }
  const familyOrder=['Dividendos','Buy & Hold','Small Caps','Fundos Imobiliários','BDRs','Outras carteiras'];
- const families=[...by.entries()].sort((a,b)=>familyOrder.indexOf(a[0])-familyOrder.indexOf(b[0]));
+ const families=[...by.entries()].sort((a,b)=>sortMode('carteiras')==='az'
+   ?a[0].localeCompare(b[0],'pt-BR',{sensitivity:'base'})
+   :sortMode('carteiras')==='recentes'
+    ?compareChronology(a[1].slice().sort(compareChronology)[0],b[1].slice().sort(compareChronology)[0])
+    :familyOrder.indexOf(a[0])-familyOrder.indexOf(b[0]));
  const html=families.map(([fam,list])=>{
   list.sort((a,b)=>(filenameMonth(b)||'').localeCompare(filenameMonth(a)||'')||score(b).localeCompare(score(a)));
   return '<section class="portfolio-shelf" aria-label="Carteira '+esc(fam)+'">'
@@ -387,16 +410,19 @@ function renderCenarios(){
   'Depois_das_Urnas',
   'Mapa_das_Oportunidades'
  ];
- const spotlight=UI.sub==='todos'?spotlightOrder.map(key=>filtered.find(x=>x.name.includes(key))).filter(Boolean):[];
+ const editorialOrder=sortMode('cenarios')==='padrao';
+ const spotlight=UI.sub==='todos'&&editorialOrder?spotlightOrder.map(key=>filtered.find(x=>x.name.includes(key))).filter(Boolean):[];
  const featuredNames=new Set(spotlight.map(x=>x.name));
  const remainder=filtered.filter(x=>!featuredNames.has(x.name));
  const buckets=[['Panorama e oportunidades para 2027',x=>/2027/i.test(x.name),'Estudos prospectivos sobre economia, riscos e alocação.'],
  ['Economia, moedas e conjuntura',x=>/DOLAR|CAMBIO|JUROS|FISCAL|URNA|ELEITORAL|GESTORAS/i.test(x.name),'Câmbio, juros, política econômica e movimentos do mercado.'],
  ['Mercados, índices e ativos globais',x=>/BITCOIN|IBOVESPA|SP500|EWZ/i.test(x.name),'Panoramas de bolsa, índices e Bitcoin.'],
  ['Outros estudos de mercado',x=>true,'Outras publicações da GM Research.']];
- const shelves=UI.sub==='todos'
-  ?(spotlight.length?sectionBlock('Leituras em destaque','Capas e temas selecionados para apresentar a diversidade da GM Research.',spotlight):'')+renderBucketed(remainder,buckets)
-  :sectionBlock((subOptions.cenarios.find(x=>x[0]===UI.sub)||[])[1]||'Estudos','',filtered);
+ const shelves=!editorialOrder
+  ?sectionBlock('Publicações ordenadas',sortMode('cenarios')==='az'?'Em ordem alfabética de título.':'Em ordem de publicação ou edição, conforme os dados disponíveis.',filtered)
+  :UI.sub==='todos'
+    ?(spotlight.length?sectionBlock('Leituras em destaque','Capas e temas selecionados para apresentar a diversidade da GM Research.',spotlight):'')+renderBucketed(remainder,buckets)
+    :sectionBlock((subOptions.cenarios.find(x=>x[0]===UI.sub)||[])[1]||'Estudos','',filtered);
  return sectionHead('Cenários & Mercado','Estudos de conjuntura, economia e perspectivas. Organizados por tema, com uma seleção inicial de leituras de destaque.',rows.length)
   +'<div class="page-width content-area">'+optionsUI('cenarios')+'<div class="editorial-shelves">'+shelves+'</div></div>';
 }
@@ -411,15 +437,18 @@ function renderEditorial(){
  ['Gestão de risco e estratégias',x=>subType(x)==='estrategia','Derivativos, hedge, proteção e estratégias relativas.'],
  ['Fundamentos e construção patrimonial',x=>subType(x)==='fundamentos','Análise, alocação e construção de carteiras de longo prazo.']];
  return sectionHead('GM Editorial','Uma biblioteca permanente de livros, ensaios e publicações de referência. Aqui a obra importa mais que a data.',rows.length)
-  +'<div class="page-width content-area">'+optionsUI('editorial')+'<div class="editorial-shelves">'+(UI.sub==='todos'?renderBucketed(filtered,buckets):sectionBlock((subOptions.editorial.find(x=>x[0]===UI.sub)||[])[1]||'Obras','',filtered))+'</div></div>';
+  +'<div class="page-width content-area">'+optionsUI('editorial')+'<div class="editorial-shelves">'+(UI.sub==='todos'&&sortMode('editorial')==='padrao'?renderBucketed(filtered,buckets):sectionBlock('Obras ordenadas','Livros e estudos organizados pelo critério selecionado.',filtered))+'</div></div>';
 }
 function renderCurioso(){
  const rows=DATA.filter(x=>section(x)==='curioso');
  const volumes=rows.filter(x=>/_Vol_(\d{3})_/i.test(x.name)).sort((a,b)=>{
+   if(sortMode('curioso')!=='padrao')return sortMode('curioso')==='az'
+     ?title(a).localeCompare(title(b),'pt-BR',{sensitivity:'base'})
+     :compareChronology(a,b);
    const aa=(a.name.match(/_Vol_(\d{3})_/i)||[])[1]||'999',bb=(b.name.match(/_Vol_(\d{3})_/i)||[])[1]||'999';
    return aa.localeCompare(bb);
  });
- const extras=rows.filter(x=>!/_Vol_(\d{3})_/i.test(x.name));
+ const extras=sortDocs(rows.filter(x=>!/_Vol_(\d{3})_/i.test(x.name)),'curioso');
  const volumeCards=volumes.map((x,i)=>'<article class="report-card">'+cardCover(x)
    +'<div class="report-card-content"><div class="card-index">VOLUME '+esc((x.name.match(/_Vol_(\d{3})_/i)||[])[1]||String(i+1).padStart(3,'0'))+'</div>'
    +'<h3>'+esc(title(x))+'</h3><div class="doc-meta">'+moreMeta(x)+'</div>'
@@ -430,7 +459,7 @@ function renderCurioso(){
   +'<h2>Curiosidade como método. Análise como resposta.</h2>'
   +'<p>Volumes definitivos e aprovados, preservados em ordem numérica. Protótipos e versões em avaliação não entram no catálogo.</p></div>'
   +'<div class="curious-num" aria-label="'+volumes.length+' volumes">'+String(volumes.length).padStart(2,'0')+'</div></div>'
-  +'<div class="curious-grid">'+volumeCards+'</div>'+specialShelf+'</div>';
+  +optionsUI('curioso')+'<div class="curious-grid">'+volumeCards+'</div>'+specialShelf+'</div>';
 }
 function archiveRows(rows){
  const visible=rows.slice(0,UI.page*PAGE);
@@ -516,9 +545,9 @@ function renderInicio(){
   +'<div class="notice">Todos os PDFs e seus endereços originais continuam preservados. Você pode acessar edições anteriores nas seções ou consultar o Acervo completo.</div></div>';
 }
 function renderSearch(){
- const q=plain(UI.query),rows=sortDocs(DATA.filter(x=>plain([title(x),x.name,x.display_name,assetInfo(x).ticker,assetInfo(x).name,section(x),subType(x)].join(' ')).includes(q)));
+ const q=plain(UI.query),rows=sortDocs(DATA.filter(x=>plain([title(x),x.name,x.display_name,assetInfo(x).ticker,assetInfo(x).name,section(x),subType(x)].join(' ')).includes(q)),'busca');
  return sectionHead('Resultados da busca','Pesquisa em todo o acervo, incluindo títulos, tickers, assuntos e versões antigas.',rows.length)
-  +'<div class="page-width content-area"><p class="result-line">'+rows.length+' documentos para "'+esc(UI.query)+'"</p>'+archiveRows(rows)+'</div>';
+  +'<div class="page-width content-area">'+optionsUI('busca')+'<p class="result-line">'+rows.length+' documentos para "'+esc(UI.query)+'"</p>'+archiveRows(rows)+'</div>';
 }
 function render(){
  if(!DATA.length)return;
@@ -563,7 +592,10 @@ document.addEventListener('click',ev=>{
  const more=ev.target.closest('button[data-more]');
  if(more){UI.page++;render();return}
 });
-document.addEventListener('change',ev=>{if(ev.target.id==='sorter'){UI.sort=ev.target.value;UI.page=1;render()}});
+document.addEventListener('change',ev=>{if(ev.target.id==='sorter'){
+ const sec=UI.query?'busca':UI.section;
+ UI.sortBy[sec]=ev.target.value;UI.page=1;render();
+}});
 $('#global-search').addEventListener('input',ev=>{
  UI.query=ev.target.value.trim();UI.page=1;
  if(UI.query.length){lastSection=UI.section}else UI.section=lastSection||'inicio';

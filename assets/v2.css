@@ -149,3 +149,158 @@ main{min-height:65vh;padding-bottom:88px}.view{animation:appear .18s ease-out}@k
 .portfolio-helper{font-size:11px;color:var(--muted);line-height:1.5;margin:18px 0 0}
 @media(max-width:1100px){.portfolio-shelf{grid-template-columns:175px minmax(0,1fr);gap:13px}.portfolio-family h2{font-size:22px}.portfolio-month-card{flex-basis:190px;gap:10px}.portfolio-month-cover{width:77px;flex-basis:77px;height:111px}}
 @media(max-width:760px){.portfolio-shelf{grid-template-columns:1fr;padding:16px;gap:14px}.portfolio-family{border-right:0;border-bottom:1px solid var(--line);padding:0 2px 13px;display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:12px;row-gap:4px}.portfolio-family-symbol{grid-row:span 3}.portfolio-family .portfolio-family-label{grid-column:2}.portfolio-family h2{grid-column:2;font-size:22px}.portfolio-family p{grid-column:2}.portfolio-family .portfolio-count{grid-column:2}.portfolio-month-card{flex:0 0 188px}.portfolio-line-heading{font-size:10px}}
+
+
+/* Biblioteca GM Research — refinamento editorial de 20/11/2026.
+   Ajuste de apresentação apenas; nenhum PDF/URL foi alterado. */
+
+/* O Analista Curioso: mesmas proporções e densidade visual das capas editoriais. */
+.curious-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:17px;
+}
+.curious-grid .report-cover{
+  aspect-ratio:3/3.4;
+  max-height:none;
+  background:#eeece7;
+}
+.curious-grid .report-cover img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  padding:7px;
+  background:#eeece7;
+}
+.curious-grid .report-card-content{min-width:0}
+.curious-grid .report-card h3{overflow-wrap:anywhere}
+
+/* Hero: sempre mostrar a capa inteira, inclusive no conjunto sobreposto. */
+.hero-art img{
+  object-fit:contain;
+  object-position:center;
+  background:#f5f1e9;
+  border-color:rgba(225,199,153,.32);
+}
+
+/* Identidade visual individualizada nas seis coleções. */
+.collections-section .block-heading{margin-bottom:23px}
+.collections-section .block-heading p{max-width:760px}
+.collection-grid{gap:16px}
+.collection-card{
+  --card-accent:#456789;
+  --card-dark:#263c55;
+  --card-tint:#e7edf3;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:288px;
+  gap:11px;
+  padding:20px 21px 18px;
+  border-radius:12px;
+  box-shadow:0 10px 28px rgba(15,30,50,.045);
+}
+.collection-card::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:var(--card-accent);
+}
+.collection-card::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:-1;
+  width:155px;height:155px;
+  top:54px;right:-45px;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--card-accent) 16%,transparent);
+  box-shadow:0 0 0 21px color-mix(in srgb,var(--card-accent) 4%,transparent),0 0 0 43px color-mix(in srgb,var(--card-accent) 3%,transparent);
+}
+.collection-dossies{--card-accent:#3f7196;--card-dark:#244b70;--card-tint:#e3edf5}
+.collection-carteiras{--card-accent:#3c806a;--card-dark:#1d5d4a;--card-tint:#e3f1ea}
+.collection-cenarios{--card-accent:#bc914a;--card-dark:#795b2d;--card-tint:#f8eed9}
+.collection-editorial{--card-accent:#845776;--card-dark:#623b58;--card-tint:#f4e8ef}
+.collection-curioso{--card-accent:#6c69a7;--card-dark:#43437f;--card-tint:#eceafb}
+.collection-arquivo{--card-accent:#66768a;--card-dark:#40536a;--card-tint:#e9edf1}
+.collection-top{display:flex;align-items:center;justify-content:space-between;gap:9px;min-height:18px}
+.collection-kicker{color:var(--card-accent);font-size:9px;font-weight:850;letter-spacing:.1em}
+.collection-total{color:#737d8b;font-size:10px;white-space:nowrap}
+.collection-visual{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  height:81px;
+  border-radius:9px;
+  background:linear-gradient(120deg,var(--card-tint),color-mix(in srgb,var(--card-tint) 54%,#fff));
+  border:1px solid color-mix(in srgb,var(--card-accent) 12%,transparent);
+}
+.collection-visual svg{
+  height:72px;width:100px;
+  stroke:var(--card-accent);
+  stroke-width:2.65px;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  fill:none;
+  filter:drop-shadow(1px 2px 2px rgba(20,35,55,.065));
+}
+.collection-card h3{
+  font:600 22px/1.23 Georgia,serif;
+  margin:2px 0 0;
+  color:var(--card-dark);
+}
+.collection-card p{
+  font-size:12px;
+  line-height:1.58;
+  margin:0;
+  flex:1;
+  color:#657080;
+}
+.collection-card footer{
+  border-top:1px solid #e7e4de;
+  padding-top:11px;
+  color:var(--card-dark);
+  font-size:11px;
+  margin-top:auto;
+  align-items:center;
+}
+.collection-arrow{
+  background:var(--card-tint);
+  color:var(--card-accent);
+  width:28px;height:28px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  font-size:15px;
+  transition:transform .18s ease;
+}
+.collection-card:hover{border-color:color-mix(in srgb,var(--card-accent) 40%,#fff);transform:translateY(-4px);box-shadow:0 15px 32px rgba(20,30,42,.085)}
+.collection-card:hover .collection-arrow{transform:translate(2px,-2px)}
+@media(max-width:1050px){
+  .curious-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .collection-card{padding:18px;min-height:285px}
+  .collection-card h3{font-size:20px}
+}
+@media(max-width:760px){
+  .curious-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .curious-grid .report-cover{aspect-ratio:3/3.3;max-height:none}
+  .curious-grid .report-cover img{padding:5px}
+  .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .collection-card{min-height:282px;padding:15px;gap:9px}
+  .collection-visual{height:68px}
+  .collection-visual svg{width:90px;height:62px}
+  .collection-card h3{font-size:19px}
+  .collection-card p{font-size:11px}
+}
+@media(max-width:460px){
+  .curious-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .curious-grid .report-cover{max-height:none}
+  .curious-grid .report-card h3{font-size:15px}
+  .collection-grid{grid-template-columns:1fr}
+  .collection-card{min-height:218px;padding:17px}
+  .collection-visual{height:71px}
+  .collection-card h3{font-size:21px}
+  .collection-card p{font-size:12px}
+}

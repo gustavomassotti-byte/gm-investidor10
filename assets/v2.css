@@ -462,3 +462,8 @@ main{min-height:65vh;padding-bottom:88px}.view{animation:appear .18s ease-out}@k
 @media(prefers-reduced-motion:reduce){
   .collections-section .collection-visual img{transition:none}
 }
+
+/* Ordenação do catálogo: esclarece data histórica sem sugerir atualização não verificada. */
+.sort-note{font-size:11px;line-height:1.55;color:#77808d;margin:-7px 0 20px;max-width:740px}
+.sort select{max-width:none;min-width:171px}
+@media(max-width:460px){.controls .sort{width:100%;justify-content:space-between}.sort select{min-width:170px}}

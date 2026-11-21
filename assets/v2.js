@@ -20,6 +20,9 @@ const publication=x=>x.published_at?'Publicado '+datestr(x.published_at):'Public
 const score=x=>(filenameMonth(x)||'0000-00')+(x.published_at||'0000-00')+x.name;
 const topicTitle={
  'GM_Research_Especial_Bitcoin_2026-11-19_CAPA_NOVA.pdf':'Bitcoin — O Ciclo Mudou?',
+ 'GM_Depois_das_Urnas_Bolsa_Dolar_Juros_Inflacao.pdf':'Depois das Urnas: Bolsa, Dólar, Juros e Inflação',
+ 'GM_Dividendos_Novembro2026_Padrao_Outubro_REV3.pdf':'Carteira de Dividendos — Novembro 2026',
+ 'GM_Research_Dossie_NVIDIA_NVDA_NVDC34_2026-11-18_APROVADO.pdf':'NVIDIA — Dossiê Fundamentalista',
  'GM_Research_Observatorio_de_Gestoras_2026-11-19_CAPA_NOVA.pdf':'Observatório de Gestoras — Quando o Consenso Muda',
  'GM_Research_Especial_Ibovespa_2026_APROVADO.pdf':'Ibovespa em Duas Moedas',
  'GM_Research_Ibovespa_3T26_O_Teste_do_Caixa.pdf':'Ibovespa — O Teste do Caixa',
@@ -58,6 +61,9 @@ const topicTitle={
  'Analista_Curioso_Divida_1624.pdf':'A Dívida de 1624'
 };
 const blurbs=[
+ [/Depois_das_Urnas/i,'Como eleições e política econômica podem mudar as perspectivas para bolsa, dólar, juros e inflação.'],
+ [/^GM_Dividendos_Novembro/i,'A seleção de dividendos da GM Research para novembro, com estratégias e acompanhamento de carteira.'],
+ [/Dossie_NVIDIA/i,'Fundamentos, valuation, riscos e perspectivas da NVIDIA em um estudo de companhia.'],
  [/Observatorio_de_Gestoras/i,'Uma leitura das mudanças de posicionamento e narrativas das principais gestoras.'],
  [/Especial_Bitcoin/i,'Ciclos, valuation narrativo e os riscos de um mercado em transformação.'],
  [/Especial_Ibovespa/i,'A bolsa brasileira observada em reais e em dólares, incluindo o EWZ.'],
@@ -416,33 +422,61 @@ function renderArquivo(){
  return sectionHead('Acervo completo','Todos os documentos publicados, inclusive edições antigas. Nenhuma publicação é escondida ou descartada pela nova organização.',DATA.length)
   +'<div class="page-width content-area">'+optionsUI('arquivo')+'<p class="result-line">'+rows.length+' documentos encontrados</p>'+archiveRows(rows)+'</div>';
 }
+const collectionArt={
+ dossies:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="16" y="11" width="60" height="48" rx="5"/><path d="M26 48V35h9v13M41 48V26h9v22M56 48V18h9v30M22 53h49" stroke-linecap="round"/><circle cx="70" cy="15" r="7" fill="var(--card-accent)" fill-opacity=".22"/></svg>',
+ carteiras:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="45" cy="36" r="23"/><path d="M45 13v23l19 13M45 36l-21 10"/><path d="M70 15h11M75.5 9.5v11" stroke-linecap="round"/><circle cx="45" cy="36" r="4" fill="var(--card-accent)"/></svg>',
+ cenarios:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="47" cy="35" r="24"/><ellipse cx="47" cy="35" rx="10" ry="24"/><path d="M23 35h48M28 22h38M28 48h38" stroke-linecap="round"/><path d="M12 55l10-9" stroke-linecap="round"/></svg>',
+ editorial:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 15h20c7 0 10 4 10 8v33c-3-5-7-7-13-7H18zM74 15H54c-7 0-10 4-10 8v33c3-5 7-7 13-7h17z"/><path d="M24 24h15M24 32h15M56 24h12M56 32h12" stroke-linecap="round"/></svg>',
+ curioso:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M33 47c-4-5-7-11-7-17a20 20 0 1 1 40 0c0 6-3 12-8 17l-2 6H35zM35 59h22M41 64h10" stroke-linecap="round"/><path d="M40 26c0-9 15-10 15 0 0 6-8 6-8 12M47 43v1" stroke-linecap="round"/></svg>',
+ arquivo:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="16" y="20" width="60" height="37" rx="4"/><path d="M12 20h68v-8H12zM34 33h24M34 42h24M24 55h44" stroke-linecap="round"/><rect x="40" y="27" width="14" height="5" rx="2"/></svg>'
+};
 function collectionCard(sec,symbol,heading,desc,n){
- return '<a href="'+esc(navURL(sec))+'" class="collection-card" data-go="'+esc(sec)+'"><div class="collection-symbol" aria-hidden="true">'+symbol+'</div><h3>'+esc(heading)+'</h3><p>'+esc(desc)+'</p><footer><span>'+n+' publicações</span><span>Explorar ↗</span></footer></a>';
+ const visual=collectionArt[sec]||collectionArt.arquivo;
+ return '<a href="'+esc(navURL(sec))+'" class="collection-card collection-'+esc(sec)+'" data-go="'+esc(sec)+'" aria-label="Explorar '+esc(heading)+': '+esc(desc)+'">'
+  +'<div class="collection-top"><span class="collection-kicker">COLEÇÃO GM RESEARCH</span><span class="collection-total">'+n+' publicações</span></div>'
+  +'<div class="collection-visual">'+visual+'</div>'
+  +'<h3>'+esc(heading)+'</h3><p>'+esc(desc)+'</p>'
+  +'<footer><span>Conhecer a coleção</span><span class="collection-arrow" aria-hidden="true">↗</span></footer></a>';
 }
 function pick(namepart){return DATA.find(x=>x.name.includes(namepart))}
 function renderInicio(){
- const choices=['Especial_Bitcoin_2026','Observatorio_de_Gestoras','Especial_Ibovespa_2026','O_Preco_da_Fragilidade','A_Cabeca_do_Investidor_Edicao_Visual','O_Analista_Curioso_Vol_001'];
+ // A vitrine reúne coleções distintas e atualiza seus destaques apenas quando o PDF existe no catálogo.
+ const choices=[
+  'O_Analista_Curioso_Vol_007',
+  'Depois_das_Urnas',
+  'GM_Dividendos_Novembro',
+  'Emergentes_IA_Estudo_Estrutural',
+  'Custo_Brasil_2026-11-19_APROVADO',
+  'O_Analista_Curioso_A_Divida_de_1624',
+  'Dossie_NVIDIA',
+  'O_Preco_da_Fragilidade'
+ ];
  const chosen=choices.map(pick).filter(Boolean);
- const heroDocs=['Especial_Bitcoin_2026','O_Preco_da_Fragilidade','O_Analista_Curioso_Vol_001'].map(pick).filter(Boolean);
+ const heroDocs=['O_Analista_Curioso_Vol_007','Depois_das_Urnas','GM_Dividendos_Novembro'].map(pick).filter(Boolean);
  const cnt=Object.fromEntries(['dossies','carteiras','cenarios','editorial','curioso'].map(k=>[k,countType(k)]));
  return '<section class="hero"><div class="page-width hero-inner"><div><div class="eyebrow light">GM RESEARCH · ACERVO DE ANÁLISE</div>'
   +'<h1>Conhecimento para <em>decisões melhores.</em></h1>'
   +'<p>Um acervo de análises, estratégias e perspectivas para quem investe com método. Pesquise por empresa, explore uma coleção ou acompanhe os estudos mais recentes.</p>'
   +'<div class="action-group"><a class="primary-button" href="'+navURL('dossies')+'" data-go="dossies">Explorar dossiês ↗</a><a class="ghost-button" href="'+navURL('editorial')+'" data-go="editorial">Conhecer a GM Editorial</a></div></div>'
-  +'<div class="hero-art" aria-hidden="true"><div class="hero-panel"></div>'+heroDocs.map((x,i)=>'<img class="cover-'+['one','two','three'][i]+'" src="'+esc(coverSrc(x))+'" alt="">').join('')+'<div class="hero-caption">Research · Editorial · Estratégia</div></div></div></section>'
+  +'<div class="hero-art" aria-hidden="true"><div class="hero-panel"></div>'+heroDocs.map((x,i)=>'<img class="cover-'+['one','two','three'][i]+'" src="'+esc(coverSrc(x))+'" alt="">').join('')+'<div class="hero-caption">Pesquisa · Perspectivas · Estratégia</div></div></div></section>'
   +'<div class="page-width"><div class="quick-stats"><div class="quick-stat"><strong>'+DATA.length+'</strong><span>publicações<br>preservadas</span></div>'
   +'<div class="quick-stat"><strong>'+cnt.dossies+'</strong><span>dossiês e<br>ativos</span></div>'
   +'<div class="quick-stat"><strong>'+cnt.editorial+'</strong><span>livros e<br>ensaios</span></div>'
-  +'<div class="quick-stat"><strong>'+cnt.curioso+'</strong><span>volumes do<br>Analista Curioso</span></div></div>'
-  +'<section class="section-block"><div class="block-heading"><div><div class="eyebrow">DESTAQUES DO ACERVO</div><h2>Para começar a explorar</h2><p>Estudos e obras selecionados, cada um preservado em sua coleção original.</p></div><a href="'+navURL('arquivo')+'" class="text-link" data-go="arquivo">Ver acervo completo ↗</a></div>'+cards(chosen)+'</section>'
-  +'<section class="section-block"><div class="block-heading"><div><div class="eyebrow">ESCOLHA UM CAMINHO</div><h2>Explore por coleção</h2></div></div>'
-  +'<div class="collection-grid">'+collectionCard('dossies','↗','Dossiês','Ações, BDRs e FIIs por empresa, com histórico de edições.',cnt.dossies)
-  +collectionCard('carteiras','◇','Carteiras','Dividendos, Buy & Hold, Small Caps, FIIs e BDRs.',cnt.carteiras)
-  +collectionCard('cenarios','◎','Cenários & Mercado','Macro, índices, câmbio e leituras sobre conjuntura.',cnt.cenarios)
-  +collectionCard('editorial','▣','GM Editorial','Obras e ensaios permanentes sobre investimento.',cnt.editorial)
-  +collectionCard('curioso','✧','O Analista Curioso','Uma coleção numerada com identidade própria.',cnt.curioso)
-  +collectionCard('arquivo','≡','Acervo completo','Consulte todas as publicações, inclusive o histórico.',DATA.length)+'</div></section>'
-  +'<div class="notice">O catálogo preserva os documentos e endereços originais. Os arquivos em versões antigas podem ser consultados pelo histórico de cada série ou pelo Acervo completo.</div></div>';
+  +'<div class="quick-stat"><strong>'+cnt.curioso+'</strong><span>publicações do<br>Analista Curioso</span></div></div>'
+  +'<section class="section-block"><div class="block-heading"><div><div class="eyebrow">DESTAQUES DA BIBLIOTECA</div><h2>Investigações que despertam perguntas</h2>'
+  +'<p>Uma seleção de assuntos para descobrir a GM Research: mercados, eleições, estratégias, empresas e ideias fora do consenso.</p></div>'
+  +'<a href="'+navURL('arquivo')+'" class="text-link" data-go="arquivo">Ver todo o catálogo ↗</a></div>'+cards(chosen)+'</section>'
+  +'<section class="section-block collections-section"><div class="block-heading"><div><div class="eyebrow">ENCONTRE SEU CAMINHO</div><h2>Explore por coleção</h2>'
+  +'<p>Escolha o tipo de análise que procura. Cada coleção tem uma proposta própria, do acompanhamento mensal às grandes perguntas do mercado.</p></div></div>'
+  +'<div class="collection-grid">'
+  +collectionCard('dossies','↗','Dossiês','Investigue empresas e ativos: fundamentos, riscos, valuation e histórico de ações, BDRs e FIIs.',cnt.dossies)
+  +collectionCard('carteiras','◇','Carteiras','Compare as estratégias de Dividendos, Buy & Hold, Small Caps, FIIs e BDRs em edições mensais.',cnt.carteiras)
+  +collectionCard('cenarios','◎','Cenários & Mercado','Entenda o ambiente econômico: eleições, juros, câmbio, índices, IA e cenários para o patrimônio.',cnt.cenarios)
+  +collectionCard('editorial','▣','GM Editorial','Aprofunde ideias de longo prazo sobre comportamento, risco, derivativos, método e construção de riqueza.',cnt.editorial)
+  +collectionCard('curioso','✧','O Analista Curioso','Explore perguntas provocativas e hipóteses fora do consenso em volumes numerados e estudos especiais.',cnt.curioso)
+  +collectionCard('arquivo','≡','Acervo completo','Pesquise todos os documentos, incluindo edições anteriores, publicações históricas e estudos especiais.',DATA.length)
+  +'</div></section>'
+  +'<div class="notice">Todos os PDFs e seus endereços originais continuam preservados. Você pode acessar edições anteriores nas seções ou consultar o Acervo completo.</div></div>';
 }
 function renderSearch(){
  const q=plain(UI.query),rows=sortDocs(DATA.filter(x=>plain([title(x),x.name,x.display_name,assetInfo(x).ticker,assetInfo(x).name,section(x),subType(x)].join(' ')).includes(q)));

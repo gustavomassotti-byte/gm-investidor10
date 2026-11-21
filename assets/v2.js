@@ -315,7 +315,7 @@ function renderDossies(){
  const filtered=filterRows(rows,'dossies');
  const groups=groupsForAssets(filtered);
  groups.sort((a,b)=>sortMode('dossies')==='recentes'
-   ?compareChronology(a.items[0],b.items[0])||a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'})
+   ?(Math.max(...b.items.map(x=>Date.parse(chronology(x))||0))-Math.max(...a.items.map(x=>Date.parse(chronology(x))||0)))||a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'})
    :a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'}));
  return sectionHead('Dossiês de investimentos','Análises por empresa e ativo. A edição mais recente aparece primeiro; os estudos antigos continuam preservados em cada ficha.',rows.length)
   +'<div class="page-width content-area">'+optionsUI('dossies')+'<p class="result-line">'+groups.length+' ativos · '+filtered.length+' documentos nesta seleção</p>'

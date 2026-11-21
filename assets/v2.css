@@ -375,3 +375,90 @@ main{min-height:65vh;padding-bottom:88px}.view{animation:appear .18s ease-out}@k
 @media(prefers-reduced-motion:reduce){
   .feature-rail{scroll-behavior:auto}
 }
+
+
+/* Coleções com fotografias editoriais — substitui os antigos ícones SVG.
+   Intervenção restrita a "Explore por coleção"; não altera o catálogo. */
+.collections-section .collection-card{
+  min-height:319px;
+  padding:18px 20px 18px;
+  gap:11px;
+  border:1px solid #ded9cf;
+  box-shadow:0 12px 26px rgba(15,30,50,.05);
+}
+.collections-section .collection-card::after{display:none}
+.collections-section .collection-visual{
+  display:block;
+  position:relative;
+  height:132px;
+  flex:0 0 132px;
+  overflow:hidden;
+  border-radius:9px;
+  border:0;
+  background:linear-gradient(125deg,#263d53,#152738);
+}
+.collections-section .collection-visual img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  filter:saturate(.82) contrast(1.07);
+  transform:scale(1);
+  transition:transform .35s ease,filter .35s ease;
+}
+.collections-section .collection-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(180deg,rgba(9,24,39,.02) 12%,rgba(7,21,37,.22) 47%,rgba(5,18,33,.83) 100%);
+  pointer-events:none;
+}
+.collections-section .collection-image-label{
+  position:absolute;
+  z-index:2;
+  left:15px;
+  bottom:14px;
+  font:800 10px/1.35 system-ui,sans-serif;
+  letter-spacing:.15em;
+  color:#f3e7d2;
+  text-shadow:0 1px 8px rgba(0,0,0,.55);
+}
+.collections-section .collection-image-label::before{
+  content:"";
+  display:inline-block;
+  width:14px;
+  height:2px;
+  vertical-align:middle;
+  margin-right:9px;
+  background:#cca15a;
+}
+.collections-section .collection-card:hover .collection-visual img{
+  transform:scale(1.045);
+  filter:saturate(.96) contrast(1.05);
+}
+.collections-section .collection-card h3{
+  margin:1px 0 0;
+  font:600 21px/1.25 Georgia,serif;
+  color:#17273a;
+}
+.collections-section .collection-card p{
+  color:#66717c;
+  line-height:1.6;
+}
+.collections-section .collection-top{min-height:19px}
+@media(max-width:760px){
+  .collections-section .collection-card{min-height:303px;padding:14px;gap:9px}
+  .collections-section .collection-visual{height:112px;flex-basis:112px}
+  .collections-section .collection-image-label{font-size:9px;left:11px;bottom:11px;letter-spacing:.1em}
+  .collections-section .collection-card h3{font-size:19px}
+}
+@media(max-width:460px){
+  .collections-section .collection-card{min-height:0;padding:16px}
+  .collections-section .collection-visual{height:146px;flex-basis:146px}
+  .collections-section .collection-card h3{font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){
+  .collections-section .collection-visual img{transition:none}
+}

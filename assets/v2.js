@@ -279,7 +279,10 @@ function filterRows(rows,sec){
 }
 function optionsUI(sec){
  const o=subOptions[sec]||[];
- return '<div class="controls"><div class="filter-pills" role="group" aria-label="Filtrar publicações">'+o.map(([k,v])=>'<button type="button" class="pill'+(UI.sub===k?' active':'')+'" data-sub="'+esc(k)+'" aria-pressed="'+(UI.sub===k?'true':'false')+'">'+esc(v)+'</button>').join('')+'</div><label class="sort">Organizar por <select id="sorter"><option value="recentes"'+(UI.sort==='recentes'?' selected':'')+'>Mais recentes</option><option value="az"'+(UI.sort==='az'?' selected':'')+'>Ordem alfabética</option></select></label></div>';
+ const sortControl=sec==='dossies'
+  ?'<span class="sort" aria-label="Dossiês organizados alfabeticamente">Ativos em ordem alfabética (A–Z)</span>'
+  :'<label class="sort">Organizar por <select id="sorter"><option value="recentes"'+(UI.sort==='recentes'?' selected':'')+'>Mais recentes</option><option value="az"'+(UI.sort==='az'?' selected':'')+'>Ordem alfabética</option></select></label>';
+ return '<div class="controls"><div class="filter-pills" role="group" aria-label="Filtrar publicações">'+o.map(([k,v])=>'<button type="button" class="pill'+(UI.sub===k?' active':'')+'" data-sub="'+esc(k)+'" aria-pressed="'+(UI.sub===k?'true':'false')+'">'+esc(v)+'</button>').join('')+'</div>'+sortControl+'</div>';
 }
 function sortDocs(rows){return rows.slice().sort((a,b)=>UI.sort==='az'?title(a).localeCompare(title(b),'pt-BR'):score(b).localeCompare(score(a)))}
 function sectionHead(t,subtitle,n){
@@ -292,7 +295,7 @@ function renderDossies(){
  const rows=DATA.filter(x=>section(x)==='dossies');
  const filtered=filterRows(rows,'dossies');
  const groups=groupsForAssets(filtered);
- groups.sort((a,b)=>UI.sort==='az'?a.asset.name.localeCompare(b.asset.name,'pt-BR'):score(b.items[0]).localeCompare(score(a.items[0])));
+ groups.sort((a,b)=>a.asset.name.localeCompare(b.asset.name,'pt-BR',{sensitivity:'base'}));
  return sectionHead('Dossiês de investimentos','Análises por empresa e ativo. A edição mais recente aparece primeiro; os estudos antigos continuam preservados em cada ficha.',rows.length)
   +'<div class="page-width content-area">'+optionsUI('dossies')+'<p class="result-line">'+groups.length+' ativos · '+filtered.length+' documentos nesta seleção</p>'
   +(groups.length?'<div class="asset-grid">'+groups.map(assetCard).join('')+'</div>':'<div class="empty">Nenhum dossiê nesta categoria.</div>')+'</div>';

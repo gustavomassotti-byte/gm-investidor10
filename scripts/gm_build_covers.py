@@ -21,8 +21,15 @@ THEMATIC_ACTIONS = re.compile(
 
 def needs_cover(row):
     cat = row.get('category', '')
+    # Dossiê NVIDIA: a vitrine deve exibir a primeira página do PDF oficial,
+    # nunca uma capa genérica. Os outros dossiês continuam inalterados.
+    is_nvidia = row.get('name', '') == (
+        'GM_Research_Dossie_NVIDIA_NVDA_NVDC34_2026-11-18_APROVADO.pdf'
+    )
     return cat in NON_ASSET_CATEGORIES or (
-        cat == 'acoes' and bool(THEMATIC_ACTIONS.search(row.get('name', '')))
+        cat == 'acoes' and (
+            bool(THEMATIC_ACTIONS.search(row.get('name', ''))) or is_nvidia
+        )
     )
 
 

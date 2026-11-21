@@ -495,11 +495,16 @@ function collectionCard(sec,symbol,heading,desc,n){
 function pick(namepart){return DATA.find(x=>x.name.includes(namepart))}
 function featureCarousel(rows){
  if(!rows.length)return '<div class="empty">Destaques em atualização.</div>';
- return '<div class="feature-carousel" role="region" aria-label="Carrossel de destaques da GM Research">'
-  +'<div class="feature-rail" data-feature-rail tabindex="0" aria-label="Capas de publicações, navegue pelas setas ou deslize lateralmente">'+rows.map(card).join('')+'</div>'
-  +'<div class="feature-controls"><span>Mercado · Macroeconomia · Editorial · Derivativos · Carteiras · Empresas</span>'
-  +'<div class="feature-buttons"><button type="button" class="feature-arrow" data-feature-step="-1" aria-label="Voltar publicações">&#8592;</button>'
-  +'<button type="button" class="feature-arrow" data-feature-step="1" aria-label="Avançar publicações">&#8594;</button></div></div></div>';
+ // Exibir as doze capas de uma vez, sem arrastar e sem alterar os PDFs.
+ // Grade 6x2 no desktop; colunas responsivas em telas menores.
+ return '<div class="feature-grid" role="list" aria-label="Doze leituras em destaque da GM Research">'
+  +rows.map(x=>{
+   const label=x.category==='analista-curioso'?'O ANALISTA CURIOSO':section(x)==='editorial'?'GM EDITORIAL':section(x)==='cenarios'?'CENÁRIOS & MERCADO':section(x)==='carteiras'?'CARTEIRAS':'DOSSIÊ';
+   return '<a class="feature-tile" role="listitem" href="'+esc(href(x))+'" target="_blank" rel="noopener" aria-label="Abrir publicação: '+esc(title(x))+'">'
+    +cardCover(x)
+    +'<div class="feature-tile-body"><span class="feature-tile-kicker">'+esc(label)+'</span>'
+    +'<h3>'+esc(title(x))+'</h3><span class="feature-tile-action">Ler publicação <span aria-hidden="true">↗</span></span></div></a>';
+  }).join('')+'</div>';
 }
 function renderInicio(){
  // A vitrine reúne coleções distintas e atualiza seus destaques apenas quando o PDF existe no catálogo.

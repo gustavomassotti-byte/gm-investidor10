@@ -218,7 +218,8 @@ function assetInfo(x){
 }
 const chip=x=>'<span class="kicker">'+esc(x)+'</span>';
 const moreMeta=x=>{
- const d=shortDate(x),p=publication(x);return esc(d)+(x.published_at?' · '+esc(p):'');
+ const d=shortDate(x),p=publication(x),updated=/^\d{4}-\d{2}-\d{2}$/.test(x.updated_at||'')?x.updated_at:'';
+ return esc(d)+(x.published_at?' · '+esc(p):'')+(updated&&updated!==x.published_at?' · Atualizado '+esc(datestr(updated)):'');
 };
 function cardCover(x){
  const src=coverSrc(x);
@@ -281,9 +282,10 @@ function sortMode(sec=UI.query?'busca':UI.section){
  return UI.sortBy[sec]||(sec==='dossies'?'az':sec==='arquivo'||sec==='busca'?'recentes':'padrao');
 }
 function chronology(x){
- const pub=/^\d{4}-\d{2}-\d{2}$/.test(x.published_at||'')?x.published_at:'';
+ const updated=/^\d{4}-\d{2}-\d{2}$/.test(x.updated_at||'')?x.updated_at:'';
+ const published=/^\d{4}-\d{2}-\d{2}$/.test(x.published_at||'')?x.published_at:'';
  const month=filenameMonth(x);
- return pub||(/^\d{4}-\d{2}$/.test(month)?month+'-01':'0000-00-00');
+ return updated||published||(/^\d{4}-\d{2}$/.test(month)?month+'-01':'0000-00-00');
 }
 function compareChronology(a,b){return chronology(b).localeCompare(chronology(a))||score(b).localeCompare(score(a))}
 function optionsUI(sec){
@@ -294,7 +296,7 @@ function optionsUI(sec){
   +'<option value="recentes"'+(selected==='recentes'?' selected':'')+'>Mais recentes</option>'
   +'</select></label>';
  return '<div class="controls"><div class="filter-pills" role="group" aria-label="Filtrar publicações">'+o.map(([k,v])=>'<button type="button" class="pill'+(UI.sub===k?' active':'')+'" data-sub="'+esc(k)+'" aria-pressed="'+(UI.sub===k?'true':'false')+'">'+esc(v)+'</button>').join('')+'</div>'+sortControl+'</div>'
-  +(selected==='recentes'?'<p class="sort-note">Ordenação pela data de publicação, quando registrada; caso contrário, pelo mês da edição. Não indica revisão do conteúdo.</p>':'');
+  +(selected==='recentes'?'<p class="sort-note">Ordenação por última atualização registrada no acervo; quando ela não existe, utiliza a data de publicação ou o mês da edição.</p>':'');
 }
 function sortDocs(rows,sec=UI.query?'busca':UI.section){
  const mode=sortMode(sec);

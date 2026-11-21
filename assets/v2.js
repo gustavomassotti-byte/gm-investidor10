@@ -369,16 +369,33 @@ function renderCarteiras(){
 }
 function renderCenarios(){
  const rows=DATA.filter(x=>section(x)==='cenarios');
- // Manter os dois PDFs no Acervo completo; mostrar somente a edição aprovada na vitrine.
+ // Preservar todas as versões no Acervo completo; na vitrine, preferir a edição aprovada.
  const hasCustoAprovado=rows.some(x=>x.name==='GM_Research_Custo_Brasil_2026-11-19_APROVADO.pdf');
  const shelfRows=hasCustoAprovado?rows.filter(x=>x.name!=='GM_Research_Custo_Brasil_2026-11-19_DEFINITIVO.pdf'):rows;
  const filtered=sortDocs(filterRows(shelfRows,'cenarios'));
+ // Começar pelas capas mais fortes e pelos assuntos variados, em vez de abrir
+ // sempre com várias capas de projeções para 2027 visualmente semelhantes.
+ const spotlightOrder=[
+  'Emergentes_IA_Estudo_Estrutural',
+  'Custo_Brasil_2026-11-19_APROVADO',
+  'Observatorio_de_Gestoras',
+  'Especial_Dolar_2026',
+  'Ibovespa_3T26_O_Teste_do_Caixa',
+  'Depois_das_Urnas',
+  'Mapa_das_Oportunidades'
+ ];
+ const spotlight=UI.sub==='todos'?spotlightOrder.map(key=>filtered.find(x=>x.name.includes(key))).filter(Boolean):[];
+ const featuredNames=new Set(spotlight.map(x=>x.name));
+ const remainder=filtered.filter(x=>!featuredNames.has(x.name));
  const buckets=[['Panorama e oportunidades para 2027',x=>/2027/i.test(x.name),'Estudos prospectivos sobre economia, riscos e alocação.'],
  ['Economia, moedas e conjuntura',x=>/DOLAR|CAMBIO|JUROS|FISCAL|URNA|ELEITORAL|GESTORAS/i.test(x.name),'Câmbio, juros, política econômica e movimentos do mercado.'],
  ['Mercados, índices e ativos globais',x=>/BITCOIN|IBOVESPA|SP500|EWZ/i.test(x.name),'Panoramas de bolsa, índices e Bitcoin.'],
  ['Outros estudos de mercado',x=>true,'Outras publicações da GM Research.']];
- return sectionHead('Cenários & Mercado','Estudos de conjuntura, economia e perspectivas. Organizados por tema, não por nome do arquivo.',rows.length)
-  +'<div class="page-width content-area">'+optionsUI('cenarios')+'<div class="editorial-shelves">'+(UI.sub==='todos'?renderBucketed(filtered,buckets):sectionBlock((subOptions.cenarios.find(x=>x[0]===UI.sub)||[])[1]||'Estudos','',filtered))+'</div></div>';
+ const shelves=UI.sub==='todos'
+  ?(spotlight.length?sectionBlock('Leituras em destaque','Capas e temas selecionados para apresentar a diversidade da GM Research.',spotlight):'')+renderBucketed(remainder,buckets)
+  :sectionBlock((subOptions.cenarios.find(x=>x[0]===UI.sub)||[])[1]||'Estudos','',filtered);
+ return sectionHead('Cenários & Mercado','Estudos de conjuntura, economia e perspectivas. Organizados por tema, com uma seleção inicial de leituras de destaque.',rows.length)
+  +'<div class="page-width content-area">'+optionsUI('cenarios')+'<div class="editorial-shelves">'+shelves+'</div></div>';
 }
 function renderBucketed(items,buckets){
  const seen=new Set,sections=[];
@@ -439,20 +456,34 @@ function collectionCard(sec,symbol,heading,desc,n){
   +'<footer><span>Conhecer a coleção</span><span class="collection-arrow" aria-hidden="true">↗</span></footer></a>';
 }
 function pick(namepart){return DATA.find(x=>x.name.includes(namepart))}
+function featureCarousel(rows){
+ if(!rows.length)return '<div class="empty">Destaques em atualização.</div>';
+ return '<div class="feature-carousel" role="region" aria-label="Carrossel de destaques da GM Research">'
+  +'<div class="feature-rail" data-feature-rail tabindex="0" aria-label="Capas de publicações, navegue pelas setas ou deslize lateralmente">'+rows.map(card).join('')+'</div>'
+  +'<div class="feature-controls"><span>Mercado · Macroeconomia · Editorial · Derivativos · Carteiras · Empresas</span>'
+  +'<div class="feature-buttons"><button type="button" class="feature-arrow" data-feature-step="-1" aria-label="Voltar publicações">&#8592;</button>'
+  +'<button type="button" class="feature-arrow" data-feature-step="1" aria-label="Avançar publicações">&#8594;</button></div></div></div>';
+}
 function renderInicio(){
  // A vitrine reúne coleções distintas e atualiza seus destaques apenas quando o PDF existe no catálogo.
+ // Curadoria visual: capas marcantes no início, com diversidade real de coleções.
+ // Apenas arquivos presentes no catálogo entram na vitrine.
  const choices=[
-  'O_Analista_Curioso_Vol_007',
-  'Depois_das_Urnas',
-  'GM_Dividendos_Novembro',
   'Emergentes_IA_Estudo_Estrutural',
   'Custo_Brasil_2026-11-19_APROVADO',
-  'O_Analista_Curioso_A_Divida_de_1624',
+  'O_Preco_da_Fragilidade',
+  'O_Analista_Curioso_Vol_007',
+  'Especial_Dolar_2026',
+  'Depois_das_Urnas',
+  'Derivativos_Edicao_Tecnica_Visual',
+  'GM_Dividendos_Novembro',
+  'Ibovespa_3T26_O_Teste_do_Caixa',
+  'Observatorio_de_Gestoras',
   'Dossie_NVIDIA',
-  'O_Preco_da_Fragilidade'
+  'Especial_Bitcoin'
  ];
  const chosen=choices.map(pick).filter(Boolean);
- const heroDocs=['O_Analista_Curioso_Vol_007','Depois_das_Urnas','GM_Dividendos_Novembro'].map(pick).filter(Boolean);
+ const heroDocs=['Emergentes_IA_Estudo_Estrutural','O_Preco_da_Fragilidade','O_Analista_Curioso_Vol_007'].map(pick).filter(Boolean);
  const cnt=Object.fromEntries(['dossies','carteiras','cenarios','editorial','curioso'].map(k=>[k,countType(k)]));
  return '<section class="hero"><div class="page-width hero-inner"><div><div class="eyebrow light">GM RESEARCH · ACERVO DE ANÁLISE</div>'
   +'<h1>Conhecimento para <em>decisões melhores.</em></h1>'
@@ -465,7 +496,7 @@ function renderInicio(){
   +'<div class="quick-stat"><strong>'+cnt.curioso+'</strong><span>publicações do<br>Analista Curioso</span></div></div>'
   +'<section class="section-block"><div class="block-heading"><div><div class="eyebrow">DESTAQUES DA BIBLIOTECA</div><h2>Investigações que despertam perguntas</h2>'
   +'<p>Uma seleção de assuntos para descobrir a GM Research: mercados, eleições, estratégias, empresas e ideias fora do consenso.</p></div>'
-  +'<a href="'+navURL('arquivo')+'" class="text-link" data-go="arquivo">Ver todo o catálogo ↗</a></div>'+cards(chosen)+'</section>'
+  +'<a href="'+navURL('arquivo')+'" class="text-link" data-go="arquivo">Ver todo o catálogo ↗</a></div>'+featureCarousel(chosen)+'</section>'
   +'<section class="section-block collections-section"><div class="block-heading"><div><div class="eyebrow">ENCONTRE SEU CAMINHO</div><h2>Explore por coleção</h2>'
   +'<p>Escolha o tipo de análise que procura. Cada coleção tem uma proposta própria, do acompanhamento mensal às grandes perguntas do mercado.</p></div></div>'
   +'<div class="collection-grid">'
@@ -509,6 +540,16 @@ function initFromURL(){
  $('#global-search').value=q;render();
 }
 document.addEventListener('click',ev=>{
+ const featureStep=ev.target.closest('button[data-feature-step]');
+ if(featureStep){
+  const rail=document.querySelector('[data-feature-rail]');
+  if(rail){
+   const card=rail.querySelector('.report-card');
+   const step=(card?card.getBoundingClientRect().width+18:300)*2;
+   rail.scrollBy({left:step*Number(featureStep.dataset.featureStep),behavior:'smooth'});
+  }
+  return;
+ }
  const link=ev.target.closest('a[data-go]');
  if(link){ev.preventDefault();go(link.dataset.go);return}
  const sub=ev.target.closest('button[data-sub]');

@@ -445,7 +445,7 @@ function renderArquivo(){
 /* Fotografia editorial: seis imagens distintas, sem alterar coleções ou PDFs.
    Unsplash CDN: imagens redimensionadas para o banner, sem arte/ícones vetoriais. */
 const collectionArt={
- dossies:{url:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=920&q=80',label:'ANÁLISE DE EMPRESAS'},
+ dossies:{url:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=920&q=80',label:'ANÁLISE DE EMPRESAS'},
  carteiras:{url:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=920&q=80',label:'ESTRATÉGIA & ALOCAÇÃO'},
  cenarios:{url:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=920&q=80',label:'ECONOMIA & MERCADOS'},
  editorial:{url:'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=920&q=80',label:'LIVROS & PESQUISA'},

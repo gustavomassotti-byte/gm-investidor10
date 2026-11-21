@@ -442,19 +442,22 @@ function renderArquivo(){
  return sectionHead('Acervo completo','Todos os documentos publicados, inclusive edições antigas. Nenhuma publicação é escondida ou descartada pela nova organização.',DATA.length)
   +'<div class="page-width content-area">'+optionsUI('arquivo')+'<p class="result-line">'+rows.length+' documentos encontrados</p>'+archiveRows(rows)+'</div>';
 }
+/* Fotografia editorial: seis imagens distintas, sem alterar coleções ou PDFs.
+   Unsplash CDN: imagens redimensionadas para o banner, sem arte/ícones vetoriais. */
 const collectionArt={
- dossies:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="16" y="11" width="60" height="48" rx="5"/><path d="M26 48V35h9v13M41 48V26h9v22M56 48V18h9v30M22 53h49" stroke-linecap="round"/><circle cx="70" cy="15" r="7" fill="var(--card-accent)" fill-opacity=".22"/></svg>',
- carteiras:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="45" cy="36" r="23"/><path d="M45 13v23l19 13M45 36l-21 10"/><path d="M70 15h11M75.5 9.5v11" stroke-linecap="round"/><circle cx="45" cy="36" r="4" fill="var(--card-accent)"/></svg>',
- cenarios:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="47" cy="35" r="24"/><ellipse cx="47" cy="35" rx="10" ry="24"/><path d="M23 35h48M28 22h38M28 48h38" stroke-linecap="round"/><path d="M12 55l10-9" stroke-linecap="round"/></svg>',
- editorial:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 15h20c7 0 10 4 10 8v33c-3-5-7-7-13-7H18zM74 15H54c-7 0-10 4-10 8v33c3-5 7-7 13-7h17z"/><path d="M24 24h15M24 32h15M56 24h12M56 32h12" stroke-linecap="round"/></svg>',
- curioso:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M33 47c-4-5-7-11-7-17a20 20 0 1 1 40 0c0 6-3 12-8 17l-2 6H35zM35 59h22M41 64h10" stroke-linecap="round"/><path d="M40 26c0-9 15-10 15 0 0 6-8 6-8 12M47 43v1" stroke-linecap="round"/></svg>',
- arquivo:'<svg viewBox="0 0 92 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="16" y="20" width="60" height="37" rx="4"/><path d="M12 20h68v-8H12zM34 33h24M34 42h24M24 55h44" stroke-linecap="round"/><rect x="40" y="27" width="14" height="5" rx="2"/></svg>'
+ dossies:{url:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=920&q=80',label:'ANÁLISE DE EMPRESAS'},
+ carteiras:{url:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=920&q=80',label:'ESTRATÉGIA & ALOCAÇÃO'},
+ cenarios:{url:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=920&q=80',label:'ECONOMIA & MERCADOS'},
+ editorial:{url:'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=920&q=80',label:'LIVROS & PESQUISA'},
+ curioso:{url:'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=920&q=80',label:'INVESTIGAÇÃO & IDEIAS'},
+ arquivo:{url:'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=920&q=80',label:'ACERVO INSTITUCIONAL'}
 };
 function collectionCard(sec,symbol,heading,desc,n){
- const visual=collectionArt[sec]||collectionArt.arquivo;
+ const art=collectionArt[sec]||collectionArt.arquivo;
+ const visual='<div class="collection-visual"><img src="'+esc(art.url)+'" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="collection-image-label">'+esc(art.label)+'</span></div>';
  return '<a href="'+esc(navURL(sec))+'" class="collection-card collection-'+esc(sec)+'" data-go="'+esc(sec)+'" aria-label="Explorar '+esc(heading)+': '+esc(desc)+'">'
   +'<div class="collection-top"><span class="collection-kicker">COLEÇÃO GM RESEARCH</span><span class="collection-total">'+n+' publicações</span></div>'
-  +'<div class="collection-visual">'+visual+'</div>'
+  +visual
   +'<h3>'+esc(heading)+'</h3><p>'+esc(desc)+'</p>'
   +'<footer><span>Conhecer a coleção</span><span class="collection-arrow" aria-hidden="true">↗</span></footer></a>';
 }

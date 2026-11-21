@@ -362,7 +362,11 @@ function renderCarteiras(){
   +'<p class="portfolio-helper">Todas as versões continuam disponíveis nos mesmos arquivos. A identificação “Mais recente” considera a edição mais nova encontrada no acervo.</p></div>';
 }
 function renderCenarios(){
- const rows=DATA.filter(x=>section(x)==='cenarios'),filtered=sortDocs(filterRows(rows,'cenarios'));
+ const rows=DATA.filter(x=>section(x)==='cenarios');
+ // Manter os dois PDFs no Acervo completo; mostrar somente a edição aprovada na vitrine.
+ const hasCustoAprovado=rows.some(x=>x.name==='GM_Research_Custo_Brasil_2026-11-19_APROVADO.pdf');
+ const shelfRows=hasCustoAprovado?rows.filter(x=>x.name!=='GM_Research_Custo_Brasil_2026-11-19_DEFINITIVO.pdf'):rows;
+ const filtered=sortDocs(filterRows(shelfRows,'cenarios'));
  const buckets=[['Panorama e oportunidades para 2027',x=>/2027/i.test(x.name),'Estudos prospectivos sobre economia, riscos e alocação.'],
  ['Economia, moedas e conjuntura',x=>/DOLAR|CAMBIO|JUROS|FISCAL|URNA|ELEITORAL|GESTORAS/i.test(x.name),'Câmbio, juros, política econômica e movimentos do mercado.'],
  ['Mercados, índices e ativos globais',x=>/BITCOIN|IBOVESPA|SP500|EWZ/i.test(x.name),'Panoramas de bolsa, índices e Bitcoin.'],
